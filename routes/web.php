@@ -16,5 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
-
 Route::get('/stocks', 'App\Http\Controllers\StocksController@index')->name('stocks');
+
+Route::get('/fibras', 'App\Http\Controllers\FibrasController@index')->name('fibras');
+
+Route::get('/cryptos', 'App\Http\Controllers\CryptosController@index')->name('cryptos');

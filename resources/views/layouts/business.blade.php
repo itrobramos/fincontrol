@@ -26,6 +26,12 @@
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link href="//cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" rel="stylesheet">
+  
+  
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -66,10 +72,19 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{{url('stocks')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Mis Acciones
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{url('fintech')}}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Fintech
               </p>
             </a>
           </li>
@@ -99,7 +114,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{{url('fibras')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Fibras
@@ -107,7 +122,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{{url('cryptos')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Cryptomonedas
@@ -149,8 +164,6 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -183,6 +196,7 @@
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 </body>
 </html>
 
