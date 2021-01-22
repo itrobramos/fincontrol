@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
+
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::get('/stocks', 'App\Http\Controllers\StocksController@index')->name('stocks');
@@ -21,3 +23,6 @@ Route::get('/stocks', 'App\Http\Controllers\StocksController@index')->name('stoc
 Route::get('/fibras', 'App\Http\Controllers\FibrasController@index')->name('fibras');
 
 Route::get('/cryptos', 'App\Http\Controllers\CryptosController@index')->name('cryptos');
+Auth::routes();
+
+

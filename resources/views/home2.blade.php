@@ -1,7 +1,9 @@
 
 @extends('layouts.business')
-@section('content')
 
+
+@section('content')
+         
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -260,9 +262,8 @@
 
 
 
-  @endsection
+@endsection
 
 
 
 
-          
