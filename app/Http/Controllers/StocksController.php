@@ -6,6 +6,7 @@ use App\View;
 use DB;
 use Auth;
 use App\Models\Broker;
+use App\Models\Exchange;
 use App\Models\Stock;
 use App\Models\UserStock;
 
@@ -35,12 +36,19 @@ class StocksController extends Controller
                             ->join('Brokers', 'Brokers.id', '=', 'Users_Stocks.brokerId')
                             ->join('Currencies', 'Currencies.id', '=', 'Users_Stocks.currencyId')
                             ->where('Users_Stocks.UserId', '=', Auth::user()->id)
+
                             ->select('Users_Stocks.*', 'Brokers.name as broker','Stocks.*','Currencies.symbol as currency')
                             ->get()
                             ;
 
+        $exchange = Exchange::where('date', date('y-m-d'))
+                    ->where('currencyIdDestiny', '=', 1)
+                    ->get();           
+       
         $data['myStocks'] = $myStocks;
-
+        $data['exchanges'] = $exchange;
+    
+        
         return view('stocks.index', $data);
     }
 
