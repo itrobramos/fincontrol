@@ -51,6 +51,7 @@
                                         <th>G/P($)</th>
                                         <th>Valor</th>
                                         <th>Actual</th>
+                                        <th>Editar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,7 +59,7 @@
                                     @foreach($myStocks as $stock)
 
                                         <tr role="row" class="odd">
-                                            <td><img style="width:30px; height:30px;"src="$stock->imageUrl"></td>                                        
+                                            <td><img style="width:30px; height:30px;"src="{{$stock->imageUrl}}"></td>                                        
                                             <td>{{$stock->symbol}}</td>
                                             <td>{{$stock->name}}</td>
                                             <td>{{$stock->quantity}}</td>
@@ -70,23 +71,22 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
+                                            <td>
+                                                <a href="{{url('stocks/'.$stock->iduserstock.'/edit')}}" class="btn btn-app">
+                                                    <i class="fas fa-edit"></i>
+                                                  </a>
+                                                  
                                         </tr>
 
                                     @endforeach
-
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
             <!-- /.card-body -->
         </div>
-
-
-
     </div>
 
 

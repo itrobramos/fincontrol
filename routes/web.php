@@ -20,8 +20,9 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::get('/stocks', 'App\Http\Controllers\StocksController@index')->name('stocks');
 Route::get('/stocks/add', 'App\Http\Controllers\StocksController@add')->name('stocks/add');
+Route::get('/stocks/{id}/edit', "App\Http\Controllers\StocksController@edit");
 Route::post('/stocks', 'App\Http\Controllers\StocksController@save');
-
+Route::patch('/stocks/{id}','App\Http\Controllers\StocksController@update');
 Route::get('/fibras', 'App\Http\Controllers\FibrasController@index')->name('fibras');
 
 Route::get('/cryptos', 'App\Http\Controllers\CryptosController@index')->name('cryptos');
