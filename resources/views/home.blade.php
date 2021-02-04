@@ -45,7 +45,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>$ 20,300</h3>
+                <h3>$ {{ $VariableTotal }}</h3>
                 <p>Renta Variable</p>
               </div>
               <div class="icon">
