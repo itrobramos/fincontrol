@@ -7,6 +7,7 @@ use Auth;
 use App\Models\Exchange;
 use App\Models\Stock;
 use App\Models\UserStock;
+use DB;
 
 
 
@@ -30,7 +31,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $myStocks = Stock::join('Users_Stocks','Users_Stocks.StockId', '=', 'Stocks.Id')
                             ->join('Brokers', 'Brokers.id', '=', 'Users_Stocks.brokerId')
                             ->join('Currencies', 'Currencies.id', '=', 'Users_Stocks.currencyId')
@@ -38,7 +38,7 @@ class HomeController extends Controller
                             ->select('Users_Stocks.*', 'Brokers.name as broker','Stocks.*','Currencies.symbol as currency')
                             ->get();
 
-        $exchange = Exchange::where('date', date('y-m-d'))
+        $exchange = Exchange::where('date', DB::raw("(select max(`date`) from exchanges)"))
                             ->where('currencyIdDestiny', '=', 1)
                             ->get();           
 

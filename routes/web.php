@@ -24,6 +24,11 @@ Route::get('/stocks/{id}/edit', "App\Http\Controllers\StocksController@edit");
 Route::post('/stocks', 'App\Http\Controllers\StocksController@save');
 Route::patch('/stocks/{id}','App\Http\Controllers\StocksController@update');
 Route::get('/fibras', 'App\Http\Controllers\FibrasController@index')->name('fibras');
+Route::get('/fibras/add', 'App\Http\Controllers\FibrasController@add')->name('fibras/add');
+Route::get('/fibras/{id}/edit', "App\Http\Controllers\FibrasController@edit");
+Route::post('/fibras', 'App\Http\Controllers\FibrasController@save');
+Route::patch('/fibras/{id}','App\Http\Controllers\FibrasController@update');
+
 
 Route::get('/cryptos', 'App\Http\Controllers\CryptosController@index')->name('cryptos');
 Auth::routes();

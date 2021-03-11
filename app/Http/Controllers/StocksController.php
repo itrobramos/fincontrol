@@ -38,6 +38,7 @@ class StocksController extends Controller
                             ->join('Brokers', 'Brokers.id', '=', 'Users_Stocks.brokerId')
                             ->join('Currencies', 'Currencies.id', '=', 'Users_Stocks.currencyId')
                             ->where('Users_Stocks.UserId', '=', Auth::user()->id)
+                            ->where('Stocks.stockTypeId', '=', 1)
 
                             ->select('Users_Stocks.*','Users_Stocks.id as iduserstock', 'Brokers.name as broker','Stocks.*','Currencies.symbol as currency')
                             ->get()
@@ -102,6 +103,7 @@ class StocksController extends Controller
             $StockDB->symbol = $request->symbol;
             $StockDB->name = $request->name;
             $StockDB->verified= 0;
+            $StockDB->stockTypeId = 1;
             
             $StockDB->save();
 

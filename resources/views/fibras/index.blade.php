@@ -10,12 +10,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Mis acciones</h1>
+                        <h1 class="m-0 text-dark">Mis fibras</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Mis Acciones</li>
+                            <li class="breadcrumb-item active">Mis fibras</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -25,7 +25,7 @@
         <div class="card">
 
             <div class="row d-flex flex-row-reverse margin">
-                    <a href="{{url('stocks/add')}}"><button type="button" class="btn btn-success">Agregar</button></a>
+                    <a href="{{url('fibras/add')}}"><button type="button" class="btn btn-success">Agregar</button></a>
             </div>
 
             <!-- /.card-header -->
@@ -72,7 +72,7 @@
                                             <td style="vertical-align: middle; text-align:center;"></td>
                                             <td style="vertical-align: middle; text-align:center;"></td>
                                             <td style="vertical-align: middle; text-align:center;">
-                                                <a href="{{url('stocks/'.$stock->iduserstock.'/edit')}}" class="btn btn-app">
+                                                <a href="{{url('fibras/'.$stock->iduserstock.'/edit')}}" class="btn btn-app">
                                                     <i class="fas fa-edit"></i>
                                                   </a>
                                                   
