@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateSnowballProyectsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('snowball_proyects', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->decimal('ODIPrice',12,2);
+            $table->integer('dividendPeriod');
+            $table->string('estimatedDividend');
+            $table->string('imageUrl');            
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('snowball_proyects');
+    }
+}

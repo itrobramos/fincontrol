@@ -23,11 +23,25 @@ Route::get('/stocks/add', 'App\Http\Controllers\StocksController@add')->name('st
 Route::get('/stocks/{id}/edit', "App\Http\Controllers\StocksController@edit");
 Route::post('/stocks', 'App\Http\Controllers\StocksController@save');
 Route::patch('/stocks/{id}','App\Http\Controllers\StocksController@update');
+
 Route::get('/fibras', 'App\Http\Controllers\FibrasController@index')->name('fibras');
 Route::get('/fibras/add', 'App\Http\Controllers\FibrasController@add')->name('fibras/add');
 Route::get('/fibras/{id}/edit', "App\Http\Controllers\FibrasController@edit");
 Route::post('/fibras', 'App\Http\Controllers\FibrasController@save');
 Route::patch('/fibras/{id}','App\Http\Controllers\FibrasController@update');
+
+Route::get('/fintech', 'App\Http\Controllers\FintechController@index')->name('fintech');
+
+Route::get('/snowballprojects', 'App\Http\Controllers\SnowballProjectController@index')->name('snowballprojects');
+Route::get('/snowballprojects/add', 'App\Http\Controllers\SnowballProjectController@add')->name('snowballprojects/add');
+Route::get('/snowballprojects/{id}/edit', "App\Http\Controllers\SnowballProjectController@edit");
+Route::post('/snowballprojects', 'App\Http\Controllers\SnowballProjectController@save');
+Route::patch('/snowballprojects/{id}','App\Http\Controllers\SnowballProjectController@update');
+
+Route::get('/snowball', 'App\Http\Controllers\SnowballController@index')->name('snowball');
+Route::get('/snowball/add', 'App\Http\Controllers\SnowballController@add')->name('snowball/add');
+Route::post('/snowball', 'App\Http\Controllers\SnowballController@save');
+Route::get('/snowball/{id}', "App\Http\Controllers\SnowballController@show");
 
 
 Route::get('/cryptos', 'App\Http\Controllers\CryptosController@index')->name('cryptos');
