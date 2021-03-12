@@ -47,6 +47,7 @@ Route::get('/dividends', 'App\Http\Controllers\DividendsController@index')->name
 Route::get('/dividends/add', 'App\Http\Controllers\DividendsController@add')->name('dividends/add');
 Route::post('/dividends', 'App\Http\Controllers\DividendsController@save');
 
+Route::get('/rentafija', 'App\Http\Controllers\RentaFijaController@index')->name('rentafija');
 
 Route::get('/cryptos', 'App\Http\Controllers\CryptosController@index')->name('cryptos');
 Auth::routes();
