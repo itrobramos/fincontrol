@@ -39,6 +39,7 @@ class StocksController extends Controller
                             ->join('Currencies', 'Currencies.id', '=', 'Users_Stocks.currencyId')
                             ->where('Users_Stocks.UserId', '=', Auth::user()->id)
                             ->where('Stocks.stockTypeId', '=', 1)
+                            ->where('Users_Stocks.Quantity', '>', 0)
 
                             ->select('Users_Stocks.*','Users_Stocks.id as iduserstock', 'Brokers.name as broker','Stocks.*','Currencies.symbol as currency')
                             ->get()

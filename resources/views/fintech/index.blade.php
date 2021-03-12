@@ -28,19 +28,33 @@
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
                     <div class="row">
-                        <div class="col-md-4 col-lg-6">
-                            <a href="snowball">
-                                <div class="card card-widget widget-user-2">
-                                    <div class="widget-user-header bg-default">
-                                    <div class="">
-                                        <img src="../images/snowball.png" alt="Snowball">
-                                    </div>
-                                    </div>
+                        <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
+                            <div class="card card-primary card-outline" style="height: 200px;">
+                              <div class="card-body box-profile">
+                                <div class="text-center">
+                                  <img class="img-fluid" src="../images/snowball.png" alt="Logo">
                                 </div>
-                                </div>
-                            </a>
+                              </div>
+                              <a href="snowball" class="btn btn-primary btn-block sticky-top"><b>Entrar</b></a>
+                            </div>
                         </div>
+    
+                        <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
+                            <div class="card card-warning card-outline" style="height: 200px;">
+                              <div class="card-body box-profile">
+                                <div class="text-center">
+                                  <img class="img-fluid" src="../images/redgirasol.png" alt="Logo">
+                                </div>
+                              </div>
+                              <a href="redgirasol" class="btn btn-warning btn-block sticky-top"><b>Entrar</b></a>
+                            </div>
+                        </div>
+    
                     </div>
+
+                    
+
+                   
 
 
                 </div>
@@ -49,6 +63,6 @@
     </div>
 
 
-
+    </div>
 
 @endsection
