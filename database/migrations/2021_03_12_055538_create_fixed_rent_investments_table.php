@@ -25,11 +25,16 @@ class CreateFixedRentInvestmentsTable extends Migration
             $table->date("endDate");
             $table->boolean("reinvest");
             $table->bigInteger("fixed_rent_platformsId")->unsigned();
+            $table->bigInteger("userId")->unsigned();
             $table->timestamps();
         });
 
         Schema::table('fixed_rent_investments', function (Blueprint $table){
             $table->foreign('fixed_rent_platformsId')->references('id')->on('fixed_rent_platforms')->onDelete('cascade');
+        });
+
+        Schema::table('fixed_rent_investments', function (Blueprint $table){
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
         });
 
     }
