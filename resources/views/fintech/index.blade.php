@@ -28,15 +28,13 @@
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-lg-6">
                             <a href="snowball">
                                 <div class="card card-widget widget-user-2">
-                                    <!-- Add the bg color to the header using any of the bg-* classes -->
                                     <div class="widget-user-header bg-default">
                                     <div class="">
                                         <img src="../images/snowball.png" alt="Snowball">
                                     </div>
-                                    <!-- /.widget-user-image -->
                                     </div>
                                 </div>
                                 </div>

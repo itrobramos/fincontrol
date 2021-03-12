@@ -24,6 +24,7 @@
 
         <div class="card">
 
+            <br>
             <div class="row d-flex flex-row-reverse margin">
                     <a href="{{url('snowball/add')}}"><button type="button" class="btn btn-success">Registrar Compras</button></a>
             </div>
@@ -36,7 +37,7 @@
                        
                         @foreach($odis as $odi)
 
-                        <div class="col-lg-3 col-md-4">
+                        <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
                             <div class="card card-primary card-outline" style="height: 350px;">
                               <div class="card-body box-profile">
                                 <div class="text-center">

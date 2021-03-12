@@ -67,7 +67,7 @@
                             <!-- small card -->
                             <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3><sup style="font-size: 20px">$</sup>0</h3>
+                                <h3><sup style="font-size: 20px">$</sup>{{$dividends->sum('amount')}}</h3>
                 
                                 <p>Dividendos</p>
                             </div>
@@ -87,7 +87,7 @@
                             <div class="card">
                               <div class="card-header p-2">
                                 <ul class="nav nav-pills">
-                                    <li class="nav-item"><a class="nav-link active" href="#shares" data-toggle="tab">Participaciones</a></li>
+                                    <li class="nav-item"><a class="nav-link active" href="#shares" data-toggle="tab">Acciones</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#dividends" data-toggle="tab">Dividendos</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#info" data-toggle="tab">Información</a></li>
 
@@ -102,9 +102,6 @@
                                   <div class="tab-pane active" id="shares">
 
                                         <div class="card">
-                                            <div class="card-header">
-                                              <h3 class="card-title">Acciones</h3>
-                                            </div>
                                             <!-- /.card-header -->
                                             <div class="card-body p-0">
                                               <table class="table table-striped">
@@ -113,8 +110,6 @@
                                                     <th>Fecha</th>
                                                     <th>Cantidad</th>
                                                     <th>Total</th>
-                                                    <th>$Dividendos</th>
-                                                    <th>%Dividendos</th>
                                                     <th style="width: 40px">Documento</th>
                                                   </tr>
                                                 </thead>
@@ -123,9 +118,7 @@
                                                     <tr>
                                                         <td>{{$share->efectiveDate}}</td>
                                                         <td>{{$share->quantity}}</td>
-                                                        <td>{{$share->quantity * $share->ODIPrice}}</td>
-                                                        <td>$0</td>
-                                                        <td><span class="badge bg-danger">0%</span></td>
+                                                        <td>$ {{$share->quantity * $share->ODIPrice}}</td>
                                                         <td><a target="n_blank" href="../{{$share->pdfUrl}}"><button class="btn btn-md btn-info fas fa-eye"></button></a></td>
                                                       </tr>
     
@@ -134,12 +127,35 @@
                                               </table>
                                             </div>
                                             <!-- /.card-body -->
-                                          </div>
+                                        </div>
 
 
                                   </div>
                                   <div class="tab-pane" id="dividends">  
-                                       dividends
+                                    <div class="card">
+                                        <!-- /.card-header -->
+                                        <div class="card-body p-0">
+                                          <table class="table table-striped">
+                                            <thead>
+                                              <tr>
+                                                <th>Fecha</th>
+                                                <th>Recibido</th>
+                                                <th>Acciones</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($dividends as $dividend)
+                                                <tr>
+                                                    <td>{{$dividend->efectiveDate}}</td>
+                                                    <td>$ {{$dividend->amount}}</td>
+                                                    <td>{{$dividend->stocksCount}}</td>
+                                                  </tr>
+                                                @endforeach
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
                                   </div>
                                 </div>
                               </div>

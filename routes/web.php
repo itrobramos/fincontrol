@@ -43,6 +43,10 @@ Route::get('/snowball/add', 'App\Http\Controllers\SnowballController@add')->name
 Route::post('/snowball', 'App\Http\Controllers\SnowballController@save');
 Route::get('/snowball/{id}', "App\Http\Controllers\SnowballController@show");
 
+Route::get('/dividends', 'App\Http\Controllers\DividendsController@index')->name('dividends');
+Route::get('/dividends/add', 'App\Http\Controllers\DividendsController@add')->name('dividends/add');
+Route::post('/dividends', 'App\Http\Controllers\DividendsController@save');
+
 
 Route::get('/cryptos', 'App\Http\Controllers\CryptosController@index')->name('cryptos');
 Auth::routes();

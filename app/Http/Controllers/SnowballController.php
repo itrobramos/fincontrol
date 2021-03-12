@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\View;
 use DB;
 use Auth;
+use App\Models\Dividend;
 use App\Models\SnowballODI;
 use App\Models\SnowballProject;
 use Image;
@@ -33,7 +34,7 @@ class SnowballController extends Controller
     public function index()
     {
         $odis = DB::select("SELECT p.id, p.name Name, p.imageUrl, SUM(quantity) quantity, o.ODIPrice * SUM(quantity) investment
-        FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id GROUP BY p.name, p.imageUrl");
+        FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id GROUP BY p.name, p.imageUrl ORDER BY p.name asc");
 
 
         $data['odis'] = $odis;
@@ -78,9 +79,12 @@ class SnowballController extends Controller
                             WHERE p.id = ". $id . " AND o.userId = " . Auth::user()->id . " GROUP BY p.name, p.imageUrl");
 
         $shares = SnowballODI::where('userId', Auth::user()->id)->where('snowballprojectid',$odis[0]->id)->get();
+        $dividends = Dividend::join('snowball_proyects', 'dividends.referenceId', '=', 'snowball_proyects.id')->where('dividends.type','4')->where('snowball_proyects.id', $id)->where('userId', Auth::user()->id)->get(); 
+       
 
         $data['odi'] = $odis[0];
         $data['shares'] = $shares;
+        $data['dividends'] = $dividends;
 
         return view('snowball.show', $data);
 
