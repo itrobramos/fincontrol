@@ -67,17 +67,21 @@
                             <!-- small card -->
                             <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3><sup style="font-size: 20px">$</sup>{{$dividends->sum('amount')}}</h3>
-                
-                                <p>Dividendos</p>
+                                <h3><sup style="font-size: 20px">$</sup>{{$dividends->sum('amount')}}</h3>                
+                                <p>Dividendos</p>                               
                             </div>
                             <div class="icon">
                                 <i class="ion ion-stats-bars"></i>
                             </div>
                             </div>
                         </div>
-                        <!-- ./col -->
 
+                        <div class="col-lg-3">
+                            Recuperación {{$recovery }} %
+                            <div class="progress">
+                              <div class="progress-bar" style="width: {{ round( ($dividends->sum('amount') / $odi->investment * 100), 2) }}%"></div>
+                            </div>  
+                        </div>
                     </div>
 
                     <br>

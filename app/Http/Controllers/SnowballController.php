@@ -80,11 +80,12 @@ class SnowballController extends Controller
 
         $shares = SnowballODI::where('userId', Auth::user()->id)->where('snowballprojectid',$odis[0]->id)->get();
         $dividends = Dividend::join('snowball_proyects', 'dividends.referenceId', '=', 'snowball_proyects.id')->where('dividends.type','4')->where('snowball_proyects.id', $id)->where('userId', Auth::user()->id)->get(); 
-       
+        $recovery = Round($dividends->sum('amount') / $odis[0]->investment * 100,2);
 
         $data['odi'] = $odis[0];
         $data['shares'] = $shares;
         $data['dividends'] = $dividends;
+        $data['recovery'] = $recovery;
 
         return view('snowball.show', $data);
 

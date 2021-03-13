@@ -37,7 +37,7 @@ class CreateUsersStocks extends Migration
             $table->foreign('currencyId')->references('id')->on('currencies');
         });
 
-        Schema::table('brokers', function (Blueprint $table){
+        Schema::table('users_stocks', function (Blueprint $table){
             $table->foreign('brokerId')->references('id')->on('brokers');
         });
 
