@@ -123,7 +123,7 @@
                                                         <td>{{$share->efectiveDate}}</td>
                                                         <td>{{$share->quantity}}</td>
                                                         <td>$ {{$share->quantity * $share->ODIPrice}}</td>
-                                                        <td><a target="n_blank" href="../{{$share->pdfUrl}}"><button class="btn btn-md btn-info fas fa-eye"></button></a></td>
+                                                        <td><a target="n_blank" href="{{env('DEPLOY_URL')}}/{{$share->pdfUrl}}"><button class="btn btn-md btn-info fas fa-eye"></button></a></td>
                                                       </tr>
     
                                                     @endforeach
