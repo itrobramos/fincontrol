@@ -32,7 +32,7 @@
                                 <div class="card card-{{$platform->color}} card-outline" style="height: 200px;">
                                     <div class="card-body box-profile">
                                         <div class="text-center">
-                                            <img class="img-fluid" src="../images/{{$platform->imageUrl}}" alt="Logo">
+                                            <img class="img-fluid" src="{{env('DEPLOY_URL')}}/images/{{$platform->imageUrl}}" alt="Logo">
                                         </div>
                                         <h3 class="profile-username text-center"></h3>
                                     </div>
