@@ -41,7 +41,7 @@ class StocksController extends Controller
                             ->where('stocks.stockTypeId', '=', 1)
                             ->where('users_stocks.quantity', '>', 0)
 
-                            ->select('users_stocks.*','users_stocks.id as iduserstock', 'Brokers.name as broker','stocks.*','currencies.symbol as currency')
+                            ->select('users_stocks.*','users_stocks.id as iduserstock', 'brokers.name as broker','stocks.*','currencies.symbol as currency')
                             ->get()
                             ;
 
