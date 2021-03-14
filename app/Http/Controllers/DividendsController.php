@@ -44,6 +44,7 @@ class DividendsController extends Controller
 
         //Grafico
         $DividendGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount FROM dividends
+        WHERE userId = " . Auth::user()->id . " 
         GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
 
         //Indicadores

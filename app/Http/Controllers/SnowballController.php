@@ -34,7 +34,7 @@ class SnowballController extends Controller
     public function index()
     {
         $odis = DB::select("SELECT p.id, p.name Name, p.imageUrl, SUM(quantity) quantity, o.ODIPrice * SUM(quantity) investment
-        FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id GROUP BY p.name, p.imageUrl ORDER BY p.name asc");
+        FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id WHERE o.userId = " . Auth::user()->id . " GROUP BY p.name, p.imageUrl ORDER BY p.name asc");
 
 
         $data['odis'] = $odis;
