@@ -36,9 +36,9 @@ class DividendsController extends Controller
     public function index()
     {
         //Tabla
-        $dividendsSnowball = Dividend::join('snowball_proyects', 'dividends.referenceId', '=', 'snowball_proyects.id')->where('dividends.type','4')->where('userId', Auth::user()->id)->get(); 
-        $dividendsFibras = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')->where('dividends.type','3')->where('userId', Auth::user()->id)->get(); 
-        $dividendsStocks = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')->where('dividends.type','1')->where('userId', Auth::user()->id)->get(); 
+        $dividendsSnowball = Dividend::join('snowball_proyects', 'dividends.referenceId', '=', 'snowball_proyects.id')->where('dividends.type','4')->where('dividends.userId', Auth::user()->id)->get(); 
+        $dividendsFibras = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')->where('dividends.type','3')->where('dividends.userId', Auth::user()->id)->get(); 
+        $dividendsStocks = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')->where('dividends.type','1')->where('dividends.userId', Auth::user()->id)->get(); 
         $dividendAll = $dividendsSnowball;
         $dividendAll = $dividendsSnowball->toBase()->merge($dividendsFibras)->toBase()->merge($dividendsStocks);
 
