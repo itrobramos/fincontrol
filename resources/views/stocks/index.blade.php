@@ -59,7 +59,7 @@
                                     @foreach($myStocks as $stock)
 
                                         <tr role="row" class="odd">
-                                            <td style="vertical-align: middle; text-align:center;"><img style="width:60px;"src="{{$stock->imageUrl}}"></td>                                        
+                                            <td style="vertical-align: middle; text-align:center;"><img style="width:60px;"src="{{env('DEPLOY_URL')}}/{{$stock->imageUrl}}"></td>                                        
                                             <td style="vertical-align: middle; text-align:center;">{{$stock->symbol}}</td>
                                             <td style="vertical-align: middle; text-align:center;">{{$stock->name}}</td>
                                             <td style="vertical-align: middle; text-align:center;">{{$stock->quantity}}</td>
