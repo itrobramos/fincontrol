@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-3 col-lg-3 col-xl-3">
                             <div class="card mb-2 bg-gradient-dark">
-                                <img class="card-img-top" src="../{{$odi->imageUrl}}" alt="Logo">
+                                <img class="card-img-top" src="{{env('DEPLOY_URL')}}/{{$odi->imageUrl}}" alt="Logo">
                             </div>
                         </div>
                         
