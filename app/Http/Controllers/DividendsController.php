@@ -43,7 +43,7 @@ class DividendsController extends Controller
         $dividendAll = $dividendsSnowball->toBase()->merge($dividendsFibras)->toBase()->merge($dividendsStocks);
 
         //Grafico
-        $DividendGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount FROM fincontrol.dividends
+        $DividendGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount FROM dividends
         GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
 
         //Indicadores
