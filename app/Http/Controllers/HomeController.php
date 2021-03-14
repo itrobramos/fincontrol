@@ -31,11 +31,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $myStocks = Stock::join('Users_Stocks','Users_Stocks.StockId', '=', 'Stocks.Id')
-                            ->join('Brokers', 'Brokers.id', '=', 'Users_Stocks.brokerId')
-                            ->join('Currencies', 'Currencies.id', '=', 'Users_Stocks.currencyId')
-                            ->where('Users_Stocks.UserId', '=', Auth::user()->id)
-                            ->select('Users_Stocks.*', 'Brokers.name as broker','Stocks.*','Currencies.symbol as currency')
+        $myStocks = Stock::join('users_stocks','users_stocks.stockId', '=', 'stocks.Id')
+                            ->join('brokers', 'brokers.id', '=', 'users_stocks.brokerId')
+                            ->join('currencies', 'currencies.id', '=', 'users_stocks.currencyId')
+                            ->where('users_stocks.userId', '=', Auth::user()->id)
+                            ->select('users_stocks.*', 'brokers.name as broker','stocks.*','currencies.symbol as currency')
                             ->get();
 
         $exchange = Exchange::where('date', DB::raw("(select max(`date`) from exchanges)"))

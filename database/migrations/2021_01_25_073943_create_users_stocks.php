@@ -21,7 +21,7 @@ class CreateUsersStocks extends Migration
             $table->decimal('quantity');
             $table->bigInteger("currencyId")->unsigned();
             $table->bigInteger("brokerId")->unsigned();
-            $table->date("transationDate");
+            $table->date("transactionDate");
             $table->timestamps();
         });
         
