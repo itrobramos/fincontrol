@@ -120,7 +120,7 @@
                                     @foreach($dividends as $dividend)
 
                                         <tr role="row" class="odd">
-                                            <td style="width:95px;"><center><img class="img-fluid" src="{{$dividend->imageUrl}}" style="display: block; margin-left: auto; margin-right: auto; height:50px;" alt="Logo"></center></td>
+                                            <td style="width:95px;"><center><img class="img-fluid" src="{{env('DEPLOY_URL')}}/{{$dividend->imageUrl}}" style="display: block; margin-left: auto; margin-right: auto; height:50px;" alt="Logo"></center></td>
                                             {{-- <td style="vertical-align: middle; text-align:center;"><img style="width:60px;"src="{{$dividend->imageUrl}}"></td>                                         --}}
                                             <td style="vertical-align: middle; text-align:center;">{{$dividend->efectiveDate}}</td>
                                             <td style="vertical-align: middle; text-align:center;">{{$dividend->name}}</td>
