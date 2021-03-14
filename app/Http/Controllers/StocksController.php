@@ -34,14 +34,14 @@ class StocksController extends Controller
      */
     public function index()
     {
-        $myStocks = Stock::join('Users_Stocks','Users_Stocks.StockId', '=', 'Stocks.Id')
-                            ->join('Brokers', 'Brokers.id', '=', 'Users_Stocks.brokerId')
-                            ->join('Currencies', 'Currencies.id', '=', 'Users_Stocks.currencyId')
-                            ->where('Users_Stocks.UserId', '=', Auth::user()->id)
-                            ->where('Stocks.stockTypeId', '=', 1)
-                            ->where('Users_Stocks.Quantity', '>', 0)
+        $myStocks = Stock::join('users_stocks','users_stocks.stockId', '=', 'stocks.Id')
+                            ->join('brokers', 'brokers.id', '=', 'users_stocks.brokerId')
+                            ->join('currencies', 'currencies.id', '=', 'users_stocks.currencyId')
+                            ->where('users_stocks.UserId', '=', Auth::user()->id)
+                            ->where('stocks.stockTypeId', '=', 1)
+                            ->where('users_stocks.quantity', '>', 0)
 
-                            ->select('Users_Stocks.*','Users_Stocks.id as iduserstock', 'Brokers.name as broker','Stocks.*','Currencies.symbol as currency')
+                            ->select('users_stocks.*','users_stocks.id as iduserstock', 'Brokers.name as broker','Stocks.*','Currencies.symbol as currency')
                             ->get()
                             ;
 

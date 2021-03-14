@@ -32,7 +32,7 @@
                             <div class="card card-primary card-outline" style="height: 200px;">
                               <div class="card-body box-profile">
                                 <div class="text-center">
-                                  <img class="img-fluid" src="../images/snowball.png" alt="Logo">
+                                  <img class="img-fluid" src="{{env('DEPLOY_URL')}}/images/snowball.png" alt="Logo">
                                 </div>
                               </div>
                               <a href="snowball" class="btn btn-primary btn-block sticky-top"><b>Entrar</b></a>
@@ -43,7 +43,7 @@
                             <div class="card card-warning card-outline" style="height: 200px;">
                               <div class="card-body box-profile">
                                 <div class="text-center">
-                                  <img class="img-fluid" src="../images/redgirasol.png" alt="Logo">
+                                  <img class="img-fluid" src="{{env('DEPLOY_URL')}}/images/redgirasol.png" alt="Logo">
                                 </div>
                               </div>
                               <a href="redgirasol" class="btn btn-warning btn-block sticky-top"><b>Entrar</b></a>

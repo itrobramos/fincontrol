@@ -41,7 +41,7 @@
                             <div class="card card-primary card-outline" style="height: 350px;">
                               <div class="card-body box-profile">
                                 <div class="text-center">
-                                  <img class="profile-user-img img-fluid img-circle" src="{{$odi->imageUrl}}" alt="Logo">
+                                  <img class="profile-user-img img-fluid img-circle" src="{{env('DEPLOY_URL')}}/{{$odi->imageUrl}}" alt="Logo">
                                 </div>
                                 <h3 class="profile-username text-center">{{$odi->Name}}</h3>
                                 <ul class="list-group list-group-unbordered mb-3">
