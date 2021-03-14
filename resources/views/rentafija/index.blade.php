@@ -36,7 +36,7 @@
                                         </div>
                                         <h3 class="profile-username text-center"></h3>
                                     </div>
-                                    <a href="/rentafija/{{$platform->id}}" class="btn btn-{{$platform->color}} btn-block sticky-top"><b>Entrar</b></a>
+                                    <a href="{{url('rentafija/' . $platform->id)}}" class="btn btn-{{$platform->color}} btn-block sticky-top"><b>Entrar</b></a>
                                 </div>
                             </div>
                         @endforeach

@@ -30,7 +30,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3 col-lg-3 col-xl-3">
-                            <img class="card-img-top" src="../images/{{$platform->imageUrl}}" alt="Logo">
+                            <img class="card-img-top" src="{{env('DEPLOY_URL')}}/images/{{$platform->imageUrl}}" alt="Logo">
                     </div>
                     
                     <div class="col-lg-3 col-md-3">
