@@ -169,37 +169,7 @@
                 <!-- /.card-body -->
               </div>
 
-            <!-- Map card -->
-            <div class="card bg-gradient-primary hidden">
-              <div class="card-header border-0">
-                <!-- card tools -->
-                <div class="card-tools">
-                  
-                </div>
-                <!-- /.card-tools -->
-              </div>
-              <div class="card-body">
-              </div>
-              <!-- /.card-body-->
-              <div class="card-footer bg-transparent">
-                <div class="row">
-                  <div class="col-4 text-center">
-                    <div id="sparkline-1"></div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <div id="sparkline-2"></div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <div id="sparkline-3"></div>
-                  </div>
-                  <!-- ./col -->
-                </div>
-                <!-- /.row -->
-              </div>
-            </div>
-            <!-- /.card -->
+          
 
 
             <!-- Calendar -->
