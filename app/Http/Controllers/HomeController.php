@@ -96,6 +96,16 @@ class HomeController extends Controller
                 $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
         } 
 
+        $InversionesBolsa = DB::select("SELECT st.name, color, sum(us.quantity * us.averagePrice) amount
+                                FROM users_stocks us INNER JOIN stocks s ON us.stockId = s.id
+                                                    INNER JOIN stock_types st on st.id = s.stockTypeId
+                                WHERE userId = ". Auth::user()->id .
+                                " GROUP BY st.name, color");
+
+        foreach($InversionesBolsa as $investment){
+                $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
+        } 
+        
         $data["Portafolio"] = $Portafolio;
 
         //PLAZOS POR VENCER
