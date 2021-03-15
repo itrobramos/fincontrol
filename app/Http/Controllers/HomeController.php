@@ -91,7 +91,8 @@ class HomeController extends Controller
                                             " GROUP BY name, color");
 
         foreach($InversionesRentaFija as $investment){
-            $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
+            if($investment->amount > 0)
+                $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
         } 
 
         $data["Portafolio"] = $Portafolio;
