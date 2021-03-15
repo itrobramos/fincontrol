@@ -34,36 +34,23 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <table id="stocktable" class="table table-bordered table-striped dataTable dtr-inline"
-                                role="grid" aria-describedby="example1_info">
-                                <thead>
-                                    <tr role="row">
-                                        <th></th>
-                                      
-                                        <th>Nombre</th>
-                                        <th>Color</th>
-                                        <th>Editar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                           
 
-                                    @foreach($accounts as $account)
-                                    <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
-                                        <div class="card card-{{$account->color}} card-outline" style="height: 200px;">
-                                            <div class="card-body box-profile">
-                                                <div class="text-center">
-                                                    <img class="img-fluid" src="{{env('DEPLOY_URL')}}/{{$account->imageUrl}}" alt="Logo">
-                                                </div>
-                                                <h3 class="profile-username text-center"></h3>
+                                @foreach($accounts as $account)
+                                <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
+                                    <div class="card card-{{$account->color}} card-outline" style="height: 200px;">
+                                        <div class="card-body box-profile">
+                                            <div class="text-center">
+                                                <img class="img-fluid" src="{{env('DEPLOY_URL')}}/{{$account->imageUrl}}" alt="Logo">
                                             </div>
-                                            <a href="{{url('account/' . $account->id)}}" class="btn btn-{{$account->color}} btn-block sticky-top"><b>Entrar</b></a>
+                                            <h3 class="profile-username text-center"></h3>
                                         </div>
+                                        <a href="{{url('account/' . $account->id)}}" class="btn btn-{{$account->color}} btn-block sticky-top"><b>Entrar</b></a>
                                     </div>
-                                @endforeach
+                                </div>
+                            @endforeach
 
-                                   
-                                </tbody>
-                            </table>
+
                         </div>
                     </div>
                 </div>
