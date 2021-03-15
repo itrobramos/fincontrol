@@ -77,7 +77,7 @@ class AccountsController extends Controller
         if($file=$request->file('image')){
             $name=$file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = 'public/uploads/images/accounts/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
+            $filename = 'uploads/images/accounts/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
             $file->move('public/uploads/images/accounts/', $filename);
             $account->imageUrl = $filename;            
         }
