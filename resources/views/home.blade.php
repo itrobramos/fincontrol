@@ -59,7 +59,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>$ </h3>
+                <h3>$ {{$EfectivoTotal }}</h3>
 
                 <p>Efectivo</p>
               </div>

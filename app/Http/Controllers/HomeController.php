@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\Exchange;
 use App\Models\Stock;
-use App\Models\UserStock;
+use App\Models\UserAccount;
 use App\Models\FixedRentInvestments;
 use App\Models\SnowballODI;
 use DB;
@@ -69,10 +69,14 @@ class HomeController extends Controller
         $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->sum('amount');
 
 
+        $EfectivoTotalAccount = UserAccount::where('userId', Auth::user()->id)->sum('amount');
+
         $data["VariableTotal"] = round($VariableTotalAccount,2);
         $data["RentaFijaTotal"] = round($RentaFijaTotalAccount,2);
+        $data["EfectivoTotal"] = round($EfectivoTotalAccount,2);
 
-        $data["PortafolioTotal"] = round($VariableTotalAccount + $RentaFijaTotalAccount,2);
+        
+        $data["PortafolioTotal"] = round($VariableTotalAccount + $RentaFijaTotalAccount + $EfectivoTotalAccount,2);
 
         
         return view('home', $data);
