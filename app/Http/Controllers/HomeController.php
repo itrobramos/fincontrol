@@ -81,7 +81,8 @@ class HomeController extends Controller
             $Portafolio[] = ["Snowball",  $amountOdis[0]->investment, '#1663FD'];
     
         foreach(UserAccount::where('userId', Auth::user()->id)->where('active', true)->get() as $useraccount){
-            $Portafolio[] = [$useraccount->account->name,  $useraccount->amount, $useraccount->account->color];
+            if($useraccount->amount > 0)
+                $Portafolio[] = [$useraccount->account->name,  $useraccount->amount, $useraccount->account->color];
         }
 
         $InversionesRentaFija = DB::select("SELECT name, color, sum(amount) amount
