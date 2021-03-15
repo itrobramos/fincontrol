@@ -89,7 +89,7 @@
                             <th>Plazo</th>
                             <th>Tasa</th>
                             <th>Inversión</th>
-                            <th style="width: 40px">Restan</th>
+                            <th>Avance</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -100,7 +100,11 @@
                                 <td>{{$inv->term}}</td>
                                 <td>{{$inv->rate}} %</td>
                                 <td>$ {{$inv->amount}}</td>
-                                <td></td>
+                                <td>{{ round(round((time() - strtotime($inv->initialDate)) / (60 * 60 * 24)) / $inv->term * 100,2) }}%
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: {{ round(round((time() - strtotime($inv->initialDate)) / (60 * 60 * 24)) / $inv->term * 100,2) }}%"></div>
+                                    </div>   
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

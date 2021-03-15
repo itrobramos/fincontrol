@@ -79,7 +79,7 @@
                         <div class="col-lg-3">
                             Recuperación {{$recovery }} %
                             <div class="progress">
-                              <div class="progress-bar" style="width: {{ round( ($dividends->sum('amount') / $odi->investment * 100), 2) }}%"></div>
+                              <div class="progress-bar" style="width: {{ $recovery }}%"></div>
                             </div>  
                         </div>
                     </div>
