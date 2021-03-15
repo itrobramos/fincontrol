@@ -33,7 +33,7 @@ class AccountsController extends Controller
      */
     public function index()
     {
-        $accounts = Account::join('users_accounts', 'users_accounts.accountId', '=', 'accounts.id')->where('active',1)->orderBy('name','asc')->get();
+        $accounts = Account::join('users_accounts', 'users_accounts.accountId', '=', 'accounts.id')->where('active',1)->where('users_accounts.userId', Auth::user()->id)->orderBy('name','asc')->get();
         $data['accounts'] = $accounts;
         return view('accounts.index', $data);
     }
