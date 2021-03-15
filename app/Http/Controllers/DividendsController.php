@@ -48,9 +48,9 @@ class DividendsController extends Controller
         GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
 
         //Indicadores
-        $indicadores['history'] = Dividend::sum('amount');
-        $indicadores['year'] = Dividend::whereYear('efectiveDate', now()->year)->sum('amount');
-        $indicadores['month'] = Dividend::whereYear('efectiveDate', now()->year)->whereMonth('efectiveDate', now()->month)->sum('amount');
+        $indicadores['history'] = Dividend::where('dividends.userId', Auth::user()->id)->sum('amount');
+        $indicadores['year'] = Dividend::whereYear('efectiveDate', now()->year)->where('dividends.userId', Auth::user()->id)->sum('amount');
+        $indicadores['month'] = Dividend::whereYear('efectiveDate', now()->year)->whereMonth('efectiveDate', now()->month)->where('dividends.userId', Auth::user()->id)->sum('amount');
 
         
         $data["dividends"] = $dividendAll->sortBy('efectiveDate');
