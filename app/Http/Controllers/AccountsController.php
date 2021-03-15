@@ -163,6 +163,12 @@ class AccountsController extends Controller
         return redirect('/accounts');
     }
 
+    public function add()
+    {
+        date_default_timezone_set('America/Monterrey');
+        return view('accounts.add');
+    }
+
     public function edit($id)
     {
         date_default_timezone_set('America/Monterrey');
