@@ -14,12 +14,12 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="dist/css/app.css">
+    <link rel="stylesheet" href="{{env('DEPLOY_URL')}}/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="{{env('DEPLOY_URL')}}/dist/css/app.css">
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
-<body style="background-image: url('{{ asset('images/cover.jpg')}}'); background-repeat: no-repeat; background-size:cover;">
+<body style="background-image: url('{{ asset('public/images/cover.jpg')}}'); background-repeat: no-repeat; background-size:cover;">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-success shadow-sm">
             <div class="container">
