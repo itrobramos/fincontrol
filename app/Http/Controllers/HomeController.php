@@ -82,7 +82,7 @@ class HomeController extends Controller
     
         foreach(UserAccount::where('userId', Auth::user()->id)->where('active', true)->get() as $useraccount){
             if($useraccount->amount > 0)
-                $Portafolio[] = [$useraccount->account->name,  $useraccount->amount, $useraccount->account->color];
+                $Portafolio[] = [$useraccount->account->name . " (Cuenta)",  $useraccount->amount, $useraccount->account->color];
         }
 
         $InversionesRentaFija = DB::select("SELECT name, color, sum(amount) amount
