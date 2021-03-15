@@ -31,7 +31,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>$ 34,000</h3>
+                <h3>$ {{ $RentaFijaTotal }}</h3>
                 <p>Renta Fija</p>
               </div>
               <div class="icon">
@@ -59,7 +59,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>$ 2,520</h3>
+                <h3>$ </h3>
 
                 <p>Efectivo</p>
               </div>
@@ -74,7 +74,7 @@
             <!-- small box -->
             <div class="small-box bg-primary">
               <div class="inner">
-                <h3>$ 56,820</h3>
+                <h3>$ {{$PortafolioTotal}}</h3>
 
                 <p>Portafolio</p>
               </div>

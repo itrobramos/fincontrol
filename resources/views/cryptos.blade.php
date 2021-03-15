@@ -48,7 +48,7 @@
                                 </thead>
                                 <tbody>
 
-                                    <tr role="row" class="odd">
+                                    {{-- <tr role="row" class="odd">
                                         <td><img style="height:25px;"src="https://s2.coinmarketcap.com/static/img/coins/200x200/1.png">
                                         </td>
                                         <td>Bitso</td>
@@ -61,7 +61,7 @@
                                         <td>$ 90.00</td>
                                         <td>$ 690.00</td>
                                         <td>$ 703699.99</td>
-                                    </tr>
+                                    </tr> --}}
 
                                   
 

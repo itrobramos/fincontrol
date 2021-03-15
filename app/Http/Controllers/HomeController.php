@@ -7,6 +7,8 @@ use Auth;
 use App\Models\Exchange;
 use App\Models\Stock;
 use App\Models\UserStock;
+use App\Models\FixedRentInvestments;
+use App\Models\SnowballODI;
 use DB;
 
 
@@ -56,7 +58,23 @@ class HomeController extends Controller
             }
         }
 
+
+        
+        $amountOdis = DB::select("SELECT SUM(o.ODIPrice * quantity) investment 
+                                FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id 
+                                WHERE o.userId = ". Auth::user()->id );
+
+        $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment;
+        
+        $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->sum('amount');
+
+
         $data["VariableTotal"] = round($VariableTotalAccount,2);
+        $data["RentaFijaTotal"] = round($RentaFijaTotalAccount,2);
+
+        $data["PortafolioTotal"] = round($VariableTotalAccount + $RentaFijaTotalAccount,2);
+
+        
         return view('home', $data);
     }
 }
