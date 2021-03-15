@@ -9,6 +9,11 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="{{env('DEPLOY_URL')}}apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{env('DEPLOY_URL')}}favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{env('DEPLOY_URL')}}favicon-16x16.png">
+    <link rel="manifest" href="{{env('DEPLOY_URL')}}site.webmanifest">
+
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <!-- Fonts -->
