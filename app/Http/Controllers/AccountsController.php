@@ -77,11 +77,16 @@ class AccountsController extends Controller
         $UserAccountDB->amount = $Movement->resultAmount;
         $UserAccountDB->save();
 
-        $account = Account::find($request->accountId);
-        $data["account"] = $account;
-        return view('accounts.show', $data);
+   
+        $account = Account::join('users_accounts', 'accounts.id', '=', 'users_accounts.accountid')->where('userId', Auth::user()->id)->find($id);
+        $movements = Movement::where('userId', Auth::user()->id)->where('accountId',$id)->get();
 
+        $data["account"] = $account;
+        $data["movements"] = $movements;
         
+        return view('accounts.show', $data);
+   
+
 
     }
 
