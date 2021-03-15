@@ -85,19 +85,27 @@ class HomeController extends Controller
         }
 
         $InversionesRentaFija = DB::select("SELECT name, color, sum(amount) amount
-        from fixed_rent_investments i
-        inner join fixed_rent_platforms p on i.fixed_rent_platformsId = p.id 
-        WHERE i.userId = ". Auth::user()->id . 
-        " GROUP BY name, color");
+                                            FROM fixed_rent_investments i
+                                            INNER JOIN fixed_rent_platforms p on i.fixed_rent_platformsId = p.id 
+                                            WHERE i.userId = ". Auth::user()->id . 
+                                            " GROUP BY name, color");
 
         foreach($InversionesRentaFija as $investment){
             $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
         } 
+
         $data["Portafolio"] = $Portafolio;
 
         //PLAZOS POR VENCER
         $RentFixedInvestments = FixedRentInvestments::where('endDate','<=', date('Y-m-d', strtotime("+30 days")))->orderBy('endDate')->get()->take(5);
         $data["RentFixedInvestments"] = $RentFixedInvestments;
+
+        //Gráfico de dividendos
+        $DividendGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount FROM dividends
+        WHERE userId = " . Auth::user()->id . " 
+        GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
+
+        $data["dividendGraph"] = $DividendGraph;
         
         return view('home', $data);
     }
