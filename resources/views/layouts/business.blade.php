@@ -109,10 +109,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{{url('accounts')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Concentrado
+                Cuentas Efectivo
               </p>
             </a>
           </li>

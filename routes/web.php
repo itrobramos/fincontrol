@@ -53,6 +53,13 @@ Route::get('/rentafija/{id}/add', "App\Http\Controllers\RentaFijaController@add"
 Route::post('/rentafija', 'App\Http\Controllers\RentaFijaController@save');
 
 Route::get('/cryptos', 'App\Http\Controllers\CryptosController@index')->name('cryptos');
+
+Route::get('/accounts', 'App\Http\Controllers\AccountsController@index')->name('accounts');
+Route::get('/accounts/add', 'App\Http\Controllers\AccountsController@add')->name('accounts/add');
+Route::get('/accounts/{id}/edit', "App\Http\Controllers\AccountsController@edit");
+Route::post('/accounts', 'App\Http\Controllers\AccountsController@save');
+Route::patch('/accounts/{id}','App\Http\Controllers\AccountsController@update');
+
 Auth::routes();
 
 
