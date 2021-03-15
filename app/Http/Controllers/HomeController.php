@@ -68,17 +68,38 @@ class HomeController extends Controller
         
         $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->sum('amount');
 
-
         $EfectivoTotalAccount = UserAccount::where('userId', Auth::user()->id)->sum('amount');
 
         $data["VariableTotal"] = round($VariableTotalAccount,2);
         $data["RentaFijaTotal"] = round($RentaFijaTotalAccount,2);
-        $data["EfectivoTotal"] = round($EfectivoTotalAccount,2);
-
-        
+        $data["EfectivoTotal"] = round($EfectivoTotalAccount,2);       
         $data["PortafolioTotal"] = round($VariableTotalAccount + $RentaFijaTotalAccount + $EfectivoTotalAccount,2);
 
         
+        $Portafolio = [];
+    
+        if($amountOdis != 0)
+            $Portafolio[] = ["Snowball",  $amountOdis[0]->investment, '#1663FD'];
+    
+        foreach(UserAccount::where('userId', Auth::user()->id)->where('active', true)->get() as $useraccount){
+            $Portafolio[] = [$useraccount->account->name,  $useraccount->amount, $useraccount->account->color];
+        }
+
+        $InversionesRentaFija = DB::select("SELECT name, color, sum(amount) amount
+        from fixed_rent_investments i
+        inner join fixed_rent_platforms p on i.fixed_rent_platformsId = p.id 
+        WHERE i.userId = ". Auth::user()->id . 
+        " GROUP BY name, color");
+
+
+
+        foreach($InversionesRentaFija as $investment){
+            $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
+        } 
+
+        $data["Portafolio"] = $Portafolio;
+
+
         return view('home', $data);
     }
 }

@@ -31,7 +31,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>$ {{ $RentaFijaTotal }}</h3>
+                <h4>$ {{ $RentaFijaTotal }}</h4>
                 <p>Renta Fija</p>
               </div>
               <div class="icon">
@@ -45,7 +45,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>$ {{ $VariableTotal }}</h3>
+                <h4>$ {{ $VariableTotal }}</h4>
                 <p>Renta Variable</p>
               </div>
               <div class="icon">
@@ -59,7 +59,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>$ {{$EfectivoTotal }}</h3>
+                <h4>$ {{$EfectivoTotal }}</h4>
 
                 <p>Efectivo</p>
               </div>
@@ -74,7 +74,7 @@
             <!-- small box -->
             <div class="small-box bg-primary">
               <div class="inner">
-                <h3>$ {{$PortafolioTotal}}</h3>
+                <h4>$ {{$PortafolioTotal}}</h4>
 
                 <p>Portafolio</p>
               </div>
@@ -260,9 +260,57 @@
 
 
 
-  @endsection
+  <!-- ChartJS -->
+<script src="../dist/Chart.min.js"></script>
+<script>
+  $(function () {
 
 
+  // Donut Chart
+  var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
+  var pieData        = {
+    labels: [
+
+        @foreach($Portafolio as $P)
+        '{{$P[0]}}',
+        @endforeach
+    ],
+    datasets: [
+      {
+        data: [
+          @foreach($Portafolio as $P)
+          '{{$P[1]}}',
+          @endforeach
+
+        ],
+        backgroundColor : [
+          @foreach($Portafolio as $P)
+          '{{$P[2]}}',
+          @endforeach
+
+        ],
+      }
+    ]
+  }
+  var pieOptions = {
+    legend: {
+      display: false
+    },
+    maintainAspectRatio : false,
+    responsive : true,
+  }
+  //Create pie or douhnut chart
+  // You can switch between pie and douhnut using the method below.
+  var pieChart = new Chart(pieChartCanvas, {
+    type: 'doughnut',
+    data: pieData,
+    options: pieOptions      
+  });
+})
+
+</script>
+
+@endsection
 
 
           

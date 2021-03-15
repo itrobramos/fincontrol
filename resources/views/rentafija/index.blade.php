@@ -29,14 +29,14 @@
                     <div class="row">
                         @foreach($platforms as $platform)
                             <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
-                                <div class="card card-{{$platform->color}} card-outline" style="height: 200px;">
+                                <div class="card card-{{$platform->tag}} card-outline" style="height: 200px;">
                                     <div class="card-body box-profile">
                                         <div class="text-center">
                                             <img class="img-fluid" src="{{env('DEPLOY_URL')}}/images/{{$platform->imageUrl}}" alt="Logo">
                                         </div>
                                         <h3 class="profile-username text-center"></h3>
                                     </div>
-                                    <a href="{{url('rentafija/' . $platform->id)}}" class="btn btn-{{$platform->color}} btn-block sticky-top"><b>Entrar</b></a>
+                                    <a href="{{url('rentafija/' . $platform->id)}}" class="btn btn-{{$platform->tag}} btn-block sticky-top"><b>Entrar</b></a>
                                 </div>
                             </div>
                         @endforeach
