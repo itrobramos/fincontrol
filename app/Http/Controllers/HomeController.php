@@ -33,6 +33,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //INDICADORES 
+
         $myStocks = Stock::join('users_stocks','users_stocks.stockId', '=', 'stocks.Id')
                             ->join('brokers', 'brokers.id', '=', 'users_stocks.brokerId')
                             ->join('currencies', 'currencies.id', '=', 'users_stocks.currencyId')
@@ -58,24 +60,21 @@ class HomeController extends Controller
             }
         }
 
-
-        
         $amountOdis = DB::select("SELECT SUM(o.ODIPrice * quantity) investment 
                                 FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id 
                                 WHERE o.userId = ". Auth::user()->id );
 
         $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment;
-        
         $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->sum('amount');
-
         $EfectivoTotalAccount = UserAccount::where('userId', Auth::user()->id)->sum('amount');
 
         $data["VariableTotal"] = round($VariableTotalAccount,2);
         $data["RentaFijaTotal"] = round($RentaFijaTotalAccount,2);
         $data["EfectivoTotal"] = round($EfectivoTotalAccount,2);       
         $data["PortafolioTotal"] = round($VariableTotalAccount + $RentaFijaTotalAccount + $EfectivoTotalAccount,2);
-
         
+
+        ///PORTAFOLIO
         $Portafolio = [];
     
         if($amountOdis != 0)
@@ -91,15 +90,15 @@ class HomeController extends Controller
         WHERE i.userId = ". Auth::user()->id . 
         " GROUP BY name, color");
 
-
-
         foreach($InversionesRentaFija as $investment){
             $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
         } 
-
         $data["Portafolio"] = $Portafolio;
 
-
+        //PLAZOS POR VENCER
+        $RentFixedInvestments = FixedRentInvestments::where('endDate','<=', date('Y-m-d', strtotime("+30 days")))->orderBy('endDate')->get()->take(5);
+        $data["RentFixedInvestments"] = $RentFixedInvestments;
+        
         return view('home', $data);
     }
 }

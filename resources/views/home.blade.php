@@ -92,24 +92,7 @@
           <!-- Left col -->
           <section class="col-lg-7 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="fas fa-chart-pie mr-1"></i>
-                  Progreso Mensual
-                </h3>
-              </div><!-- /.card-header -->
-              <div class="card-body">
-                <div class="tab-content p-0">
-                  <!-- Morris chart - Sales -->
-                  <div class="chart tab-pane active" id="revenue-chart"
-                       style="position: relative; height: 300px;">
-                      <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>                         
-                   </div>
-                </div>
-              </div><!-- /.card-body -->
-            </div>
-
+        
 
             <div class="card">
                 <div class="card-header">
@@ -128,6 +111,25 @@
               </div>
             <!-- /.card -->
 
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  Progreso Mensual
+                </h3>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content p-0">
+                  <!-- Morris chart - Sales -->
+                  <div class="chart tab-pane active" id="revenue-chart"
+                       style="position: relative; height: 300px;">
+                      <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>                         
+                   </div>
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+
+            
           </section>
           <!-- /.Left col -->
           <!-- right col (We are only adding the ID to make the widgets sortable)-->
@@ -142,33 +144,24 @@
                   <table class="table">
                     <thead>
                       <tr>
-                        <th style="width: 10px">#</th>
                         <th>Descripción</th>
                         <th>Progress</th>
                         <th style="width: 40px">Label</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1.</td>
-                        <td>Finsus 1 mes (10-Enero-2021)</td>
-                        <td>
-                          <div class="progress progress-xs">
-                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                          </div>
-                        </td>
-                        <td><span class="badge bg-danger">33%</span></td>
-                      </tr>
-                      <tr>
-                        <td>2.</td>
-                        <td>Hey Banco 1 Semana</td>
-                        <td>
-                          <div class="progress progress-xs">
-                            <div class="progress-bar bg-warning" style="width: 70%"></div>
-                          </div>
-                        </td>
-                        <td><span class="badge bg-warning">70%</span></td>
-                      </tr>
+
+                      @foreach ($RentFixedInvestments as $inv)
+                        <tr>
+                          <td>{{$inv->FixedRentPlatform->name}} - ($ {{$inv->amount}}) - {{date('M', strtotime($inv->endDate))}} {{date('d', strtotime($inv->endDate))}}</td>
+                          <td>
+                            <div class="progress progress-xs">
+                              <div class="progress-bar progress-bar-danger" style="width:  {{ round(round((time() - strtotime($inv->initialDate)) / (60 * 60 * 24)) / $inv->term * 100,2) }}%"></div>
+                            </div>
+                          </td>
+                          <td><span class="badge bg-danger"> {{ round(round((time() - strtotime($inv->initialDate)) / (60 * 60 * 24)) / $inv->term * 100,2) }}%</span></td>
+                        </tr>
+                      @endforeach
                       
                     </tbody>
                   </table>
