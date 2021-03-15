@@ -33,10 +33,9 @@
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
                     <div class="row">
-                        <div class="col-sm-12">
                            
 
-                                @foreach($accounts as $account)
+                            @foreach($accounts as $account)
                                 <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
                                     <div class="card card-{{$account->color}} card-outline" style="height: 200px;">
                                         <div class="card-body box-profile">
@@ -51,7 +50,6 @@
                             @endforeach
 
 
-                        </div>
                     </div>
                 </div>
             </div>
