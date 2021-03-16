@@ -72,12 +72,13 @@
 
                             @foreach($movements as $movement)
 
-                                <td>{{$movement->transactionDate}}</td>
-                                <td>@if($movement->type == 1) Ingreso @else Egreso @endif</td>
-                                <td>{{$movement->amount}}</td>
-                                <td>{{$movement->concept}}</td>
-                                <td>{{$movement->resultAmount}}</td>
-
+                                <tr>
+                                    <td>{{$movement->transactionDate}}</td>
+                                    <td>@if($movement->type == 1) Ingreso @else Egreso @endif</td>
+                                    <td>{{$movement->amount}}</td>
+                                    <td>{{$movement->concept}}</td>
+                                    <td>{{$movement->resultAmount}}</td>
+                                </tr>
                             @endforeach
 
                         </tbody>

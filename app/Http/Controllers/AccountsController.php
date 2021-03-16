@@ -78,7 +78,7 @@ class AccountsController extends Controller
         $UserAccountDB->save();
 
    
-        $account = Account::join('users_accounts', 'accounts.id', '=', 'users_accounts.accountid')->where('userId', Auth::user()->id)->where('accountId', $request->accountId);
+        $account = Account::join('users_accounts', 'accounts.id', '=', 'users_accounts.accountid')->where('userId', Auth::user()->id)->where('accountId', $request->accountId)->first();
         $movements = Movement::where('userId', Auth::user()->id)->where('accountId',$request->accountId)->get();
 
         $data["account"] = $account;
