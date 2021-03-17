@@ -51,7 +51,7 @@
                                             </li>
                                             <li class="list-group-item">
                                                 <b>Monto Invertido</b> <a class="float-right">
-                                                    {{ $stock['Inversion']}}</a>
+                                                    ${{ $stock['Inversion']}}</a>
                                             </li>
                                             <li class="list-group-item">
                                                 <b>Portafolio Fibras</b> <a class="float-right">
