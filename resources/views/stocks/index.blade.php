@@ -54,7 +54,7 @@
                                                     ${{ $stock['Inversion']}}</a>
                                             </li>
                                             <li class="list-group-item">
-                                                <b>Portafolio Fibras</b> <a class="float-right">
+                                                <b>Portafolio Acciones</b> <a class="float-right">
                                                     {{ $stock['Porcentaje'] }} %</a>
                                             </li>
                                         </ul>
