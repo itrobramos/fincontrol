@@ -69,7 +69,7 @@ class FibrasController extends Controller
             $stocks[] = ["Id" => $fibra->id,
                         "Nombre" => $fibra->name,
                          "Acciones" => $fibra->quantity,
-                         "Inversion" => $Inversion,
+                         "Inversion" => Round($Inversion,2),
                          "Porcentaje" => Round($Inversion / $montoInversion * 100 ,2),
                          "Imagen" => $fibra->imageUrl
                         ];

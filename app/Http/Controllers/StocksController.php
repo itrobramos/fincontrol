@@ -45,14 +45,39 @@ class StocksController extends Controller
                             ->get()
                             ;
 
-        $exchange = Exchange::where('date', date('y-m-d'))
-                    ->where('currencyIdDestiny', '=', 1)
-                    ->get();           
-       
-        $data['myStocks'] = $myStocks;
-        $data['exchanges'] = $exchange;
-    
+        $exchange = Exchange::where('date', DB::raw("(select max(`date`) from exchanges)"))
+        ->where('currencyIdDestiny', '=', 1)
+        ->where('currencyIdOrigin', '=', 2)
+        ->first()->price;    
+
+        $montoInversion = 0;
+        $stocks = [];
+
         
+        foreach($myStocks as $stock){
+            if($stock->currencyId == 1)
+                $montoInversion += $stock->quantity * $stock->averagePrice;
+            else if($stock->currencyId == 2)
+                $montoInversion += $stock->quantity * $stock->averagePrice *  $exchange;
+        }
+
+        foreach($myStocks as $stock){
+
+            if($stock->currencyId == 1)
+                $Inversion = $stock->quantity * $stock->averagePrice;
+            else if($stock->currencyId == 2)
+                $Inversion = $stock->quantity * $stock->averagePrice *  $exchange;
+
+            $stocks[] = ["Id" => $stock->id,
+                        "Nombre" => $stock->name,
+                        "Acciones" => $stock->quantity,
+                        "Inversion" => Round($Inversion,2),
+                        "Porcentaje" => Round($Inversion / $montoInversion * 100 ,2),
+                        "Imagen" => $stock->imageUrl
+                        ];
+        }
+        
+        $data['myStocks'] = $stocks;
         return view('stocks.index', $data);
     }
 
