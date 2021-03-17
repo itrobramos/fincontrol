@@ -39,17 +39,44 @@ class FibrasController extends Controller
                             ->join('currencies', 'currencies.id', '=', 'users_stocks.currencyId')
                             ->where('users_stocks.userId', '=', Auth::user()->id)
                             ->where('stocks.stockTypeId', '=', 3)
-
                             ->select('users_stocks.*','users_stocks.id as iduserstock', 'brokers.name as broker','stocks.*','currencies.symbol as currency')
                             ->get()
                             ;
 
-        $exchange = Exchange::where('date', date('y-m-d'))
-                    ->where('currencyIdDestiny', '=', 1)
-                    ->get();           
-       
-        $data['myStocks'] = $myStocks;
-        $data['exchanges'] = $exchange;
+        $exchange = Exchange::where('date', DB::raw("(select max(`date`) from exchanges)"))
+        ->where('currencyIdDestiny', '=', 1)
+        ->where('currencyIdOrigin', '=', 2)
+        ->first()->price;    
+
+        $montoInversion = 0;
+        $stocks = [];
+
+        
+        foreach($myStocks as $fibra){
+            if($fibra->currencyId == 1)
+                $montoInversion += $fibra->quantity * $fibra->averagePrice;
+            else if($fibra->currencyId == 2)
+                $montoInversion += $fibra->quantity * $fibra->averagePrice *  $exchange;
+        }
+
+        foreach($myStocks as $fibra){
+
+            if($fibra->currencyId == 1)
+                $Inversion = $fibra->quantity * $fibra->averagePrice;
+            else if($fibra->currencyId == 2)
+                $Inversion = $fibra->quantity * $fibra->averagePrice *  $exchange;
+
+            $stocks[] = ["Id" => $fibra->id,
+                        "Nombre" => $fibra->name,
+                         "Acciones" => $fibra->quantity,
+                         "Inversion" => $Inversion,
+                         "Porcentaje" => Round($Inversion / $montoInversion * 100 ,2),
+                         "Imagen" => $fibra->imageUrl
+                        ];
+        }
+        
+
+        $data['myStocks'] = $stocks;
     
         
         return view('fibras.index', $data);
