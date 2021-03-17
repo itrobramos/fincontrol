@@ -14,7 +14,7 @@ use Image;
 
 use Illuminate\Http\Request;
 
-class FibrasController extends Controller
+class CriptosController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -37,12 +37,12 @@ class FibrasController extends Controller
         $myStocks = Stock::join('users_stocks','users_stocks.stockId', '=', 'stocks.Id')
                             ->join('brokers', 'brokers.id', '=', 'users_stocks.brokerId')
                             ->join('currencies', 'currencies.id', '=', 'users_stocks.currencyId')
-                            ->where('users_stocks.userId', '=', Auth::user()->id)
-                            ->where('stocks.stockTypeId', '=', 3)
-                            ->where('users_stocks.quantity', '>', 0)
+                            ->where('users_stocks.UserId', '=', Auth::user()->id)
+                            ->where('stocks.stockTypeId', '=', 4)
                             ->select('users_stocks.*','users_stocks.id as iduserstock', 'brokers.name as broker','stocks.*','currencies.symbol as currency')
-                            ->get()
-                            ;
+                            ->orderBy('stocks.name')
+                            ->get();
+
 
         $exchange = Exchange::where('date', DB::raw("(select max(`date`) from exchanges)"))
         ->where('currencyIdDestiny', '=', 1)
@@ -53,34 +53,32 @@ class FibrasController extends Controller
         $stocks = [];
 
         
-        foreach($myStocks as $fibra){
-            if($fibra->currencyId == 1)
-                $montoInversion += $fibra->quantity * $fibra->averagePrice;
-            else if($fibra->currencyId == 2)
-                $montoInversion += $fibra->quantity * $fibra->averagePrice *  $exchange;
+        foreach($myStocks as $stock){
+            if($stock->currencyId == 1)
+                $montoInversion += $stock->quantity * $stock->averagePrice;
+            else if($stock->currencyId == 2)
+                $montoInversion += $stock->quantity * $stock->averagePrice *  $exchange;
         }
 
-        foreach($myStocks as $fibra){
+        
+        foreach($myStocks as $stock){
 
-            if($fibra->currencyId == 1)
-                $Inversion = $fibra->quantity * $fibra->averagePrice;
-            else if($fibra->currencyId == 2)
-                $Inversion = $fibra->quantity * $fibra->averagePrice *  $exchange;
+            if($stock->currencyId == 1)
+                $Inversion = $stock->quantity * $stock->averagePrice;
+            else if($stock->currencyId == 2)
+                $Inversion = $stock->quantity * $stock->averagePrice *  $exchange;
 
-            $stocks[] = ["Id" => $fibra->iduserstock    ,
-                        "Nombre" => $fibra->name,
-                         "Acciones" => $fibra->quantity,
-                         "Inversion" => Round($Inversion,2),
-                         "Porcentaje" => Round($Inversion / $montoInversion * 100 ,2),
-                         "Imagen" => $fibra->imageUrl
+            $stocks[] = ["Id" => $stock->iduserstock,
+                        "Nombre" => $stock->name,
+                        "Acciones" => $stock->quantity,
+                        "Inversion" => Round($Inversion,2),
+                        "Porcentaje" => Round($Inversion / $montoInversion * 100 ,2),
+                        "Imagen" => $stock->imageUrl
                         ];
         }
         
-
         $data['myStocks'] = $stocks;
-    
-        
-        return view('fibras.index', $data);
+        return view('criptos.index', $data);
     }
 
     public function add()
@@ -89,7 +87,7 @@ class FibrasController extends Controller
         $brokers = Broker::all();
         $data['brokers'] = $brokers;
 
-        return view('fibras.add',$data);
+        return view('criptos.add',$data);
     }
 
     public function edit($id)
@@ -101,7 +99,7 @@ class FibrasController extends Controller
         $data['brokers'] = $brokers;
         $data['stock'] = $UserStock;
 
-        return view('fibras.edit',$data);
+        return view('criptos.edit',$data);
     }
 
     public function editsimple($id)
@@ -111,7 +109,7 @@ class FibrasController extends Controller
         $UserStock = UserStock::find($id);
         $data['stock'] = $UserStock;
 
-        return view('fibras.editsimple',$data);
+        return view('criptos.editsimple',$data);
     }
 
     public function updatesimple(Request $request, $id){
@@ -123,12 +121,15 @@ class FibrasController extends Controller
         $UserStockDB->currencyId = $request->currency;
         $UserStockDB->save();
 
-        return redirect('/fibras');
+        return redirect('/criptos');
     }
 
     public function save(Request $request){
 
         $stock = Stock::where('symbol', $request->symbol)->first();
+
+        // dd(Auth::user()->id);
+
         if($stock != null){
            //se registra al usuario 
            $UserStockDB = new UserStock();
@@ -150,7 +151,7 @@ class FibrasController extends Controller
             $StockDB->symbol = $request->symbol;
             $StockDB->name = $request->name;
             $StockDB->verified= 0;
-            $StockDB->stockTypeId = 3;
+            $StockDB->stockTypeId = 4;
             
             $StockDB->save();
 
@@ -171,7 +172,7 @@ class FibrasController extends Controller
         }
 
 
-        return redirect('/fibras');
+        return redirect('/criptos');
     }
 
     public function update(Request $request, $id){
@@ -237,6 +238,12 @@ class FibrasController extends Controller
         }
 
 
-        return redirect('/fibras');
+        return redirect('/criptos');
+    }
+
+    public function destroy($id)
+    {
+        UserStock::destroy($id);
+        return redirect('criptos')->with('Message', 'Criptomoneda eliminada correctamente');
     }
 }

@@ -49,7 +49,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{url('home')}}" class="brand-link">
-      <img src="{{env('DEPLOY_URL')}}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      <img src="{{env('DEPLOY_URL')}}/dist/img/AdminLTELogo.png" alt="admin" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">FinControl</span>
     </a>
@@ -73,8 +73,8 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{url('home')}}" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <a href="{{url('home')}}" class="nav-link">
+              <i class="nav-icon fas fa-chart-line"></i>
               <p>
                 Dashboard
                 <i class="right"></i>
@@ -92,7 +92,7 @@
 
           <li class="nav-item">
             <a href="{{url('fintech')}}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-laptop"></i>
               <p>
                 Fintech
               </p>
@@ -101,7 +101,7 @@
          
           <li class="nav-item">
             <a href="{{url('rentafija')}}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
                 Renta Fija
               </p>
@@ -109,7 +109,7 @@
           </li>
           <li class="nav-item">
             <a href="{{url('dividends')}}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-hand-holding-usd"></i>
               <p>
                 Dividendos
               </p>
@@ -117,7 +117,7 @@
           </li>
           <li class="nav-item">
             <a href="{{url('accounts')}}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-dollar-sign"></i>
               <p>
                 Cuentas Efectivo
               </p>
@@ -125,17 +125,17 @@
           </li>
           <li class="nav-item">
             <a href="{{url('fibras')}}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-building"></i>
               <p>
                 Fibras
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{url('cryptos')}}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+            <a href="{{url('criptos')}}" class="nav-link">
+              <i class="nav-icon fab fa-bitcoin"></i>
               <p>
-                Cryptomonedas
+                Criptomonedas
               </p>
             </a>
           </li>
@@ -143,7 +143,7 @@
           <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
             document.getElementById('logout-form').submit();">
-              <i class="nav-icon far fa-circle text-danger"></i>
+              <i class="nav-icon fas fa-sign-out-alt text-danger"></i>
               <p class="text">Cerrar sesión</p>
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -218,6 +218,19 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{env('DEPLOY_URL')}}/dist/js/demo.js"></script>
 <script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+{{-- <script>
+$(document).ready(function() {
+  $( ".nav-link" ).bind( "click", function(event) {
+      var clickedItem = $( this );
+      $( ".nav-link" ).each( function() {
+          $( this ).removeClass( "active" );
+      });
+      clickedItem.addClass( "active" );
+  });
+});
+</script> --}}
+
 </body>
 </html>
 

@@ -134,7 +134,7 @@ class HomeController extends Controller
                 else if($stock->currency == "EUR")
                     $VariableTotalETF = $VariableTotalETF + $stock->quantity * $stock->averagePrice * $exchange[1]['price']; 
             }
-            else if($stock->type == "Cripto"){
+            else if($stock->type == "Criptomonedas"){
                 $colorCripto = $stock->color;
                 if($stock->currency == "MXN")
                     $VariableTotalCriptos = $VariableTotalCriptos + $stock->quantity * $stock->averagePrice;
@@ -148,7 +148,7 @@ class HomeController extends Controller
         if($VariableTotalFibra> 0)
             $Portafolio[] = ['Fibras',  Round($VariableTotalFibra,2), $colorFibra];
         if($VariableTotalCriptos> 0)
-            $Portafolio[] = ['Criptos',  Round($VariableTotalCriptos,2), $colorCripto];
+            $Portafolio[] = ['Criptomonedas',  Round($VariableTotalCriptos,2), $colorCripto];
         if($VariableTotalETF> 0)
             $Portafolio[] = ['ETF',  Round($VariableTotalETF,2), $colorETF];
         if($VariableTotalAcciones> 0)

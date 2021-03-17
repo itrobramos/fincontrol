@@ -69,7 +69,7 @@ class StocksController extends Controller
             else if($stock->currencyId == 2)
                 $Inversion = $stock->quantity * $stock->averagePrice *  $exchange;
 
-            $stocks[] = ["Id" => $stock->id,
+            $stocks[] = ["Id" => $stock->iduserstock,
                         "Nombre" => $stock->name,
                         "Acciones" => $stock->quantity,
                         "Inversion" => Round($Inversion,2),
@@ -101,6 +101,28 @@ class StocksController extends Controller
         $data['stock'] = $UserStock;
 
         return view('stocks.edit',$data);
+    }
+
+    public function editsimple($id)
+    {
+        date_default_timezone_set('America/Monterrey');
+
+        $UserStock = UserStock::find($id);
+        $data['stock'] = $UserStock;
+
+        return view('stocks.editsimple',$data);
+    }
+
+    public function updatesimple(Request $request, $id){
+
+        $UserStockDB = UserStock::find($id);
+        $UserStockDB->Quantity = $request->quantity;
+        $UserStockDB->averagePrice = $request->average;
+        $UserStockDB->currencyId = $request->currency;
+        $UserStockDB->currencyId = $request->currency;
+        $UserStockDB->save();
+
+        return redirect('/stocks');
     }
 
     public function save(Request $request){
@@ -218,5 +240,11 @@ class StocksController extends Controller
 
 
         return redirect('/stocks');
+    }
+
+    public function destroy($id)
+    {
+        UserStock::destroy($id);
+        return redirect('stocks')->with('Message', 'Acción eliminada correctamente');
     }
 }

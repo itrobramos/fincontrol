@@ -38,6 +38,34 @@
 
                             <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
                                 <div class="card card-primary card-outline" style="height: 400px;">
+                                    <button type="button" class="btn btn-default btn-block  dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu" style="">
+                                        <button type="submit" class="btn btn-block">
+                                            <a class="dropdown-item" href="fibras/{{ $stock['Id']}}/editsimple"> 
+                                                <span class="btn-inner-icon">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </span> Editar
+                                            </a>
+                                        </button>
+                                     
+                                            <form method='post' action="{{ url('/fibras/' . $stock['Id']) }}">
+                                                {{ csrf_field()}}
+                                                {{ method_field('DELETE')}}
+
+                                                <button type="submit" class="btn btn-block" onclick="return confirm('¿Está seguro?');">
+                                                    <a class="dropdown-item"> 
+                                                        <span class="btn-inner-icon">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </span> Borrar
+                                                    </a>
+                                                </button>
+
+                                                
+                                            </form>
+                                        </a>
+
+                                    </div>
                                     <div class="card-body box-profile">
                                         <div class="text-center">
                                             <img class="img-fluid"

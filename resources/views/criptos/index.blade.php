@@ -10,12 +10,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Mis acciones</h1>
+                        <h1 class="m-0 text-dark">Mis criptomonedas</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{url('home')}}">Home</a></li>
-                            <li class="breadcrumb-item active">Mis Acciones</li>
+                            <li class="breadcrumb-item active">Mis criptomonedas</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -25,7 +25,7 @@
         <div class="card">
 
             <div class="row d-flex flex-row-reverse margin">
-                <a href="{{ url('stocks/add') }}"><button type="button" class="btn btn-success">Agregar</button></a>
+                <a href="{{ url('criptos/add') }}"><button type="button" class="btn btn-success">Agregar</button></a>
             </div>
 
             <!-- /.card-header -->
@@ -42,14 +42,14 @@
                                     </button>
                                     <div class="dropdown-menu" style="">
                                         <button type="submit" class="btn btn-block">
-                                            <a class="dropdown-item" href="stocks/{{ $stock['Id']}}/editsimple"> 
+                                            <a class="dropdown-item" href="criptos/{{ $stock['Id']}}/editsimple"> 
                                                 <span class="btn-inner-icon">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </span> Editar
                                             </a>
                                         </button>
                                      
-                                            <form method='post' action="{{ url('/stocks/' . $stock['Id']) }}">
+                                            <form method='post' action="{{ url('/criptos/' . $stock['Id']) }}">
                                                 {{ csrf_field()}}
                                                 {{ method_field('DELETE')}}
 
@@ -89,7 +89,7 @@
                                         </ul>
                                         <br>
                                     </div>
-                                    <a href="stocks/{{ $stock['Id'] }}" class="btn btn-primary btn-block sticky-top"><b>Ver más</b></a>
+                                    <a href="criptos/{{ $stock['Id'] }}" class="btn btn-primary btn-block sticky-top"><b>Ver más</b></a>
                                 </div>
                             </div>
                         @endforeach
@@ -101,13 +101,5 @@
         </div>
     </div>
 
-
-
-    <script>
-        $(document).ready(function() {
-            $('#stocktable').DataTable();
-        });
-
-    </script>
 
 @endsection

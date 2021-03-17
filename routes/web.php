@@ -21,14 +21,29 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 Route::get('/stocks', 'App\Http\Controllers\StocksController@index')->name('stocks');
 Route::get('/stocks/add', 'App\Http\Controllers\StocksController@add')->name('stocks/add');
 Route::get('/stocks/{id}/edit', "App\Http\Controllers\StocksController@edit");
+Route::get('/stocks/{id}/editsimple', "App\Http\Controllers\StocksController@editsimple");
 Route::post('/stocks', 'App\Http\Controllers\StocksController@save');
 Route::patch('/stocks/{id}','App\Http\Controllers\StocksController@update');
+Route::patch('/stockssimple/{id}','App\Http\Controllers\StocksController@updatesimple');
+Route::delete('/stocks/{id}', 'App\Http\Controllers\StocksController@destroy');
 
 Route::get('/fibras', 'App\Http\Controllers\FibrasController@index')->name('fibras');
 Route::get('/fibras/add', 'App\Http\Controllers\FibrasController@add')->name('fibras/add');
 Route::get('/fibras/{id}/edit', "App\Http\Controllers\FibrasController@edit");
+Route::get('/fibras/{id}/editsimple', "App\Http\Controllers\FibrasController@editsimple");
 Route::post('/fibras', 'App\Http\Controllers\FibrasController@save');
 Route::patch('/fibras/{id}','App\Http\Controllers\FibrasController@update');
+Route::patch('/fibras/{id}','App\Http\Controllers\FibrasController@updatesimple');
+Route::delete('/fibras/{id}', 'App\Http\Controllers\FibrasController@destroy');
+
+Route::get('/criptos', 'App\Http\Controllers\CriptosController@index')->name('criptos');
+Route::get('/criptos/add', 'App\Http\Controllers\CriptosController@add')->name('criptos/add');
+Route::get('/criptos/{id}/edit', "App\Http\Controllers\CriptosController@edit");
+Route::get('/criptos/{id}/editsimple', "App\Http\Controllers\CriptosController@editsimple");
+Route::post('/criptos', 'App\Http\Controllers\CriptosController@save');
+Route::patch('/criptos/{id}','App\Http\Controllers\CriptosController@update');
+Route::patch('/criptossimple/{id}','App\Http\Controllers\CriptosController@updatesimple');
+Route::delete('/criptos/{id}', 'App\Http\Controllers\CriptosController@destroy');
 
 Route::get('/fintech', 'App\Http\Controllers\FintechController@index')->name('fintech');
 

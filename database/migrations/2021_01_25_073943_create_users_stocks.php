@@ -17,8 +17,8 @@ class CreateUsersStocks extends Migration
             $table->id();
             $table->bigInteger("userId")->unsigned();
             $table->bigInteger("stockId")->unsigned();
-            $table->decimal('averagePrice');
-            $table->decimal('quantity');
+            $table->decimal('averagePrice',12,2);
+            $table->decimal('quantity',12,8);
             $table->bigInteger("currencyId")->unsigned();
             $table->bigInteger("brokerId")->unsigned();
             $table->date("transactionDate");
