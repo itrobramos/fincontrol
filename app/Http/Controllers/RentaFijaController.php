@@ -16,10 +16,10 @@ class RentaFijaController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth', ['except' => ['welcome']]);
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['login']]);
+    }
 
    
 

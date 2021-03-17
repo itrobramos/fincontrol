@@ -21,10 +21,10 @@ class DividendsController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth', ['except' => ['welcome']]);
-    // }
+     public function __construct()
+     {
+         $this->middleware('auth', ['except' => ['login']]);
+     }
 
    
 
@@ -38,9 +38,9 @@ class DividendsController extends Controller
         //Tabla
         $dividendsSnowball = Dividend::join('snowball_proyects', 'dividends.referenceId', '=', 'snowball_proyects.id')->where('dividends.type','4')->where('dividends.userId', Auth::user()->id)->get(); 
         $dividendsFibras = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')->where('dividends.type','3')->where('dividends.userId', Auth::user()->id)->get(); 
-        $dividendsStocks = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')->where('dividends.type','1')->where('dividends.userId', Auth::user()->id)->get(); 
+        $dividendsstocks = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')->where('dividends.type','1')->where('dividends.userId', Auth::user()->id)->get(); 
         $dividendAll = $dividendsSnowball;
-        $dividendAll = $dividendsSnowball->toBase()->merge($dividendsFibras)->toBase()->merge($dividendsStocks);
+        $dividendAll = $dividendsSnowball->toBase()->merge($dividendsFibras)->toBase()->merge($dividendsstocks);
 
         //Grafico
         $DividendGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount FROM dividends
@@ -64,23 +64,23 @@ class DividendsController extends Controller
     public function add()
     {
         date_default_timezone_set('America/Monterrey');
-        $fibras = Stock::join('Users_Stocks','Users_Stocks.StockId', '=', 'Stocks.Id')
-                        ->join('Brokers', 'Brokers.id', '=', 'Users_Stocks.brokerId')
-                        ->join('Currencies', 'Currencies.id', '=', 'Users_Stocks.currencyId')
-                        ->where('Users_Stocks.UserId', '=', Auth::user()->id)
-                        ->where('Stocks.stockTypeId', '=', 3)
-                        ->orderBy('Stocks.name', 'Asc')
-                        ->select('Users_Stocks.*','Users_Stocks.id as iduserstock', 'Brokers.name as broker','Stocks.*','Currencies.symbol as currency')
+        $fibras = Stock::join('users_stocks','users_stocks.stockId', '=', 'stocks.Id')
+                        ->join('brokers', 'brokers.id', '=', 'users_stocks.brokerId')
+                        ->join('currencies', 'currencies.id', '=', 'users_stocks.currencyId')
+                        ->where('users_stocks.UserId', '=', Auth::user()->id)
+                        ->where('stocks.stockTypeId', '=', 3)
+                        ->orderBy('stocks.name', 'Asc')
+                        ->select('users_stocks.*','users_stocks.id as iduserstock', 'brokers.name as broker','stocks.*','currencies.symbol as currency')
                         ->get()
                         ;
 
-        $stocks = Stock::join('Users_Stocks','Users_Stocks.StockId', '=', 'Stocks.Id')
-                        ->join('Brokers', 'Brokers.id', '=', 'Users_Stocks.brokerId')
-                        ->join('Currencies', 'Currencies.id', '=', 'Users_Stocks.currencyId')
-                        ->where('Users_Stocks.UserId', '=', Auth::user()->id)
-                        ->where('Stocks.stockTypeId', '=', 1)
-                        ->orderBy('Stocks.name', 'Asc')
-                        ->select('Users_Stocks.*','Users_Stocks.id as iduserstock', 'Brokers.name as broker','Stocks.*','Currencies.symbol as currency')
+        $stocks = Stock::join('users_stocks','users_stocks.stockId', '=', 'stocks.Id')
+                        ->join('brokers', 'brokers.id', '=', 'users_stocks.brokerId')
+                        ->join('currencies', 'currencies.id', '=', 'users_stocks.currencyId')
+                        ->where('users_stocks.UserId', '=', Auth::user()->id)
+                        ->where('stocks.stockTypeId', '=', 1)
+                        ->orderBy('stocks.name', 'Asc')
+                        ->select('users_stocks.*','users_stocks.id as iduserstock', 'brokers.name as broker','stocks.*','currencies.symbol as currency')
                         ->get()
                         ;
 
