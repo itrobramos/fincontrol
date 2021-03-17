@@ -40,8 +40,8 @@
                                 <div class="card card-primary card-outline" style="height: 400px;">
                                     <div class="card-body box-profile">
                                         <div class="text-center">
-                                            <img class="profile-user-img img-fluid img-circle"
-                                                src="{{ env('DEPLOY_URL') }}/{{ $stock['Imagen'] }}" alt="Logo">
+                                            <img class="img-fluid"
+                                            src="{{ env('DEPLOY_URL') }}/{{ $stock['Imagen'] }}" style="height: 60px;" alt="Logo">
                                         </div>
                                         <h4 class="profile-username text-center">{{ $stock['Nombre'] }}</h4>
                                         <br>
@@ -67,31 +67,7 @@
                             </div>
                         @endforeach
 
-{{--                                
-                        <td style="vertical-align: middle; text-align:center;"><img style="width:60px;"
-                                src="{{ env('DEPLOY_URL') }}/{{ $stock->imageUrl }}"></td>
-                        <td style="vertical-align: middle; text-align:center;">{{ $stock->symbol }}</td>
-                        <td style="vertical-align: middle; text-align:center;">{{ $stock->name }}</td>
-                        <td style="vertical-align: middle; text-align:center;">{{ $stock->quantity }}
-                        </td>
-                        <td style="vertical-align: middle; text-align:center;">$
-                            {{ $stock->averagePrice }}</td>
-                        <td style="vertical-align: middle; text-align:center;">$
-                            {{ $stock->averagePrice * $stock->quantity }}</td>
-                        <td style="vertical-align: middle; text-align:center;">{{ $stock->currency }}
-                        </td>
-                        <td style="vertical-align: middle; text-align:center;">{{ $stock->broker }}
-                        </td>
-                        <td style="vertical-align: middle; text-align:center;"></td>
-                        <td style="vertical-align: middle; text-align:center;"></td>
-                        <td style="vertical-align: middle; text-align:center;"></td>
-                        <td style="vertical-align: middle; text-align:center;"></td>
-                        <td style="vertical-align: middle; text-align:center;">
-                            <a href="{{ url('fibras/' . $stock->iduserstock . '/edit') }}"
-                                class="btn btn-app">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                        </td> --}}
+
 
                     </div>
                 </div>

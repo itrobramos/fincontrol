@@ -40,8 +40,8 @@
                                 <div class="card card-primary card-outline" style="height: 400px;">
                                     <div class="card-body box-profile">
                                         <div class="text-center">
-                                            <img class="profile-user-img img-fluid img-circle"
-                                                src="{{ env('DEPLOY_URL') }}/{{ $stock['Imagen'] }}" alt="Logo">
+                                            <img class="img-fluid"
+                                                src="{{ env('DEPLOY_URL') }}/{{ $stock['Imagen'] }}" style="height: 60px;" alt="Logo">
                                         </div>
                                         <h4 class="profile-username text-center">{{ $stock['Nombre'] }}</h4>
                                         <br>
