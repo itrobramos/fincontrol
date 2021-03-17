@@ -38,8 +38,9 @@ class HomeController extends Controller
         $myStocks = Stock::join('users_stocks','users_stocks.stockId', '=', 'stocks.Id')
                             ->join('brokers', 'brokers.id', '=', 'users_stocks.brokerId')
                             ->join('currencies', 'currencies.id', '=', 'users_stocks.currencyId')
+                            ->join('stock_types', 'stock_types.id', '=', 'stocks.stockTypeId')
                             ->where('users_stocks.userId', '=', Auth::user()->id)
-                            ->select('users_stocks.*', 'brokers.name as broker','stocks.*','currencies.symbol as currency')
+                            ->select('users_stocks.*', 'brokers.name as broker','stocks.*','currencies.symbol as currency','stock_types.name as type','stock_types.color')
                             ->get();
 
         $exchange = Exchange::where('date', DB::raw("(select max(`date`) from exchanges)"))
@@ -96,15 +97,63 @@ class HomeController extends Controller
                 $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
         } 
 
-        $InversionesBolsa = DB::select("SELECT st.name, color, sum(us.quantity * us.averagePrice) amount
-                                FROM users_stocks us INNER JOIN stocks s ON us.stockId = s.id
-                                                    INNER JOIN stock_types st on st.id = s.stockTypeId
-                                WHERE userId = ". Auth::user()->id .
-                                " GROUP BY st.name, color");
+        $VariableTotalFibra = 0;
+        $VariableTotalAcciones = 0;
+        $VariableTotalETF = 0;
+        $VariableTotalCriptos = 0;
+        $colorFibra = "";
+        $colorAcciones = "";
+        $colorETF = "";
+        $colorCripto = "";
 
-        foreach($InversionesBolsa as $investment){
-                $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
-        } 
+        foreach($myStocks as $stock){
+            if($stock->type == "Fibra"){
+                $colorFibra = $stock->color;
+                if($stock->currency == "MXN")
+                    $VariableTotalFibra = $VariableTotalFibra + $stock->quantity * $stock->averagePrice;
+                else if($stock->currency == "USD")
+                    $VariableTotalFibra = $VariableTotalFibra + $stock->quantity * $stock->averagePrice * $exchange[0]['price'];
+                else if($stock->currency == "EUR")
+                    $VariableTotalFibra = $VariableTotalFibra + $stock->quantity * $stock->averagePrice * $exchange[1]['price']; 
+            }
+            else if($stock->type == "Acción"){
+                $colorAcciones = $stock->color;
+                if($stock->currency == "MXN")
+                    $VariableTotalAcciones = $VariableTotalAcciones + $stock->quantity * $stock->averagePrice;
+                else if($stock->currency == "USD")
+                    $VariableTotalAcciones = $VariableTotalAcciones + $stock->quantity * $stock->averagePrice * $exchange[0]['price'];
+                else if($stock->currency == "EUR")
+                    $VariableTotalAcciones = $VariableTotalAcciones + $stock->quantity * $stock->averagePrice * $exchange[1]['price']; 
+            }
+            else if($stock->type == "ETF"){
+                $colorETF = $stock->color;
+                if($stock->currency == "MXN")
+                    $VariableTotalETF = $VariableTotalETF + $stock->quantity * $stock->averagePrice;
+                else if($stock->currency == "USD")
+                    $VariableTotalETF = $VariableTotalETF + $stock->quantity * $stock->averagePrice * $exchange[0]['price'];
+                else if($stock->currency == "EUR")
+                    $VariableTotalETF = $VariableTotalETF + $stock->quantity * $stock->averagePrice * $exchange[1]['price']; 
+            }
+            else if($stock->type == "Cripto"){
+                $colorCripto = $stock->color;
+                if($stock->currency == "MXN")
+                    $VariableTotalCriptos = $VariableTotalCriptos + $stock->quantity * $stock->averagePrice;
+                else if($stock->currency == "USD")
+                    $VariableTotalCriptos = $VariableTotalCriptos + $stock->quantity * $stock->averagePrice * $exchange[0]['price'];
+                else if($stock->currency == "EUR")
+                    $VariableTotalCriptos = $VariableTotalCriptos + $stock->quantity * $stock->averagePrice * $exchange[1]['price']; 
+            }
+        }
+
+        if($VariableTotalFibra> 0)
+            $Portafolio[] = ['Fibras',  Round($VariableTotalFibra,2), $colorFibra];
+        if($VariableTotalCriptos> 0)
+            $Portafolio[] = ['Criptos',  Round($VariableTotalCriptos,2), $colorCripto];
+        if($VariableTotalETF> 0)
+            $Portafolio[] = ['ETF',  Round($VariableTotalETF,2), $colorETF];
+        if($VariableTotalAcciones> 0)
+            $Portafolio[] = ['Acciones',  Round($VariableTotalAcciones,2), $colorAcciones];
+            
         
         $data["Portafolio"] = $Portafolio;
 

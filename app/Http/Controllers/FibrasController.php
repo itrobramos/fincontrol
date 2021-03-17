@@ -39,6 +39,7 @@ class FibrasController extends Controller
                             ->join('currencies', 'currencies.id', '=', 'users_stocks.currencyId')
                             ->where('users_stocks.userId', '=', Auth::user()->id)
                             ->where('stocks.stockTypeId', '=', 3)
+                            ->where('users_stocks.quantity', '>', 0)
                             ->select('users_stocks.*','users_stocks.id as iduserstock', 'brokers.name as broker','stocks.*','currencies.symbol as currency')
                             ->get()
                             ;

@@ -42,6 +42,7 @@ class StocksController extends Controller
                             ->where('users_stocks.quantity', '>', 0)
 
                             ->select('users_stocks.*','users_stocks.id as iduserstock', 'brokers.name as broker','stocks.*','currencies.symbol as currency')
+                            ->orderBy('stocks.name')
                             ->get()
                             ;
 
