@@ -194,7 +194,7 @@ class FibrasController extends Controller
             if($file=$request->file('image')){
                 $name=$file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension(); // getting image extension
-                $filename = 'public/uploads/images/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
+                $filename = 'uploads/images/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
                 $file->move('public/uploads/images/', $filename);
                 
                 $stock->imageUrl = $filename;
@@ -214,7 +214,7 @@ class FibrasController extends Controller
             if($file=$request->file('image')){
                 $name=$file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension(); // getting image extension
-                $filename = 'public/uploads/images/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
+                $filename = 'uploads/images/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
                 $file->move('public/uploads/images/', $filename);
                 
                 $StockDB->imageUrl = $filename;

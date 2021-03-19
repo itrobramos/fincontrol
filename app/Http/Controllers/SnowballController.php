@@ -64,7 +64,7 @@ class SnowballController extends Controller
         if($file=$request->file('pdf')){
             $name=$file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = 'public/uploads/pdf/snowball/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
+            $filename = 'uploads/pdf/snowball/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
             $file->move('public/uploads/pdf/snowball/', $filename);
             $SnowballODI->pdfURL = $filename;            
         }
@@ -112,7 +112,7 @@ class SnowballController extends Controller
         if($file=$request->file('image')){
             $name=$file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = 'public/uploads/images/snowball/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
+            $filename = 'uploads/images/snowball/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
             $file->move('public/uploads/images/snowball/', $filename);
             $SnowballProject->imageUrl = $filename;            
         }

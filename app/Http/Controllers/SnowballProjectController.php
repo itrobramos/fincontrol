@@ -55,7 +55,7 @@ class SnowballProjectController extends Controller
         if($file=$request->file('image')){
             $name=$file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = 'public/uploads/images/snowball/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
+            $filename = 'uploads/images/snowball/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
             $file->move('public/uploads/images/snowball/', $filename);
             $SnowballProject->imageUrl = $filename;            
         }
@@ -85,7 +85,7 @@ class SnowballProjectController extends Controller
         if($file=$request->file('image')){
             $name=$file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = 'public/uploads/images/snowball/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
+            $filename = 'uploads/images/snowball/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
             $file->move('public/uploads/images/snowball/', $filename);
             $SnowballProject->imageUrl = $filename;            
         }
