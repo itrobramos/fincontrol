@@ -158,7 +158,7 @@ class HomeController extends Controller
         $data["Portafolio"] = $Portafolio;
 
         //PLAZOS POR VENCER
-        $RentFixedInvestments = FixedRentInvestments::where('userId', Auth::user()->id)->where('endDate','<=', date('Y-m-d', strtotime("+30 days")))->orderBy('endDate')->get()->take(5);
+        $RentFixedInvestments = FixedRentInvestments::where('userId', Auth::user()->id)->where('status', 1)->where('endDate','<=', date('Y-m-d', strtotime("+30 days")))->orderBy('endDate')->get()->take(5);
         $data["RentFixedInvestments"] = $RentFixedInvestments;
 
         //Gráfico de dividendos

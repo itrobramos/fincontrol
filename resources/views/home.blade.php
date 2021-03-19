@@ -131,7 +131,6 @@
                                         <tr>
                                             <th>Descripción</th>
                                             <th>Progress</th>
-                                            <th style="width: 40px">Label</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -140,16 +139,23 @@
                                             <tr>
                                                 <td>{{ $inv->FixedRentPlatform->name }} - ($ {{ $inv->amount }}) -
                                                     {{ date('M', strtotime($inv->endDate)) }}
-                                                    {{ date('d', strtotime($inv->endDate)) }}</td>
-                                                <td>
-                                                    <div class="progress progress-xs">
-                                                        <div class="progress-bar progress-bar-danger"
-                                                            style="width:  {{ round((round((time() - strtotime($inv->initialDate)) / (60 * 60 * 24)) / $inv->term) * 100, 2) }}%">
-                                                        </div>
-                                                    </div>
+                                                    {{ date('d', strtotime($inv->endDate)) }}
                                                 </td>
-                                                <td><span class="badge bg-danger">
-                                                        {{ round((round((time() - strtotime($inv->initialDate)) / (60 * 60 * 24)) / $inv->term) * 100, 2) }}%</span>
+                                                <td>
+                                                    @if( round(round((time() - strtotime($inv->initialDate)) / (60 * 60 * 24)) / $inv->term * 100,2) >= 100)
+                                                        <span class="badge badge-success">Finalizado</span>
+                                                        <a class="btn badge badge-warning" href="{{url('rentafija/reinvest')}}/{{$inv->id}}">
+                                                            <i class="nav-icon fas fa-calendar-alt"></i> Reinvertir
+                                                        </a>
+                                                        <a class="btn badge badge-warning" href="{{url('rentafija/close')}}/{{$inv->id}}">
+                                                            <i class="nav-icon fas fa-hand-holding-usd"></i> Liquidar
+                                                        </a>
+                                                    @else
+                                                        {{ round(round((time() - strtotime($inv->initialDate)) / (60 * 60 * 24)) / $inv->term * 100,2) }}%
+                                                        <div class="progress">
+                                                            <div class="progress-bar" style="width: {{ round(round((time() - strtotime($inv->initialDate)) / (60 * 60 * 24)) / $inv->term * 100,2) }}%"></div>
+                                                        </div>   
+                                                    @endif  
                                                 </td>
                                             </tr>
                                         @endforeach
