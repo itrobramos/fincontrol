@@ -64,6 +64,15 @@
                                 <input type='date' name="transactionDate" id="fecha" class='form-control'>
                             </div>
 
+                            <div class="form-group">
+                                <label for="Retirar a">Plataforma a Transferir:</label>
+                                <select class="form-control" name="account">
+                                        <option value="0">Ninguna</option>
+                                    @foreach($accountsList as $account)
+                                        <option value="{{$account->accountId}}">{{$account->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             <div class="form-group">
                                 <label for="Imagen">Imagen</label>

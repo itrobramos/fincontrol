@@ -53,7 +53,8 @@
                 <br>
 
                 <div class="row d-flex flex-row-reverse margin">
-                    <a href="{{url('accounts/' . $account->accountId . '/register')}}"><button type="button" class="btn btn-success">Registrar</button></a>
+                    <a href="{{url('accounts/' . $account->accountId . '/register')}}"><button type="button" class="btn btn-success">Transferir</button></a>
+
                 </div>
 
                 <br>

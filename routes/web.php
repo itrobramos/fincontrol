@@ -66,8 +66,12 @@ Route::get('/rentafija', 'App\Http\Controllers\RentaFijaController@index')->name
 Route::get('/rentafija/{id}', "App\Http\Controllers\RentaFijaController@show");
 Route::get('/rentafija/{id}/add', "App\Http\Controllers\RentaFijaController@add");
 Route::post('/rentafija', 'App\Http\Controllers\RentaFijaController@save');
+Route::get('/rentafija/reinvest/{id}', 'App\Http\Controllers\RentaFijaController@reinvest')->name('rentafija/reinvest');
+Route::get('/rentafija/close/{id}', 'App\Http\Controllers\RentaFijaController@close')->name('rentafija/close');
+Route::post('/rentafija/close', 'App\Http\Controllers\RentaFijaController@saveclose');
 
 Route::get('/cryptos', 'App\Http\Controllers\CryptosController@index')->name('cryptos');
+
 
 Route::get('/accounts', 'App\Http\Controllers\AccountsController@index')->name('accounts');
 Route::get('/accounts/configure', 'App\Http\Controllers\AccountsController@configure')->name('accounts/configure');

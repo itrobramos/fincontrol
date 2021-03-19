@@ -66,7 +66,7 @@ class HomeController extends Controller
                                 WHERE o.userId = ". Auth::user()->id );
 
         $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment;
-        $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->sum('amount');
+        $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->where('status',1)->sum('amount');
         $EfectivoTotalAccount = UserAccount::where('userId', Auth::user()->id)->sum('amount');
 
         $data["VariableTotal"] = round($VariableTotalAccount,2);
@@ -78,7 +78,7 @@ class HomeController extends Controller
         ///PORTAFOLIO
         $Portafolio = [];
     
-        if($amountOdis != 0)
+        if($amountOdis > 0)
             $Portafolio[] = ["Snowball",  $amountOdis[0]->investment, '#1663FD'];
     
         foreach(UserAccount::where('userId', Auth::user()->id)->where('active', true)->get() as $useraccount){
@@ -89,7 +89,7 @@ class HomeController extends Controller
         $InversionesRentaFija = DB::select("SELECT name, color, sum(amount) amount
                                             FROM fixed_rent_investments i
                                             INNER JOIN fixed_rent_platforms p on i.fixed_rent_platformsId = p.id 
-                                            WHERE i.userId = ". Auth::user()->id . 
+                                            WHERE i.status = 1 AND i.userId = ". Auth::user()->id . 
                                             " GROUP BY name, color");
 
         foreach($InversionesRentaFija as $investment){

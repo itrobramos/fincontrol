@@ -43,6 +43,10 @@ class AccountsController extends Controller
         date_default_timezone_set('America/Monterrey');
         $account = Account::find($id);
         $data["account"] = $account;
+
+        $accountsList = Account::join('users_accounts', 'users_accounts.accountId', '=', 'accounts.id')->where('active',1)->where('users_accounts.userId', Auth::user()->id)->orderBy('name','asc')->get();
+        $data['accountsList'] = $accountsList;
+
         return view('accounts.register', $data);
     }
 
@@ -71,6 +75,31 @@ class AccountsController extends Controller
         }
         else{
             $Movement->resultAmount = $UserAccountDB->amount - $request->amount;
+        }
+
+        if($request->account > 0){
+             //Se actualiza el monto de la cuenta
+            $UserAccountDB2 = UserAccount::where('userId', Auth::user()->id)->where('accountId', $request->account)->first();
+            
+            if($request->type == 1){
+                $UserAccountDB2->amount =  $UserAccountDB2->amount - $request->amount;
+            }
+            else{
+                $UserAccountDB2->amount =  $UserAccountDB2->amount + $request->amount;
+            }
+
+            $UserAccountDB2->save();
+
+            //Se crea el moviemiento para bitacora
+            $movement2 = new Movement();
+            $movement2->userId = Auth::user()->id;
+            $movement2->accountId = $request->account;
+            $movement2->type = 1;
+            $movement2->amount = $request->amount;
+            $movement2->transactionDate = date("Y-m-d");
+            $movement2->concept = "Transferencia de " . $UserAccountDB2->Account->name;
+            $movement2->resultAmount = $movement2->resultAmount + $request->amount;
+            $movement2->save();        
         }
         
         $Movement->save();
