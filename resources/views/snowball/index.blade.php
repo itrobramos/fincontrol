@@ -39,11 +39,34 @@
 
                         <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
                             <div class="card card-primary card-outline" style="height: 350px;">
-                              <div class="card-body box-profile">
-                                <div class="text-center">
-                                  <img class="profile-user-img img-fluid img-circle" src="{{env('DEPLOY_URL')}}/{{$odi->imageUrl}}" alt="Logo">
+                                <button type="button" class="btn btn-default btn-block  dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" style="">
+                                    
+                                        <form method='post' action="{{ url('/snowball/' . $odi->id) }}">
+                                            {{ csrf_field()}}
+                                            {{ method_field('DELETE')}}
+
+                                            <button type="submit" class="btn btn-block" onclick="return confirm('¿Está seguro?');">
+                                                <a class="dropdown-item"> 
+                                                    <span class="btn-inner-icon">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </span> Borrar
+                                                </a>
+                                            </button>
+
+                                            
+                                        </form>
+                                    </a>
+
                                 </div>
-                                <h3 class="profile-username text-center">{{$odi->Name}}</h3>
+                                
+                                <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img class="img-fluid"
+                                    src="{{ env('DEPLOY_URL') }}/{{ $odi->imageUrl }}" style="height: 60px;" alt="Logo">
+                                </div>
+                                <h4 class="profile-username text-center" style="font-size:18px;">{{ $odi->Name }}</h4>
                                 <ul class="list-group list-group-unbordered mb-3">
                                   <li class="list-group-item">
                                     <b>Acciones</b> <a class="float-right">{{$odi->quantity}}</a>

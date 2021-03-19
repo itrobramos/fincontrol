@@ -57,6 +57,8 @@ Route::get('/snowball', 'App\Http\Controllers\SnowballController@index')->name('
 Route::get('/snowball/add', 'App\Http\Controllers\SnowballController@add')->name('snowball/add');
 Route::post('/snowball', 'App\Http\Controllers\SnowballController@save');
 Route::get('/snowball/{id}', "App\Http\Controllers\SnowballController@show");
+Route::delete('/snowball/{id}', 'App\Http\Controllers\SnowballController@destroy');
+
 
 Route::get('/dividends', 'App\Http\Controllers\DividendsController@index')->name('dividends');
 Route::get('/dividends/add', 'App\Http\Controllers\DividendsController@add')->name('dividends/add');

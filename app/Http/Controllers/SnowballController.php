@@ -120,4 +120,11 @@ class SnowballController extends Controller
         $SnowballProject->save();
         return redirect('/snowballprojects');
     }
+
+    public function destroy($id)
+    {
+        SnowballODI::destroy($id);
+        return redirect('/snowball')->with('Message', 'ODI(s) eliminada(s) correctamente');
+
+    }
 }
