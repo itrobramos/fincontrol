@@ -41,7 +41,7 @@
 
                             <div class="form-group">
                                 <label for="Tipo">Tipo</label>
-                                <select class="form-control" name="type">
+                                <select class="form-control" name="type" id="cmbTipo">
                                     <option value="1">Ingreso</option>
                                     <option value="2">Egreso</option>
                                 </select>
@@ -64,7 +64,7 @@
                                 <input type='date' name="transactionDate" id="fecha" class='form-control'>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" style="display: none;" id="plataformaTransferir">
                                 <label for="Retirar a">Plataforma a Transferir:</label>
                                 <select class="form-control" name="account">
                                         <option value="0">Ninguna</option>
@@ -103,6 +103,15 @@
     <script>
         $(document).ready(function() {
             $('#stocktable').DataTable();
+        });
+
+        $("#cmbTipo").change(function(){
+            var selectedValue = $("#cmbTipo").val()
+            if(selectedValue == 2)
+                $("#plataformaTransferir").fadeIn("slow");
+            else
+                $("#plataformaTransferir").fadeOut("slow");
+                        
         });
 
     </script>
