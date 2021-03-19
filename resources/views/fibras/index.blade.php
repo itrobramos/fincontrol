@@ -75,7 +75,7 @@
                                         <br>
                                         <ul class="list-group list-group-unbordered mb-3">
                                             <li class="list-group-item">
-                                                <b>Acciones</b> <a class="float-right">{{ $stock['Acciones'] }}</a>
+                                                <b>Acciones</b> <a class="float-right">{{  floatval($stock['Acciones']) }}</a>
                                             </li>
                                             <li class="list-group-item">
                                                 <b>Monto Invertido</b> <a class="float-right">

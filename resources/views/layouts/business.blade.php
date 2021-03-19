@@ -49,8 +49,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{url('home')}}" class="brand-link">
-      <img src="{{env('DEPLOY_URL')}}/dist/img/AdminLTELogo.png" alt="admin" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
+      <img src="{{env('DEPLOY_URL')}}/favicon-32x32.png" alt="admin" class="brand-image">
       <span class="brand-text font-weight-light">FinControl</span>
     </a>
 

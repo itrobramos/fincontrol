@@ -54,7 +54,6 @@
                             <div class="small-box bg-success">
                             <div class="inner">
                                 <h3><sup style="font-size: 20px">$</sup>{{$odi->investment}}</h3>
-                
                                 <p>Inversión</p>
                             </div>
                             <div class="icon">
@@ -114,7 +113,7 @@
                                                     <th>Fecha</th>
                                                     <th>Cantidad</th>
                                                     <th>Total</th>
-                                                    <th style="width: 40px">Documento</th>
+                                                    <th></th>
                                                   </tr>
                                                 </thead>
                                                 <tbody>
