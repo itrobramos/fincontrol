@@ -84,9 +84,12 @@ Route::get('/accounts/{id}/edit', "App\Http\Controllers\AccountsController@edit"
 Route::post('/accounts', 'App\Http\Controllers\AccountsController@save');
 Route::patch('/accounts/{id}','App\Http\Controllers\AccountsController@update');
 Route::get('/accounts/{id}', "App\Http\Controllers\AccountsController@show");
-
 Route::get('/accounts/{id}/register', "App\Http\Controllers\AccountsController@register");
 Route::post('/accounts/register', 'App\Http\Controllers\AccountsController@savemovement');
+
+Route::get('/profile', 'App\Http\Controllers\ProfileController@index')->name('profile');
+Route::patch('/profile/','App\Http\Controllers\ProfileController@update');
+
 
 Auth::routes();
 
