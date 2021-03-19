@@ -90,6 +90,11 @@ Route::post('/accounts/register', 'App\Http\Controllers\AccountsController@savem
 Route::get('/profile', 'App\Http\Controllers\ProfileController@index')->name('profile');
 Route::patch('/profile/','App\Http\Controllers\ProfileController@update');
 
+Route::get('/infoRentaFija', 'App\Http\Controllers\InformationController@rentaFija')->name('info/rentaFija');
+Route::get('/infoRentaVariable', 'App\Http\Controllers\InformationController@rentaVariable')->name('info/rentaVariable');
+Route::get('/infoEfectivo', 'App\Http\Controllers\InformationController@efectivo')->name('info/Efectivo');
+Route::get('/infoPortafolio', 'App\Http\Controllers\InformationController@portafolio')->name('info/portafolio');
+
 
 Auth::routes();
 
