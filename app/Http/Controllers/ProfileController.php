@@ -41,7 +41,7 @@ class ProfileController extends Controller
 
         if($file=$request->file('image')){
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = 'public/uploads/userimages/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
+            $filename = 'uploads/userimages/' . strtolower(str_replace($request->symbol," ","")) . time() . '.' . strtolower($extension);
             $file->move('public/uploads/userimages/', $filename);
             $user->imageUrl = $filename;
         }
