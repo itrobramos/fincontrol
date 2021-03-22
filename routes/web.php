@@ -71,6 +71,8 @@ Route::post('/rentafija', 'App\Http\Controllers\RentaFijaController@save');
 Route::get('/rentafija/reinvest/{id}', 'App\Http\Controllers\RentaFijaController@reinvest')->name('rentafija/reinvest');
 Route::get('/rentafija/close/{id}', 'App\Http\Controllers\RentaFijaController@close')->name('rentafija/close');
 Route::post('/rentafija/close', 'App\Http\Controllers\RentaFijaController@saveclose');
+Route::get('/rentafija/details/{id}', "App\Http\Controllers\RentaFijaController@details");
+
 
 Route::get('/cryptos', 'App\Http\Controllers\CryptosController@index')->name('cryptos');
 

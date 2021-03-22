@@ -81,6 +81,70 @@ class RentaFijaController extends Controller
         return view('rentafija.close', $data);
     }
 
+
+    public function details($id)
+    {
+        date_default_timezone_set('America/Monterrey');
+        $Investment = FixedRentInvestments::find($id);
+
+        $Paids = [];
+
+        
+        if($Investment->daysCount > 0){
+
+            $date1  = $Investment->initialDate;
+            $date2  = $Investment->endDate;        
+            $time   = strtotime($date1);
+            $last   = date('Y-m', strtotime($date2));
+            $cont   = 0;
+            $months = $Investment->term / 30;
+            $valuePerDay = $Investment->totalEarnings / 360;
+            $lastPayDate = $date1;
+
+            do {
+                $month = date('Y-m', $time);
+                print_r($month . "<br>");
+                $payDate = date('Y-m-d', $time);
+
+
+                if($payDate > $date1){
+
+                    if(date('D', strtotime($payDate)) == 'Sat')
+                        $payDate = strtotime('+2 days', strtotime($payDate));
+                    else if(date('D', strtotime($payDate)) == 'Sun')
+                        $payDate = strtotime('+1 days', strtotime($payDate));
+                    else
+                        $payDate = strtotime($payDate);
+
+                    
+                    $diff = abs($payDate - strtotime($lastPayDate));
+                    $days = round(floor($diff / (60*60*24)),0);
+
+                    
+                    $Paids[] = [
+                        'payDay' => date('Y-m-d',$payDate),
+                        'number' => $cont,
+                        'amount' => Round($days * $valuePerDay,2), 
+                        'percent' => Round($cont / $months * 100, 2),
+                    ];  
+                    
+                    $lastPayDate = date('Y-m-d',$payDate);
+                }
+            
+                $time = strtotime('+ 1day', $time);
+                $cont++;
+            } while ($month != $last);
+            
+            
+        }
+        dd($Paids);
+
+
+        $data["paids"] = $Paids;
+        $data['investment'] = $Investment;
+        return view('rentafija.details', $data);
+    }
+
     public function saveclose(Request $request)
     {
         date_default_timezone_set('America/Monterrey');

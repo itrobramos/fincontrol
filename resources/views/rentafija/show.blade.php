@@ -90,6 +90,7 @@
                             <th>Tasa</th>
                             <th>Inversión</th>
                             <th>Avance</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -115,6 +116,11 @@
                                             <div class="progress-bar" style="width: {{ round(round((time() - strtotime($inv->initialDate)) / (60 * 60 * 24)) / $inv->term * 100,2) }}%"></div>
                                         </div>   
                                     @endif
+                                </td>
+                                <td>
+                                    <a class="btn badge badge-success" href="{{url('rentafija/details')}}/{{$inv->id}}">
+                                        <i class="nav-icon fa fa-calendar"></i> Calendario  
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach
