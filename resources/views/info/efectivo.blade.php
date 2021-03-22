@@ -30,7 +30,7 @@
 
                       <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Dividendos</h3>
+                            <h3 class="card-title">Montos graficado</h3>
                         </div>
                         <div class="card-body" style="display: block;">
                             <div class="chart">
@@ -54,7 +54,6 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    <i class="fas fa-chart-pie mr-1"></i>
                                     Diversificación
                                 </h3>
                             </div><!-- /.card-header -->
@@ -75,8 +74,7 @@
                       <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <i class="fas fa-chart-pie mr-1"></i>
-                                Diversificación
+                                Concentrado
                             </h3>
                         </div><!-- /.card-header -->
                         <div class="card-body">
