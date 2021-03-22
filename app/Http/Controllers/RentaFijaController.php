@@ -100,14 +100,15 @@ class RentaFijaController extends Controller
             $months = $Investment->term / 30;
             $valuePerDay = $Investment->totalEarnings / 360;
             $lastPayDate = $date1;
+            $diasasumar  = 0;
 
             do {
                 $month = date('Y-m', $time);
-                print_r($month . "<br>");
                 $payDate = date('Y-m-d', $time);
 
 
                 if($payDate > $date1){
+
 
                     if(date('D', strtotime($payDate)) == 'Sat')
                         $payDate = strtotime('+2 days', strtotime($payDate));
@@ -129,16 +130,29 @@ class RentaFijaController extends Controller
                     ];  
                     
                     $lastPayDate = date('Y-m-d',$payDate);
+                
                 }
-            
-                $time = strtotime('+ 1day', $time);
+
+ 
+                if(date('m', $time) == 1 && (date('d',$time) >= 28) ){
+                    $diasasumar = date('t',$time) - date('d', $time) + date('t',strtotime(date('Y',$time).'-02'));
+                    $time = strtotime('+' . $diasasumar . ' days', $time);
+                }
+                else{
+                    if($diasasumar > 0){
+                        $diasasumar = date('t',$time) -1 - date('d', $time) + date('t',strtotime(date('Y',$time).'-03'));;
+                        $time = strtotime('+' . $diasasumar . ' days', $time);
+                        $diasasumar = 0;
+                    }
+                    else{
+                        $time = strtotime('+ 1month', $time);
+                    }
+                }
                 $cont++;
             } while ($month != $last);
             
             
         }
-        dd($Paids);
-
 
         $data["paids"] = $Paids;
         $data['investment'] = $Investment;
