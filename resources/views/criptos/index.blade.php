@@ -37,7 +37,7 @@
                         @foreach ($myStocks as $stock)
 
                             <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
-                                <div class="card card-primary card-outline" style="height: 400px;"> 
+                                <div class="card card-primary card-outline" style="height: 350px;"> 
                                     <button type="button" class="btn btn-default btn-block  dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
                                     </button>
                                     <div class="dropdown-menu" style="">
@@ -87,9 +87,7 @@
                                                     {{ $stock['Porcentaje'] }} %</a>
                                             </li>
                                         </ul>
-                                        <br>
                                     </div>
-                                    <a href="criptos/{{ $stock['Id'] }}" class="btn btn-primary btn-block sticky-top"><b>Ver más</b></a>
                                 </div>
                             </div>
                         @endforeach

@@ -26,6 +26,7 @@ Route::post('/stocks', 'App\Http\Controllers\StocksController@save');
 Route::patch('/stocks/{id}','App\Http\Controllers\StocksController@update');
 Route::patch('/stockssimple/{id}','App\Http\Controllers\StocksController@updatesimple');
 Route::delete('/stocks/{id}', 'App\Http\Controllers\StocksController@destroy');
+Route::get('/stocks/{id}', "App\Http\Controllers\StocksController@show");
 
 Route::get('/fibras', 'App\Http\Controllers\FibrasController@index')->name('fibras');
 Route::get('/fibras/add', 'App\Http\Controllers\FibrasController@add')->name('fibras/add');
@@ -35,6 +36,7 @@ Route::post('/fibras', 'App\Http\Controllers\FibrasController@save');
 Route::patch('/fibras/{id}','App\Http\Controllers\FibrasController@update');
 Route::patch('/fibras/{id}','App\Http\Controllers\FibrasController@updatesimple');
 Route::delete('/fibras/{id}', 'App\Http\Controllers\FibrasController@destroy');
+Route::get('/fibras/{id}', "App\Http\Controllers\FibrasController@show");
 
 Route::get('/criptos', 'App\Http\Controllers\CriptosController@index')->name('criptos');
 Route::get('/criptos/add', 'App\Http\Controllers\CriptosController@add')->name('criptos/add');

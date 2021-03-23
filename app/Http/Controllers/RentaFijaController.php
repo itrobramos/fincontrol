@@ -88,7 +88,6 @@ class RentaFijaController extends Controller
         $Investment = FixedRentInvestments::find($id);
 
         $Paids = [];
-
         
         if($Investment->daysCount > 0){
 
@@ -106,9 +105,7 @@ class RentaFijaController extends Controller
                 $month = date('Y-m', $time);
                 $payDate = date('Y-m-d', $time);
 
-
                 if($payDate > $date1){
-
 
                     if(date('D', strtotime($payDate)) == 'Sat')
                         $payDate = strtotime('+2 days', strtotime($payDate));
@@ -117,11 +114,9 @@ class RentaFijaController extends Controller
                     else
                         $payDate = strtotime($payDate);
 
-                    
                     $diff = abs($payDate - strtotime($lastPayDate));
                     $days = round(floor($diff / (60*60*24)),0);
 
-                    
                     $Paids[] = [
                         'payDay' => date('Y-m-d',$payDate),
                         'number' => $cont,
@@ -130,9 +125,7 @@ class RentaFijaController extends Controller
                     ];  
                     
                     $lastPayDate = date('Y-m-d',$payDate);
-                
                 }
-
  
                 if(date('m', $time) == 1 && (date('d',$time) >= 28) ){
                     $diasasumar = date('t',$time) - date('d', $time) + date('t',strtotime(date('Y',$time).'-02'));
@@ -151,6 +144,27 @@ class RentaFijaController extends Controller
                 $cont++;
             } while ($month != $last);
             
+            
+        }
+
+        if($Investment->dayFixed > 0){
+            $date1  = $Investment->initialDate;
+            $time   = strtotime($date1);
+            $valuePerDay = $Investment->totalEarnings / $Investment->dayFixed;
+            $payDate = date('Y-m-d', $time);
+
+            $payDate = strtotime('+ ' . $Investment->dayFixed . ' days', strtotime($payDate));
+
+            $diff = abs($payDate - strtotime($date1));
+            $days = round(floor($diff / (60*60*24)),0);
+
+
+            $Paids[] = [
+                'payDay' => date('Y-m-d',$payDate),
+                'number' => 1,
+                'amount' => Round($days * $valuePerDay,2), 
+                'percent' => Round($days / 28 * 100, 2),
+            ];  
             
         }
 

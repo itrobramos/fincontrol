@@ -6,6 +6,7 @@ use App\View;
 use DB;
 use Auth;
 use App\Models\Broker;
+use App\Models\Dividend;
 use App\Models\Exchange;
 use App\Models\Stock;
 use App\Models\UserStock;
@@ -238,5 +239,27 @@ class FibrasController extends Controller
 
 
         return redirect('/fibras');
+    }
+
+
+    public function show($id){
+
+        $UserStock = UserStock::find($id);
+
+        $dividends = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')
+                    ->join('users_stocks', 'users_stocks.stockId', '=', 'stocks.id')
+                    ->where('dividends.type','3')
+                    ->where('users_stocks.id', $id)
+                    ->where('dividends.userId', Auth::user()->id)
+                    ->get(); 
+
+        $recovery = Round($dividends->sum('amount') / ($UserStock->quantity * $UserStock->averagePrice) * 100,2);
+
+        $data['userstock'] = $UserStock;
+        $data['dividends'] = $dividends;
+        $data['recovery'] = $recovery;
+
+        return view('fibras.show', $data);
+
     }
 }
