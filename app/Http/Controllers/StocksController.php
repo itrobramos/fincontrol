@@ -9,6 +9,7 @@ use App\Models\Broker;
 use App\Models\Dividend;
 use App\Models\Exchange;
 use App\Models\Stock;
+use App\Models\Sector;
 use App\Models\UserStock;
 use Image;
 
@@ -38,11 +39,12 @@ class StocksController extends Controller
         $myStocks = Stock::join('users_stocks','users_stocks.stockId', '=', 'stocks.Id')
                             ->join('brokers', 'brokers.id', '=', 'users_stocks.brokerId')
                             ->join('currencies', 'currencies.id', '=', 'users_stocks.currencyId')
+                            ->leftjoin('sectors', 'sectors.id', '=', 'stocks.sectorId')
                             ->where('users_stocks.UserId', '=', Auth::user()->id)
                             ->where('stocks.stockTypeId', '=', 1)
                             ->where('users_stocks.quantity', '>', 0)
 
-                            ->select('users_stocks.*','users_stocks.id as iduserstock', 'brokers.name as broker','stocks.*','currencies.symbol as currency')
+                            ->select('users_stocks.*','users_stocks.id as iduserstock', 'brokers.name as broker','stocks.*','currencies.symbol as currency', 'sectors.name as sector')
                             ->orderBy('stocks.name')
                             ->get()
                             ;
@@ -75,7 +77,8 @@ class StocksController extends Controller
                         "Acciones" => $stock->quantity,
                         "Inversion" => Round($Inversion,2),
                         "Porcentaje" => Round($Inversion / $montoInversion * 100 ,2),
-                        "Imagen" => $stock->imageUrl
+                        "Imagen" => $stock->imageUrl,
+                        "Sector" => $stock->sector
                         ];
         }
         
@@ -191,6 +194,22 @@ class StocksController extends Controller
            $UserStockDB->currencyId = $request->currency;
            $UserStockDB->brokerId = $request->broker;
 
+           if(isset($request->sector)){
+                $sector = Sector::where('name', $request->sector)->first();
+
+  
+                if($sector!= null){
+                    $stock->sectorId = $sector->id;
+                }
+                else{
+                    $sector = new Sector();
+                    $sector->name = $request->sector;
+                    $sector->save();
+                    $stock->sectorId = $sector->id;
+                }
+                $stock->save();
+           }
+           
            if($request->date != null)
                $UserStockDB->transactionDate = $request->date;
 
@@ -213,6 +232,20 @@ class StocksController extends Controller
             $StockDB->symbol = $request->symbol;
             $StockDB->name = $request->name;
             $StockDB->verified= 0;
+
+            if(isset($request->sector)){
+                $sector = Sector::where('name', $request->sector);
+
+                if($sector != null){
+                    $StockDB->sectorId = $sector->id;
+                }
+                else{
+                    $sector = new Sector();
+                    $sector->name = $request->sector;
+                    $sector->save();
+                    $StockDB->sectorId = $sector->id;
+                }
+            }
 
             if($file=$request->file('image')){
                 $name=$file->getClientOriginalName();

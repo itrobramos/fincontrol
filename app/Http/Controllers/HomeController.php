@@ -165,9 +165,29 @@ class HomeController extends Controller
         $DividendGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount FROM dividends
         WHERE userId = " . Auth::user()->id . " 
         GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
-
         $data["dividendGraph"] = $DividendGraph;
-        
+
+
+        //Grafico de sectores
+        $SectorsGraph = DB::select("SELECT se.name, c.symbol currency, round(SUM(quantity * averagePrice),2) inversion FROM users_stocks us 
+        INNER JOIN stocks s ON us.stockId = s.id
+        INNER JOIN sectors se ON se.id = s.sectorId
+        INNER JOIN currencies c on c.id = us.currencyId
+        WHERE userId = " . Auth::user()->id . " 
+        GROUP BY se.name, c.name");
+
+
+        foreach($SectorsGraph as $stock){
+            if($stock->currency == "MXN")
+                $stock->inversion = $stock->inversion;
+            else if($stock->currency == "USD")
+                $stock->inversion = $stock->inversion * $exchange[0]['price'];
+            else if($stock->currency == "EUR")
+                $stock->inversion = $stock->inversion * $exchange[1]['price']; 
+        }
+
+        $data["sectorsGraph"] = $SectorsGraph;
+
         return view('home', $data);
     }
 }

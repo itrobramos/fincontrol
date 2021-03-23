@@ -37,7 +37,7 @@
                         @foreach ($myStocks as $stock)
 
                             <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
-                                <div class="card card-primary card-outline" style="height: 400px;"> 
+                                <div class="card card-primary card-outline" style="height: 420px;"> 
                                     <button type="button" class="btn btn-default btn-block  dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
                                     </button>
                                     <div class="dropdown-menu" style="">
@@ -85,6 +85,10 @@
                                             <li class="list-group-item">
                                                 <b>Portafolio Acciones</b> <a class="float-right">
                                                     {{ $stock['Porcentaje'] }} %</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <b>Sector</b> <a class="float-right">
+                                                    {{ $stock['Sector'] }} </a>
                                             </li>
                                         </ul>
                                         <br>

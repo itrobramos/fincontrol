@@ -114,6 +114,23 @@
                         </div>
                         <!-- /.card -->
 
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="fas fa-chart-pie mr-1"></i>
+                                    Sectores
+                                </h3>
+                            </div><!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="tab-content p-0">
+                                    <div class="chart tab-pane active" id="sectors-chart"
+                                        style="position: relative; height: 300px;">
+                                        <canvas id="sectors-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                    </div>
+                                </div>
+                            </div><!-- /.card-body -->
+                        </div>
+
 
 
                     </section>
@@ -191,11 +208,12 @@
   <!-- ChartJS -->
   <script src="../dist/Chart.min.js"></script>
     <script>
-      $(function () {
+
+    $(function () {
     
-      var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
-      var pieData        = {
-        labels: [
+        var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
+        var pieData        = {
+            labels: [
             @foreach($Portafolio as $P)
             '{{$P[0]}}',
             @endforeach
@@ -214,49 +232,99 @@
             ],
           }
         ]
-      }
-      var pieOptions = {
+        }
+        var pieOptions = {
         legend: {
-          display: true
+            display: true
         },
         maintainAspectRatio : false,
         responsive : true,
-      }
-      //Create pie or douhnut chart
-      // You can switch between pie and douhnut using the method below.
-      var pieChart = new Chart(pieChartCanvas, {
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartCanvas, {
         type: 'doughnut',
         data: pieData,
         options: pieOptions      
-      });
+        });
     })
+
+
+    $(function () {
+    
+    var pieChartCanvas = $('#sectors-chart-canvas').get(0).getContext('2d')
+    var pieData        = {
+      labels: [
+          @foreach($sectorsGraph as $P)
+          '{{$P->name}}',
+          @endforeach
+      ],
+      datasets: [
+        {
+          data: [
+            @foreach($sectorsGraph as $P)
+            '{{$P->inversion}}',
+            @endforeach
+          ],
+          backgroundColor : [
+            @foreach($sectorsGraph as $P)
+                getRandomColor(),
+            @endforeach
+          ],         
+        }
+      ]
+    }
+    var pieOptions = {
+      legend: {
+        display: true
+      },
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    var pieChart = new Chart(pieChartCanvas, {
+      type: 'doughnut',
+      data: pieData,
+      options: pieOptions      
+    });
+
+    function getRandomColor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+                }
+  })
 
     $(function () {
 
-var areaChartData = {
-  labels  : [
-      @foreach($dividendGraph as $dividend)
-      '{{$dividend->year}}-{{$dividend->month}}',
-      @endforeach
-  ],
-  datasets: [
-    {
-      label               : 'Dividendos por mes',
-      backgroundColor     : 'rgba(60,141,188,0.9)',
-      borderColor         : 'rgba(60,141,188,0.8)',
-      pointRadius          : false,
-      pointColor          : '#3b8bba',
-      pointStrokeColor    : 'rgba(60,141,188,1)',
-      pointHighlightFill  : '#fff',
-      pointHighlightStroke: 'rgba(60,141,188,1)',
-      data                : [
+    var areaChartData = {
+    labels  : [
         @foreach($dividendGraph as $dividend)
-            '{{$dividend->amount}}',
+        '{{$dividend->year}}-{{$dividend->month}}',
         @endforeach
-      ]
+    ],
+    datasets: [
+        {
+        label               : 'Dividendos por mes',
+        backgroundColor     : 'rgba(60,141,188,0.9)',
+        borderColor         : 'rgba(60,141,188,0.8)',
+        pointRadius          : false,
+        pointColor          : '#3b8bba',
+        pointStrokeColor    : 'rgba(60,141,188,1)',
+        pointHighlightFill  : '#fff',
+        pointHighlightStroke: 'rgba(60,141,188,1)',
+        data                : [
+            @foreach($dividendGraph as $dividend)
+                '{{$dividend->amount}}',
+            @endforeach
+        ]
+        }
+    ]
     }
-  ]
-}
 
 var barChartCanvas = $('#barChart').get(0).getContext('2d')
 var barChartData = jQuery.extend(true, {}, areaChartData)

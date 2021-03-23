@@ -59,6 +59,11 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="Sector">Sector</label>
+                                <input type="text" name="sector" class="form-control" value="{{ $stock->Sector ? $stock->Sector->name : '' }}">
+                            </div>
+
+                            <div class="form-group">
                                 <label for="Currency">Moneda</label>
                                 <select class="form-control" name="currency">
                                     <option value="1" @if($stock->currency->Symbol === "MXN") selected @endif>MXN</option>
