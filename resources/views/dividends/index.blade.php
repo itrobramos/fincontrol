@@ -99,8 +99,34 @@
                   </div>
 
 
+                  <!--GRAFICO POR EMPRESA-->
+
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Mejores empresas</h3>
+      
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                      </div>
+                    </div>
+                    <div class="card-body" style="display: block;">
+                      <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                        <canvas id="barChartCompany" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 604px;" width="604" height="250" class="chartjs-render-monitor"></canvas>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+
+
+
                   <br><br>
-                <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+               
+               
+               
+               
+                  <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
                     <div class="row">
                         <div class="col-sm-12">
@@ -113,6 +139,7 @@
                                         <th style="vertical-align: middle; text-align:center;">Nombre</th>
                                         <th style="vertical-align: middle; text-align:center;">Monto</th>
                                         <th style="vertical-align: middle; text-align:center;">Cantidad Acciones</th>
+                                        <th style="vertical-align: middle; text-align:center;">Monto por acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -121,11 +148,11 @@
 
                                         <tr role="row" class="odd">
                                             <td style="width:95px;"><center><img class="img-fluid" src="{{env('DEPLOY_URL')}}/{{$dividend->imageUrl}}" style="display: block; margin-left: auto; margin-right: auto; height:50px;" alt="Logo"></center></td>
-                                            {{-- <td style="vertical-align: middle; text-align:center;"><img style="width:60px;"src="{{$dividend->imageUrl}}"></td>                                         --}}
                                             <td style="vertical-align: middle; text-align:center;">{{$dividend->efectiveDate}}</td>
                                             <td style="vertical-align: middle; text-align:center;">{{$dividend->name}}</td>
                                             <td style="vertical-align: middle; text-align:center;">$ {{$dividend->amount}}</td>
                                             <td style="vertical-align: middle; text-align:center;">{{$dividend->stocksCount}}</td>
+                                            <td style="vertical-align: middle; text-align:center;">$ {{ round($dividend->amount / $dividend->stocksCount, 2)}}</td>                                            
                                         </tr>
 
                                     @endforeach 
@@ -140,7 +167,6 @@
         </div>
 
     </div>
-
 
 
 
@@ -192,11 +218,63 @@
       options: barChartOptions
     })
 
-    
+    //////Grafico de empresas
+
+    var areaChartData = {
+      labels  : [
+          @foreach($dividendCompaniesGraph as $dividend => $amount)
+              @if($indicadores['history'] / 100 < $amount )
+                    '{{$dividend}}  {{round($amount/$indicadores['history']*100,2)}}%',
+              @endif
+          @endforeach
+      ],
+      datasets: [
+        {
+          label               : 'Mejores empresas',
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          borderColor         : 'rgba(60,141,188,0.8)',
+          pointRadius          : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : [
+            @foreach($dividendCompaniesGraph as $dividend => $amount)
+                @if($indicadores['history'] / 100 < $amount )
+                    '{{$amount}}',
+                @endif
+            @endforeach
+          ],
+          backgroundColor : [
+            @foreach($dividendCompaniesGraph as $dividend => $amount)
+            '#7AD293',
+            @endforeach
+          ],
+        }
+      ]
+    }
+
+    var barChartCanvas = $('#barChartCompany').get(0).getContext('2d')
+    var barChartData = jQuery.extend(true, {}, areaChartData)
+    var temp0 = areaChartData.datasets[0]
+    barChartData.datasets[0] = temp0
+
+    var barChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      datasetFill             : false
+    }
+
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar', 
+      data: barChartData,
+      options: barChartOptions
+    })
+
  })
 
  $(document).ready(function() {
-            $('#stocktable').DataTable();
+    $('#stocktable').DataTable();
 });
    
 </script>

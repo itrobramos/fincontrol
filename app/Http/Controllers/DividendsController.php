@@ -10,6 +10,7 @@ use App\Models\Stock;
 use App\Models\UserStock;
 use App\Models\SnowballODI;
 use App\Models\SnowballProject;
+use Ramsey\Collection\Collection;
 
 
 use Illuminate\Http\Request;
@@ -47,16 +48,22 @@ class DividendsController extends Controller
         WHERE userId = " . Auth::user()->id . " 
         GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
 
+        $dividendallcollection = collect($dividendAll)->sortBy('name')->groupBy('name')->map(function ($row) {
+            return $row->sum('amount') ;
+        });
+        
+   
+        $dividendCompaniesGraph = $dividendallcollection;
+
         //Indicadores
         $indicadores['history'] = Dividend::where('dividends.userId', Auth::user()->id)->sum('amount');
         $indicadores['year'] = Dividend::whereYear('efectiveDate', now()->year)->where('dividends.userId', Auth::user()->id)->sum('amount');
         $indicadores['month'] = Dividend::whereYear('efectiveDate', now()->year)->whereMonth('efectiveDate', now()->month)->where('dividends.userId', Auth::user()->id)->sum('amount');
 
-        
-        $data["dividends"] = $dividendAll->sortBy('efectiveDate');
+        $data["dividends"] = $dividendAll->sortByDesc('efectiveDate');
         $data["dividendGraph"] = $DividendGraph;
+        $data["dividendCompaniesGraph"] = $dividendCompaniesGraph;
         $data["indicadores"] = $indicadores;
-
 
         return view('dividends.index', $data);
     }
