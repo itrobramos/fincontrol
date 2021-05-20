@@ -6,16 +6,16 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="{{env('DEPLOY_URL')}}/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- fullCalendar -->
-    <link rel="stylesheet" href="../plugins/fullcalendar/main.min.css">
-    <link rel="stylesheet" href="../plugins/fullcalendar-daygrid/main.min.css">
-    <link rel="stylesheet" href="../plugins/fullcalendar-timegrid/main.min.css">
-    <link rel="stylesheet" href="../plugins/fullcalendar-bootstrap/main.min.css">
+    <link rel="stylesheet" href="{{env('DEPLOY_URL')}}/plugins/fullcalendar/main.min.css">
+    <link rel="stylesheet" href="{{env('DEPLOY_URL')}}/plugins/fullcalendar-daygrid/main.min.css">
+    <link rel="stylesheet" href="{{env('DEPLOY_URL')}}/plugins/fullcalendar-timegrid/main.min.css">
+    <link rel="stylesheet" href="{{env('DEPLOY_URL')}}/plugins/fullcalendar-bootstrap/main.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="{{env('DEPLOY_URL')}}/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -70,20 +70,12 @@
 
 
 
-
-
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1>Calendario de pagos programados</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Calendar</li>
-                        </ol>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -125,12 +117,12 @@
 
     <!-- jQuery -->
     <!-- fullCalendar 2.2.5 -->
-    <script src="../plugins/moment/moment.min.js"></script>
-    <script src="../plugins/fullcalendar/main.min.js"></script>
-    <script src="../plugins/fullcalendar-daygrid/main.min.js"></script>
-    <script src="../plugins/fullcalendar-timegrid/main.min.js"></script>
-    <script src="../plugins/fullcalendar-interaction/main.min.js"></script>
-    <script src="../plugins/fullcalendar-bootstrap/main.min.js"></script>
+    <script src="{{env('DEPLOY_URL')}}/plugins/moment/moment.min.js"></script>
+    <script src="{{env('DEPLOY_URL')}}/plugins/fullcalendar/main.min.js"></script>
+    <script src="{{env('DEPLOY_URL')}}/plugins/fullcalendar-daygrid/main.min.js"></script>
+    <script src="{{env('DEPLOY_URL')}}/plugins/fullcalendar-timegrid/main.min.js"></script>
+    <script src="{{env('DEPLOY_URL')}}/plugins/fullcalendar-interaction/main.min.js"></script>
+    <script src="{{env('DEPLOY_URL')}}/plugins/fullcalendar-bootstrap/main.min.js"></script>
     <!-- Page specific script -->
     <script>
         $(function() {
