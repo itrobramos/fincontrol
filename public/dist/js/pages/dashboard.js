@@ -89,11 +89,11 @@ $(function () {
   })
 
 
-  // The Calender
-  $('#calendar').datetimepicker({
-    format: 'L',
-    inline: true
-  })
+  // // The Calender
+  // $('#calendar').datetimepicker({
+  //   format: 'L',
+  //   inline: true
+  // })
 
   // SLIMSCROLL FOR CHAT WIDGET
   $('#chat-box').overlayScrollbars({

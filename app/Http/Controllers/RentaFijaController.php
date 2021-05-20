@@ -10,6 +10,7 @@ use App\Models\Account;
 use App\Models\UserAccount;
 use App\Models\FixedRentPlatform;
 use App\Models\FixedRentInvestments;
+use App\Models\FixedRentPaid;
 use App\Models\Movement;
 
 class RentaFijaController extends Controller
@@ -33,6 +34,16 @@ class RentaFijaController extends Controller
     {
         $platforms = FixedRentPlatform::all();
         $data["platforms"] = $platforms;
+     
+        $paids = DB::select("SELECT date fecha, color, sum(p.amount) monto
+        FROM fixed_rent_paids p inner join fixed_rent_investments i ON p.fixedRentInvestmentId = i.id
+        inner join fixed_rent_platforms pl ON i.fixed_rent_platformsId = pl.id
+        where month(date) = " . date('m'). "  AND YEAR(date) = " . date('Y'). "
+        AND i.userId = " . Auth::user()->id . " 
+        group by date, color
+        order by date");
+
+        $data['paids'] = $paids;
         return view('rentafija.index', $data);
     }
 
@@ -234,4 +245,127 @@ class RentaFijaController extends Controller
         return redirect('/rentafija/'. $request->platformId);
     }
 
+    public function saveAllPaids(){
+        date_default_timezone_set('America/Monterrey');
+        $Investments = FixedRentInvestments::where('endDate', '>', date('Y-m-d'))->where('id','>',57)->get();
+
+        $Paids = [];
+        
+        foreach($Investments as $Investment)
+        {
+        
+            if($Investment->daysCount > 0){
+    
+                $date1  = $Investment->initialDate;
+                $date2  = $Investment->endDate;        
+                $time   = strtotime($date1);
+                $last   = date('Y-m', strtotime($date2));
+                $cont   = 0;
+                $months = $Investment->term / 30;
+                $valuePerDay = $Investment->totalEarnings / 360;
+                $lastPayDate = $date1;
+                $diasasumar  = 0;
+    
+                do {
+                    $month = date('Y-m', $time);
+                    $payDate = date('Y-m-d', $time);
+    
+                    if($payDate > $date1){
+    
+                        if(date('D', strtotime($payDate)) == 'Sat')
+                            $payDate = strtotime('+2 days', strtotime($payDate));
+                        else if(date('D', strtotime($payDate)) == 'Sun')
+                            $payDate = strtotime('+1 days', strtotime($payDate));
+                        else
+                            $payDate = strtotime($payDate);
+    
+                        $diff = abs($payDate - strtotime($lastPayDate));
+                        $days = round(floor($diff / (60*60*24)),0);
+    
+                        $Paids[] = [
+                            'investmentId' => $Investment->id, 
+                            'payDay' => date('Y-m-d',$payDate),
+                            'number' => $cont,
+                            'amount' => Round($days * $valuePerDay,2), 
+                            'percent' => Round($cont / $months * 100, 2),
+                        ];  
+                        
+                        $lastPayDate = date('Y-m-d',$payDate);
+                    }
+     
+                    if(date('m', $time) == 1 && (date('d',$time) >= 28) ){
+                        $diasasumar = date('t',$time) - date('d', $time) + date('t',strtotime(date('Y',$time).'-02'));
+                        $time = strtotime('+' . $diasasumar . ' days', $time);
+                    }
+                    else{
+                        if($diasasumar > 0){
+                            $diasasumar = date('t',$time) -1 - date('d', $time) + date('t',strtotime(date('Y',$time).'-03'));;
+                            $time = strtotime('+' . $diasasumar . ' days', $time);
+                            $diasasumar = 0;
+                        }
+                        else{
+                            $time = strtotime('+ 1month', $time);
+                        }
+                    }
+                    $cont++;
+                } while ($month != $last);
+                
+                
+            }
+    
+            if($Investment->dayFixed > 0){
+                $date1  = $Investment->initialDate;
+                $time   = strtotime($date1);
+                $valuePerDay = $Investment->totalEarnings / $Investment->dayFixed;
+                $payDate = date('Y-m-d', $time);
+    
+                $payDate = strtotime('+ ' . $Investment->dayFixed . ' days', strtotime($payDate));
+    
+                $diff = abs($payDate - strtotime($date1));
+                $days = round(floor($diff / (60*60*24)),0);
+    
+    
+                $Paids[] = [
+                    'investmentId' => $Investment->id, 
+                    'payDay' => date('Y-m-d',$payDate),
+                    'number' => 1,
+                    'amount' => Round($days * $valuePerDay,2), 
+                    'percent' => Round($days / 28 * 100, 2),
+                ];  
+                
+            }
+    
+        }
+
+
+        foreach($Paids as $Paid){
+
+            
+
+            $FRPaid = new FixedRentPaid();
+            
+            $FRPaid->fixedRentInvestmentId = $Paid['investmentId'];
+            $FRPaid->date = $Paid['payDay'];
+            $FRPaid->number = $Paid['number'];
+            $FRPaid->amount = $Paid['amount'];
+            $FRPaid->percent = $Paid['percent'];
+            $FRPaid->save();
+            
+        }
+    }
+
+    public function calendar(){
+
+        $paids = DB::select("SELECT date fecha, color, sum(p.amount) monto
+                FROM fixed_rent_paids p inner join fixed_rent_investments i ON p.fixedRentInvestmentId = i.id
+                inner join fixed_rent_platforms pl ON i.fixed_rent_platformsId = pl.id
+                where month(date) = " . date('m'). "  AND YEAR(date) = " . date('Y'). "
+                AND i.userId = " . Auth::user()->id . " 
+                group by date, color
+                order by date");
+
+        $data['paids'] = $paids;
+
+        return view('rentafija.calendar',$data);
+    }    
 }
