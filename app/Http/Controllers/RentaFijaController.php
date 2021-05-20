@@ -38,7 +38,7 @@ class RentaFijaController extends Controller
         $paids = DB::select("SELECT date fecha, color, sum(p.amount) monto
         FROM fixed_rent_paids p inner join fixed_rent_investments i ON p.fixedRentInvestmentId = i.id
         inner join fixed_rent_platforms pl ON i.fixed_rent_platformsId = pl.id
-        where month(date) = " . date('m'). "  AND YEAR(date) = " . date('Y'). "
+        where (month(date) = " . date('m'). "  AND YEAR(date) = " . date('Y'). ") OR date <= " . date('Y-m-d') . "
         AND i.userId = " . Auth::user()->id . " 
         group by date, color
         order by date");
