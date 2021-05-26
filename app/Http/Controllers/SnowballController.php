@@ -26,15 +26,13 @@ class SnowballController extends Controller
         $odis = DB::select("SELECT p.id, p.name Name, p.imageUrl, SUM(quantity) quantity, o.ODIPrice * SUM(quantity) investment
         FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id WHERE o.userId = " . Auth::user()->id . " GROUP BY p.name, p.imageUrl ORDER BY p.name asc");
 
-        $paids = DB::select("SELECT date fecha, color, sum(p.amount) monto
-        FROM fixed_rent_paids p inner join fixed_rent_investments i ON p.fixedRentInvestmentId = i.id
-        inner join fixed_rent_platforms pl ON i.fixed_rent_platformsId = pl.id
-        where (month(date) = " . date('m'). "  AND YEAR(date) = " . date('Y'). ") OR date >= " . date('Y-m-d') . "
-        AND i.userId = " . Auth::user()->id . " 
-        group by date, color
-        order by date");
+        $paids = DB::select("SELECT DATE_ADD(MAKEDATE(year(now()), day(efectiveDate) + 5), INTERVAL (month(now()))-1 MONTH) date, p.name
+                FROm snowball_odis o inner join snowball_proyects p on o.snowballProjectId = p.id
+                WHERE o.userId = " . Auth::user()->id . "
+                GROUP BY year(now()), month(now()) , day(efectiveDate) + 5");
 
         $data['paids'] = $paids;
+
 
         $data['odis'] = $odis;
         return view('snowball.index', $data);
