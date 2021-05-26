@@ -236,10 +236,10 @@
                 events: [
                     @foreach ($paids as $paid)
                         {
-                        title : '$ {{ $paid->monto }}',
-                        start : '{{ $paid->fecha }}',
-                        backgroundColor: '{{ $paid->color }}', //red
-                        borderColor : '{{ $paid->color }}', //red
+                        title : '$ {{ $paid->name }}',
+                        start : '{{ $paid->date }}',
+                        backgroundColor: '#007bff', //#007bff
+                        borderColor : '#007bff', //#007bff
                         allDay : true
                         },
                     @endforeach
