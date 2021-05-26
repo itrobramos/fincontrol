@@ -28,52 +28,50 @@
             <div class="col-md-10 col-lg-6">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">{{$project->name}}</h3>
+                        <h3 class="card-title">{{$ODI->snowballproject->name}}</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
 
-                    <form role="form" method="Post" action="{{ url('/snowballprojects/' .$project->id) }}" enctype="multipart/form-data">
+                    <form role="form" method="Post" action="{{ url('/snowball/' .$ODI->id) }}" enctype="multipart/form-data">
                         {{ csrf_field()}}
                         {{ method_field('PATCH')}}
                         <div class="card-body">
 
                             <div class="form-group">
-                                <label for="Nombre">Nombre</label>
-                                <input type="text" name="name" class="form-control" value="{{$project->name}}">
+                                <label for="Estimado">Cantidad ODIS</label>
+                                <input type="number" name="quantity" value="{{$ODI->quantity}}" step="any" class="form-control">
                             </div>
 
                             <div class="form-group">
-                                <label for="Precio">Precio ODI</label>
-                                <input type="number" step="any" name="price" value="{{$project->ODIPrice}}" class="form-control">
+                                <label for="Estimado">Precio Individual</label>
+                                <input type="number" name="price" value="{{$ODI->ODIPrice}}" step="any" class="form-control">
                             </div>
 
                             <div class="form-group">
-                                <label for="Estimado">Dividendo Estimado</label>
-                                <input type="text" name="estimatedDividend" value="{{$project->estimatedDividend}}" step="any" class="form-control">
+                                <label for="Estimado">Dividendo</label>
+                                <input type="number" name="dividend" value="{{$ODI->dividend}}" step="any" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="Bono">Bono</label>
+                                <input type="number" name="bono" value="{{$ODI->bono}}" step="any" class="form-control">
                             </div>
 
                             <div class="form-group">
-                                <label for="Periodo">Frecuencia Dividendo</label>
-                                <input type="text" name="dividendPeriod" value="{{$project->dividendPeriod}}" step="any" class="form-control">
+                                <label for="Bono">Frecuencia (Meses)</label>
+                                <input type="number" name="frequency" value="{{$ODI->frequency}}" step="any" class="form-control">
                             </div>
 
                             <div class="form-group">
-                                <label for="Shares">Cantidad de acciones</label>
-                                <input type="number" step="any" name="shares" value="{{$project->shares}}" class="form-control">
+                                <label for="Bono">Fecha Efectiva</label>
+                                <input type="date" name="efectiveDate" value="{{$ODI->efectiveDate}}" step="any" class="form-control">
                             </div>
 
                             <div class="form-group">
-                                <label for="Oferta">Oferta</label>
-                                <input type="number" step="any" name="offering" value="{{$project->offering}}" class="form-control">
+                                <label for="Imagen">Documento</label>
+                                <input type='file' name="pdf" id="pdfURL" class='form-control-file'>
                             </div>
-
-                            <div class="form-group">
-                                <label for="Imagen">Imagen</label>
-                                <input type='file' name="image" value="{{$project->image}}" id="imageUrl" class='form-control-file'>
-                            </div>
-
-
 
                         </div>
                         <!-- /.card-body -->

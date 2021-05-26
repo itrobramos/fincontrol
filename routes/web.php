@@ -57,9 +57,11 @@ Route::patch('/snowballprojects/{id}','App\Http\Controllers\SnowballProjectContr
 
 Route::get('/snowball', 'App\Http\Controllers\SnowballController@index')->name('snowball');
 Route::get('/snowball/add', 'App\Http\Controllers\SnowballController@add')->name('snowball/add');
+Route::get('/snowball/{id}/edit', 'App\Http\Controllers\SnowballController@edit')->name('snowball/edit');
 Route::post('/snowball', 'App\Http\Controllers\SnowballController@save');
 Route::get('/snowball/{id}', "App\Http\Controllers\SnowballController@show");
 Route::delete('/snowball/{id}', 'App\Http\Controllers\SnowballController@destroy');
+Route::patch('/snowball/{id}','App\Http\Controllers\SnowballController@update');
 
 
 Route::get('/dividends', 'App\Http\Controllers\DividendsController@index')->name('dividends');
