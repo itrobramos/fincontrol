@@ -11,6 +11,9 @@ use App\Models\Exchange;
 use App\Models\Stock;
 use App\Models\Sector;
 use App\Models\UserStock;
+use App\Models\StockClose;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;    
 use Image;
 
 
@@ -286,6 +289,54 @@ class StocksController extends Controller
 
         $UserStock = UserStock::find($id);
 
+        $exchange = Exchange::where('date', DB::raw("(select max(`date`) from exchanges)"))
+        ->where('currencyIdDestiny', '=', 1)
+        ->where('currencyIdOrigin', '=', 2)
+        ->first()->price;    
+
+
+        if($UserStock->currencyId == 1)
+            $UserStock->investment = $UserStock->quantity * $UserStock->averagePrice;
+        else if($UserStock->currencyId == 2)
+            $UserStock->investment = $UserStock->quantity * $UserStock->averagePrice *  $exchange;
+
+        
+        $symbol = ($UserStock->stock->symbol);
+
+        $response = Http::get('https://api.polygon.io/v2/aggs/ticker/'.$symbol.'/prev?unadjusted=true', [
+            'apiKey' => 'T4OPJuoT08AUVQuhEpG69PdepZeVujAE',
+            'limit' => 10,
+        ]);
+
+        $result = (json_decode($response->body()));
+        
+        @$price = ($result->results[0]->c);
+
+        if($price != null)
+        {
+            $stockCloseDB = StockClose::where('stockId', $UserStock->stock->id)->where('created_at', '>', date('Y-m-d'))->first();
+
+            if($stockCloseDB == null){
+                $StockClose = new StockClose();
+                $StockClose->stockId = $UserStock->stock->id;
+                $StockClose->price = $price;
+                $StockClose->save();
+            }
+    
+    
+            $CurrentPrice = StockClose::where('stockId', $UserStock->stock->id)->orderBy('created_at')->first()->price;     
+            
+            if($CurrentPrice != null){
+                if($UserStock->currencyId == 1)
+                    $UserStock->currentPrice = $UserStock->quantity * $CurrentPrice;
+                else if($UserStock->currencyId == 2)
+                    $UserStock->currentPrice = $UserStock->quantity * $CurrentPrice *  $exchange;
+    
+                $UserStock->rendimiento = round((round($UserStock->currentPrice, 2) / round($UserStock->investment, 2) - 1) * 100,2);
+            }                
+        }    
+
+
         $dividends = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')
                     ->join('users_stocks', 'users_stocks.stockId', '=', 'stocks.id')
                     ->where('dividends.type','1')
@@ -295,6 +346,7 @@ class StocksController extends Controller
 
         $recovery = Round($dividends->sum('amount') / ($UserStock->quantity * $UserStock->averagePrice) * 100,2);
 
+        
         $data['userstock'] = $UserStock;
         $data['dividends'] = $dividends;
         $data['recovery'] = $recovery;
