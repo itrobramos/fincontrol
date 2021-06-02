@@ -65,7 +65,11 @@ class HomeController extends Controller
                                 FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id 
                                 WHERE o.userId = ". Auth::user()->id );
 
-        $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment;
+        $amountRedGirasol = DB::select("SELECT SUM(rg.investment) investment 
+                                FROM redgirasol_projects rg 
+                                WHERE rg.userId = ". Auth::user()->id );
+
+        $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment + $amountRedGirasol[0]->investment;
         $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->where('status',1)->sum('amount');
         $EfectivoTotalAccount = UserAccount::where('userId', Auth::user()->id)->sum('amount');
 
@@ -80,6 +84,9 @@ class HomeController extends Controller
     
         if($amountOdis > 0)
             $Portafolio[] = ["Snowball",  $amountOdis[0]->investment, '#1663FD'];
+
+        if($amountRedGirasol > 0)
+            $Portafolio[] = ["Red Girasol",  $amountRedGirasol[0]->investment, '#FAAE3D'];
     
         foreach(UserAccount::where('userId', Auth::user()->id)->where('active', true)->get() as $useraccount){
             if($useraccount->amount > 0)
