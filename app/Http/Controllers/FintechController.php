@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\View;
+use App\Models\Fintech;
 use DB;
 
 use Illuminate\Http\Request;
@@ -28,6 +29,8 @@ class FintechController extends Controller
      */
     public function index()
     {
-        return view('fintech.index');
+        $Fintechs = Fintech::where('active', 1)->get();
+        $data['fintechs'] = $Fintechs;
+        return view('fintech.index', $data);
     }
 }
