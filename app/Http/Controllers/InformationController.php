@@ -201,6 +201,10 @@ class InformationController extends Controller
                     FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id 
                     WHERE o.userId = ". Auth::user()->id );
 
+        $amountRedGirasol = DB::select("SELECT SUM(rg.investment) investment 
+                                        FROM redgirasol_projects rg 
+                                        WHERE rg.userId = ". Auth::user()->id );
+
         $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment;
  
  
@@ -209,6 +213,9 @@ class InformationController extends Controller
          if($amountOdis > 0)
              $Portafolio[] = ["Snowball",  $amountOdis[0]->investment, '#1663FD'];
      
+        if($amountRedGirasol > 0)
+            $Portafolio[] = ["Red Girasol",  $amountRedGirasol[0]->investment, '#FAAE3D'];
+
          $VariableTotalFibra = 0;
          $VariableTotalAcciones = 0;
          $VariableTotalETF = 0;
