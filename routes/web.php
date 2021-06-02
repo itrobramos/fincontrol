@@ -67,6 +67,8 @@ Route::patch('/snowball/{id}','App\Http\Controllers\SnowballController@update');
 Route::get('/redgirasol', 'App\Http\Controllers\RedGirasolController@index')->name('redgirasol');
 Route::get('/redgirasol/add', 'App\Http\Controllers\RedGirasolController@add')->name('redgirasol/add');
 Route::get('/redgirasol/{id}/edit', 'App\Http\Controllers\RedGirasolController@edit')->name('redgirasol/edit');
+Route::get('/redgirasol/{id}/payment', 'App\Http\Controllers\RedGirasolController@payment')->name('redgirasol/payment');
+Route::post('/redgirasol/{id}/payment', 'App\Http\Controllers\RedGirasolController@savePayment');
 Route::post('/redgirasol', 'App\Http\Controllers\RedGirasolController@save');
 Route::get('/redgirasol/{id}', "App\Http\Controllers\RedGirasolController@show");
 Route::delete('/redgirasol/{id}', 'App\Http\Controllers\RedGirasolController@destroy');

@@ -48,6 +48,14 @@
                                                 </span> Editar
                                             </a>
                                         </button>
+
+                                        <button type="submit" class="btn btn-block">
+                                            <a class="dropdown-item" href="redgirasol/{{ $project['Id']}}/payment"> 
+                                                <span class="btn-inner-icon">
+                                                    <i class="fas fa-hand-holding-usd"></i>
+                                                </span> Registrar Pago
+                                            </a>
+                                        </button>
                                      
                                             <form method='post' action="{{ url('/redgirasol/' . $project['Id']) }}">
                                                 {{ csrf_field()}}

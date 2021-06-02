@@ -15,7 +15,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{url('home')}}">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="/fibras">Red Girasol</a></li>
+                            <li class="breadcrumb-item active"><a href="/redgirasol">Red Girasol</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -65,8 +65,8 @@
                             <!-- small card -->
                             <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3><sup style="font-size: 20px">$</sup>{{0}}</h3>    
-                                <p>Pagos</p>
+                                <h3><sup style="font-size: 20px">$</sup>{{ $dividends->sum('amount')}}</h3>    
+                                <p>{{ $dividends->count()}} pagos de {{ $project->months }}</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-stats-bars"></i>
@@ -75,10 +75,14 @@
                         </div>
 
                         <div class="col-lg-3">
-                            {{-- Recuperación {{$recovery }} % --}}
+                            Recuperación {{$recovery }} %
                             <div class="progress">
-                              {{-- <div class="progress-bar" style="width: {{ $recovery }}%"></div> --}}
+                               <div class="progress-bar" style="width: {{ $recovery }}%"></div> 
                             </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <a href="{{ $project->id }}/payment"><button class="btn btn-sm btn-success">Registrar Pago</button> </a>
                         </div>
                     </div>
 
@@ -104,19 +108,19 @@
                                           <table class="table table-striped">
                                             <thead>
                                               <tr>
+                                                <th>Número</th>
                                                 <th>Fecha</th>
                                                 <th>Recibido</th>
-                                                <th>Acciones</th>
                                               </tr>
                                             </thead>
                                             <tbody>
-                                                {{-- @foreach($dividends as $dividend)
+                                                @foreach($dividends as $dividend)
                                                 <tr>
+                                                    <td>{{$dividend->paymentNo}}</td>
                                                     <td>{{$dividend->efectiveDate}}</td>
                                                     <td>$ {{$dividend->amount}}</td>
-                                                    <td>{{$dividend->stocksCount}}</td>
-                                                  </tr>
-                                                @endforeach --}}
+                                                </tr>
+                                                @endforeach
                                             </tbody>
                                           </table>
                                         </div>

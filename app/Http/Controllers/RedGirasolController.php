@@ -7,6 +7,7 @@ use DB;
 use Auth;
 use App\Models\Exchange;
 use App\Models\RedGirasolProject;
+use App\Models\FintechPayment;
 use Image;
 
 
@@ -145,20 +146,47 @@ class RedGirasolController extends Controller
 
         $RedGirasolProject = RedGirasolProject::find($id);
 
-        // $dividends = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')
-        //             ->join('users_stocks', 'users_stocks.stockId', '=', 'stocks.id')
-        //             ->where('dividends.type','3')
-        //             ->where('users_stocks.id', $id)
-        //             ->where('dividends.userId', Auth::user()->id)
-        //             ->get(); 
+         $dividends = FintechPayment::join('redgirasol_projects', 'fintech_payments.referenceId', '=', 'redgirasol_projects.id')
+                     ->where('fintech_payments.type','1')
+                     ->where('fintech_payments.userId', Auth::user()->id)
+                     ->get(); 
 
-        // $recovery = Round($dividends->sum('amount') / ($UserStock->quantity * $UserStock->averagePrice) * 100,2);
+         $recovery = Round($dividends->sum('amount') / ($RedGirasolProject->investment) * 100,2);
 
         $data['project'] = $RedGirasolProject;
-        // $data['dividends'] = $dividends;
-        // $data['recovery'] = $recovery;
+        $data['dividends'] = $dividends;
+        $data['recovery'] = $recovery;
 
         return view('redgirasol.show', $data);
 
+    }
+
+
+    public function payment($id){
+
+        $RedGirasolProject = RedGirasolProject::find($id);
+
+        $data['project'] = $RedGirasolProject;
+
+        return view('redgirasol.payment', $data);
+    }
+
+    public function savePayment(Request $request, $id){
+        
+        $RedGirasolProject = RedGirasolProject::find($id);
+
+        $Payment = new FintechPayment();
+
+        $Payment->paymentNo = $request->paymentNo;
+        $Payment->type = 1;
+        $Payment->referenceId = $id;
+        $Payment->efectiveDate = $request->date;
+        $Payment->amount = $request->amount;
+        $Payment->currencyId = $request->currency;
+        $Payment->userId = Auth::user()->id;
+        $Payment->save();
+        
+
+        return redirect('/redgirasol/'.$id);
     }
 }
