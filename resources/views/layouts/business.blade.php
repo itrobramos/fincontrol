@@ -114,6 +114,16 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{{url('incomes')}}" class="nav-link">
+              <i class="nav-icon fas fa-hand-holding-usd"></i>
+              <p>
+                Entradas
+              </p>
+            </a>
+          </li>
+
           <li class="nav-item">
             <a href="{{url('accounts')}}" class="nav-link">
               <i class="nav-icon fas fa-dollar-sign"></i>

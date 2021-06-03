@@ -79,6 +79,9 @@ Route::get('/dividends', 'App\Http\Controllers\DividendsController@index')->name
 Route::get('/dividends/add', 'App\Http\Controllers\DividendsController@add')->name('dividends/add');
 Route::post('/dividends', 'App\Http\Controllers\DividendsController@save');
 
+Route::get('/incomes', 'App\Http\Controllers\FintechController@incomes')->name('incomes');
+
+
 Route::get('/rentafija', 'App\Http\Controllers\RentaFijaController@index')->name('rentafija');
 Route::get('/rentafija/calendar', 'App\Http\Controllers\RentaFijaController@calendar')->name('info/calendar');
 Route::get('/rentafija/{id}', "App\Http\Controllers\RentaFijaController@show");

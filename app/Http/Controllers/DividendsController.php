@@ -48,11 +48,14 @@ class DividendsController extends Controller
         WHERE userId = " . Auth::user()->id . " 
         GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
 
+        $PaymentsGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount FROM fintech_payments
+        WHERE userId = " . Auth::user()->id . " 
+        GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
+
         $dividendallcollection = collect($dividendAll)->sortBy('name')->groupBy('name')->map(function ($row) {
             return $row->sum('amount') ;
         });
-        
-   
+
         $dividendCompaniesGraph = $dividendallcollection;
 
         //Indicadores
@@ -62,6 +65,8 @@ class DividendsController extends Controller
 
         $data["dividends"] = $dividendAll->sortByDesc('efectiveDate');
         $data["dividendGraph"] = $DividendGraph;
+        $data["paymentGraph"] = $PaymentsGraph;
+
         $data["dividendCompaniesGraph"] = $dividendCompaniesGraph;
         $data["indicadores"] = $indicadores;
 
