@@ -157,9 +157,8 @@ class RealEstateController extends Controller
 
     public function show($name, $id)
     {
-
         $RealEstateProject = RealEstateProject::find($id);
-        $Fintech = Fintech::where('id', $RealEstateProject->fintechId)->first();
+        $Fintech = Fintech::where('name', $name)->first();
 
         $dividends = FintechPayment::join('realestate_projects', 'fintech_payments.referenceId', '=', 'realestate_projects.id')
             ->where('fintech_payments.type', $Fintech->id)

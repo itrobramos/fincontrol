@@ -50,7 +50,7 @@
                                         </button>
 
                                         <button type="submit" class="btn btn-block">
-                                            <a class="dropdown-item" href="{{ $project['Id']}}/payment"> 
+                                            <a class="dropdown-item" href="{{ $fintech->name . '/'. $project['Id']}}/payment"> 
                                                 <span class="btn-inner-icon">
                                                     <i class="fas fa-hand-holding-usd"></i>
                                                 </span> Registrar Pago
