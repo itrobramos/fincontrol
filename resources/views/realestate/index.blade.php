@@ -37,7 +37,7 @@
                         @foreach ($projects as $project)
 
                             <div class="col-xlg-3 col-lg-3 col-md-4 col-sm-6">
-                                <div class="card card-primary card-outline" style="height: 400px;">
+                                <div class="card card-primary card-outline" style="height: 500px;">
                                     <button type="button" class="btn btn-default btn-block  dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
                                     </button>
                                     <div class="dropdown-menu" style="">
