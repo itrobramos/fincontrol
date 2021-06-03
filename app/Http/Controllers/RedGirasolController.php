@@ -147,7 +147,7 @@ class RedGirasolController extends Controller
         $RedGirasolProject = RedGirasolProject::find($id);
 
          $dividends = FintechPayment::join('redgirasol_projects', 'fintech_payments.referenceId', '=', 'redgirasol_projects.id')
-                     ->where('fintech_payments.type','1')
+                     ->where('fintech_payments.type','2')
                      ->where('fintech_payments.userId', Auth::user()->id)
                      ->where('fintech_payments.referenceId', $id)
                      ->get(); 

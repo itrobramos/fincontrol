@@ -113,6 +113,17 @@ Route::get('/infoRentaVariable', 'App\Http\Controllers\InformationController@ren
 Route::get('/infoEfectivo', 'App\Http\Controllers\InformationController@efectivo')->name('info/Efectivo');
 Route::get('/infoPortafolio', 'App\Http\Controllers\InformationController@portafolio')->name('info/portafolio');
 
+
+
+Route::get('/realestate/{name}', 'App\Http\Controllers\RealEstateController@index')->name('realestate');
+Route::get('/realestate/{name}/add', 'App\Http\Controllers\RealEstateController@add')->name('realestate/add');
+Route::post('/realestate/{name}', 'App\Http\Controllers\RealEstateController@save');
+Route::get('/realestate/{id}/edit', 'App\Http\Controllers\RealEstateController@edit')->name('realestate/edit');
+Route::patch('/realestate/{id}','App\Http\Controllers\RealEstateController@update');
+Route::get('/realestate/{name}/{id}', "App\Http\Controllers\RealEstateController@show");
+Route::get('/realestate/{name}/{id}/payment', 'App\Http\Controllers\RealEstateController@payment')->name('realestate/payment');
+Route::post('/realestate/{name}/{id}/payment', 'App\Http\Controllers\RealEstateController@savePayment');
+
 Auth::routes();
 
 Route::get('/getAllPaidsDayFixedRent', 'App\Http\Controllers\RentaFijaController@saveAllPaids');
