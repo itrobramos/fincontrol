@@ -77,7 +77,7 @@
                                     <div class="card-body box-profile">
                                         <div class="text-center">
                                             <img class="img-fluid"
-                                            src="{{ env('DEPLOY_URL') }}/{{ $project['Imagen'] }}" style="height: 60px;" alt="Logo">
+                                            src="{{ env('DEPLOY_URL') }}/{{ $project['Imagen'] }}" style="height: 120px;" alt="Logo">
                                         </div>
                                         <h4 class="profile-username text-center">{{ $project['Nombre'] }}</h4>
                                         <br>
