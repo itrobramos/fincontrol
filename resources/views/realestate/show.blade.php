@@ -129,7 +129,7 @@
                                   </div>
 
                                   <div class="tab-pane" id="info">
-                                    info
+                                    {{$project->information}}
                                   </div>
 
                                 </div>
