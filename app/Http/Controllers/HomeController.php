@@ -79,8 +79,12 @@ class HomeController extends Controller
 
 
 
-        $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment + $amountRedGirasol[0]->investment;
-        $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->where('status',1)->sum('amount');
+        $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment;
+        $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->where('status',1)->sum('amount') 
+                                    +  $amountRedGirasol[0]->investment 
+                                    +  $amountMonific[0]->investment
+                                    +  $amountLendera[0]->investment;
+                                    
         $EfectivoTotalAccount = UserAccount::where('userId', Auth::user()->id)->sum('amount');
 
         $data["VariableTotal"] = round($VariableTotalAccount,2);
