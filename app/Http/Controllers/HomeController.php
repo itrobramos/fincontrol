@@ -69,6 +69,16 @@ class HomeController extends Controller
                                 FROM redgirasol_projects rg 
                                 WHERE rg.userId = ". Auth::user()->id );
 
+        $amountMonific = DB::select("SELECT SUM(rg.investment) investment 
+                                FROM realestate_projects rg 
+                                WHERE fintechId = 1 AND rg.userId = ". Auth::user()->id );
+
+        $amountLendera = DB::select("SELECT SUM(rg.investment) investment 
+                                FROM leasing_projects rg 
+                                WHERE fintechId = 4 AND rg.userId = ". Auth::user()->id );
+
+
+
         $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment + $amountRedGirasol[0]->investment;
         $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->where('status',1)->sum('amount');
         $EfectivoTotalAccount = UserAccount::where('userId', Auth::user()->id)->sum('amount');
@@ -87,6 +97,12 @@ class HomeController extends Controller
 
         if($amountRedGirasol > 0)
             $Portafolio[] = ["Red Girasol",  $amountRedGirasol[0]->investment, '#FAAE3D'];
+
+        if($amountMonific > 0)
+            $Portafolio[] = ["Monific",  $amountMonific[0]->investment, '#136176'];
+
+        if($amountLendera > 0)
+            $Portafolio[] = ["Lendera",  $amountLendera[0]->investment, '#D23942'];
     
         foreach(UserAccount::where('userId', Auth::user()->id)->where('active', true)->get() as $useraccount){
             if($useraccount->amount > 0)

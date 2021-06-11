@@ -201,20 +201,12 @@ class InformationController extends Controller
                     FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id 
                     WHERE o.userId = ". Auth::user()->id );
 
-        $amountRedGirasol = DB::select("SELECT SUM(rg.investment) investment 
-                                        FROM redgirasol_projects rg 
-                                        WHERE rg.userId = ". Auth::user()->id );
-
         $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment;
  
- 
-         $Portafolio = [];
+        $Portafolio = [];
     
-         if($amountOdis > 0)
+        if($amountOdis > 0)
              $Portafolio[] = ["Snowball",  $amountOdis[0]->investment, '#1663FD'];
-     
-        if($amountRedGirasol > 0)
-            $Portafolio[] = ["Red Girasol",  $amountRedGirasol[0]->investment, '#FAAE3D'];
 
          $VariableTotalFibra = 0;
          $VariableTotalAcciones = 0;
@@ -290,11 +282,35 @@ class InformationController extends Controller
                                              WHERE i.status = 1 AND i.userId = ". Auth::user()->id . 
                                              " GROUP BY name, color");
  
+
          foreach($InversionesRentaFija as $investment){
              if($investment->amount > 0)
                  $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
          } 
           
+
+        $amountRedGirasol = DB::select("SELECT SUM(rg.investment) investment 
+                                FROM redgirasol_projects rg 
+                                WHERE rg.userId = ". Auth::user()->id );
+
+        $amountLendera = DB::select("SELECT SUM(rg.investment) investment 
+                            FROM leasing_projects rg 
+                            WHERE fintechId = 4 AND rg.userId = ". Auth::user()->id );
+
+        $amountMonific = DB::select("SELECT SUM(rg.investment) investment 
+                            FROM realestate_projects rg 
+                            WHERE fintechId = 1 AND rg.userId = ". Auth::user()->id );
+
+        if($amountRedGirasol > 0)
+            $Portafolio[] = ["Red Girasol",  $amountRedGirasol[0]->investment, '#FAAE3D'];
+        
+        if($amountLendera > 0)
+            $Portafolio[] = ["Lendera",  $amountLendera[0]->investment, '#D23942'];
+        
+        if($amountMonific > 0)
+            $Portafolio[] = ["Monific",  $amountMonific[0]->investment, '#136176'];
+
+
         $data["Portafolio"] = $Portafolio;
  
         return view('info.rentaFija', $data);

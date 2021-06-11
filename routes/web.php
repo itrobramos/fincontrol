@@ -127,6 +127,16 @@ Route::get('/realestate/{name}/{id}', "App\Http\Controllers\RealEstateController
 Route::get('/realestate/{name}/{id}/payment', 'App\Http\Controllers\RealEstateController@payment')->name('realestate/payment');
 Route::post('/realestate/{name}/{id}/payment', 'App\Http\Controllers\RealEstateController@savePayment');
 
+
+Route::get('/leasing/{name}', 'App\Http\Controllers\LeasingController@index')->name('leasing');
+Route::get('/leasing/{name}/add', 'App\Http\Controllers\LeasingController@add')->name('leasing/add');
+Route::post('/leasing/{name}', 'App\Http\Controllers\LeasingController@save');
+Route::get('/leasing/{id}/edit', 'App\Http\Controllers\LeasingController@edit')->name('leasing/edit');
+Route::patch('/leasing/{id}','App\Http\Controllers\LeasingController@update');
+Route::get('/leasing/{name}/{id}', "App\Http\Controllers\LeasingController@show");
+Route::get('/leasing/{name}/{id}/payment', 'App\Http\Controllers\LeasingController@payment')->name('leasing/payment');
+Route::post('/leasing/{name}/{id}/payment', 'App\Http\Controllers\LeasingController@savePayment');
+
 Auth::routes();
 
 Route::get('/getAllPaidsDayFixedRent', 'App\Http\Controllers\RentaFijaController@saveAllPaids');

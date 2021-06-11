@@ -15,7 +15,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{url('home')}}">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="/realstate/{{$project->Name}}">{{$project->Name}}</a></li>
+                            <li class="breadcrumb-item active"><a href="/leasing/{{$project->Name}}">{{$project->Name}}</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
