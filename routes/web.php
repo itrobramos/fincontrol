@@ -137,6 +137,11 @@ Route::get('/leasing/{name}/{id}', "App\Http\Controllers\LeasingController@show"
 Route::get('/leasing/{name}/{id}/payment', 'App\Http\Controllers\LeasingController@payment')->name('leasing/payment');
 Route::post('/leasing/{name}/{id}/payment', 'App\Http\Controllers\LeasingController@savePayment');
 
+
+Route::get('/expenses/categories', 'App\Http\Controllers\ExpensesController@categories')->name('expenses/categories');
+Route::get('/expenses/categoriesAdd', 'App\Http\Controllers\ExpensesController@categoriesAdd')->name('expenses/categoriesAdd');
+Route::post('/expenses/categoriesAdd', 'App\Http\Controllers\ExpensesController@categoriesSave');
+
 Auth::routes();
 
 Route::get('/getAllPaidsDayFixedRent', 'App\Http\Controllers\RentaFijaController@saveAllPaids');

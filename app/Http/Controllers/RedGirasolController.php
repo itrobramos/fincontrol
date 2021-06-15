@@ -179,7 +179,7 @@ class RedGirasolController extends Controller
         $Payment = new FintechPayment();
 
         $Payment->paymentNo = $request->paymentNo;
-        $Payment->type = 1;
+        $Payment->type = 2;
         $Payment->referenceId = $id;
         $Payment->efectiveDate = $request->date;
         $Payment->amount = $request->amount;
