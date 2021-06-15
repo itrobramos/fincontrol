@@ -167,14 +167,14 @@
               </li>
 
               <li class="nav-item">
-                <a href="forms/general.html" class="nav-link">
+                <a href="{{url('expenses/index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Presupuesto</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="forms/general.html" class="nav-link">
+                <a href="{{url('expenses/index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Gastos</p>
                 </a>

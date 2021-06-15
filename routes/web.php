@@ -142,6 +142,11 @@ Route::get('/expenses/categories', 'App\Http\Controllers\ExpensesController@cate
 Route::get('/expenses/categoriesAdd', 'App\Http\Controllers\ExpensesController@categoriesAdd')->name('expenses/categoriesAdd');
 Route::post('/expenses/categoriesAdd', 'App\Http\Controllers\ExpensesController@categoriesSave');
 
+Route::get('/expenses/index', 'App\Http\Controllers\ExpensesController@expenses')->name('expenses/index');
+Route::get('/expenses/Add', 'App\Http\Controllers\ExpensesController@expensesAdd')->name('expenses/Add');
+Route::post('/expenses/Add', 'App\Http\Controllers\ExpensesController@expensesSave');
+
+
 Auth::routes();
 
 Route::get('/getAllPaidsDayFixedRent', 'App\Http\Controllers\RentaFijaController@saveAllPaids');
