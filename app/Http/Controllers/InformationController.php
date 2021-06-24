@@ -47,15 +47,15 @@ class InformationController extends Controller
         $VariableTotalAccount = 0;
 
         foreach($myStocks as $stock){
-        if($stock->currency == "MXN"){
-        $VariableTotalAccount = $VariableTotalAccount + $stock->quantity * $stock->averagePrice;
-        }
-        else if($stock->currency == "USD"){
-        $VariableTotalAccount = $VariableTotalAccount + $stock->quantity * $stock->averagePrice * $exchange[0]['price'];
-        }
-        else if($stock->currency == "EUR"){
-        $VariableTotalAccount = $VariableTotalAccount + $stock->quantity * $stock->averagePrice * $exchange[1]['price']; 
-        }
+            if($stock->currency == "MXN"){
+                $VariableTotalAccount = $VariableTotalAccount + $stock->quantity * $stock->averagePrice;
+            }
+            else if($stock->currency == "USD"){
+                $VariableTotalAccount = $VariableTotalAccount + $stock->quantity * $stock->averagePrice * $exchange[0]['price'];
+            }
+            else if($stock->currency == "EUR"){
+                $VariableTotalAccount = $VariableTotalAccount + $stock->quantity * $stock->averagePrice * $exchange[1]['price']; 
+            }
         }
 
         $amountOdis = DB::select("SELECT SUM(o.ODIPrice * quantity) investment 
@@ -297,6 +297,10 @@ class InformationController extends Controller
                             FROM leasing_projects rg 
                             WHERE fintechId = 4 AND rg.userId = ". Auth::user()->id );
 
+        $amountCumplo = DB::select("SELECT SUM(rg.investment) investment 
+                            FROM leasing_projects rg 
+                            WHERE fintechId = 5 AND rg.userId = ". Auth::user()->id );
+
         $amountMonific = DB::select("SELECT SUM(rg.investment) investment 
                             FROM realestate_projects rg 
                             WHERE fintechId = 1 AND rg.userId = ". Auth::user()->id );
@@ -309,6 +313,9 @@ class InformationController extends Controller
         
         if($amountMonific > 0)
             $Portafolio[] = ["Monific",  $amountMonific[0]->investment, '#136176'];
+
+        if($amountCumplo > 0)
+            $Portafolio[] = ["Cumplo",  $amountCumplo[0]->investment, '#3cba68'];
 
 
         $data["Portafolio"] = $Portafolio;

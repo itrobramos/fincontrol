@@ -77,13 +77,18 @@ class HomeController extends Controller
                                 FROM leasing_projects rg 
                                 WHERE fintechId = 4 AND rg.userId = ". Auth::user()->id );
 
+        $amountCumplo = DB::select("SELECT SUM(rg.investment) investment 
+                                FROM leasing_projects rg 
+                                WHERE fintechId = 5 AND rg.userId = ". Auth::user()->id );
+
 
 
         $VariableTotalAccount = $VariableTotalAccount + $amountOdis[0]->investment;
         $RentaFijaTotalAccount = FixedRentInvestments::where('userId', Auth::user()->id)->where('status',1)->sum('amount') 
                                     +  $amountRedGirasol[0]->investment 
                                     +  $amountMonific[0]->investment
-                                    +  $amountLendera[0]->investment;
+                                    +  $amountLendera[0]->investment
+                                    +  $amountCumplo[0]->investment;
                                     
         $EfectivoTotalAccount = UserAccount::where('userId', Auth::user()->id)->sum('amount');
 
@@ -107,7 +112,11 @@ class HomeController extends Controller
 
         if($amountLendera > 0)
             $Portafolio[] = ["Lendera",  $amountLendera[0]->investment, '#D23942'];
+
+        if($amountCumplo > 0)
+            $Portafolio[] = ["Cumplo",  $amountCumplo[0]->investment, '#3cba68'];
     
+        
         foreach(UserAccount::where('userId', Auth::user()->id)->where('active', true)->get() as $useraccount){
             if($useraccount->amount > 0)
                 $Portafolio[] = [$useraccount->account->name . " (Cuenta)",  $useraccount->amount, $useraccount->account->color];
