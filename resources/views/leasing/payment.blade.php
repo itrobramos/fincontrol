@@ -33,7 +33,7 @@
                     <!-- /.card-header -->
                     <!-- form start -->
 
-                    <form role="form" method="Post" action="{{ url('/leasing/' .$project->id) }}/payment" enctype="multipart/form-data">
+                    <form role="form" method="Post" action="{{ url('/leasing/'.$fintech->name. '/' .$project->id) }}/payment" enctype="multipart/form-data">
                         {{ csrf_field()}}
                         <div class="card-body">
 
