@@ -188,7 +188,7 @@ class LeasingController extends Controller
         return view('leasing.payment', $data);
     }
 
-    public function savePayment(Request $request, $id)
+    public function savePayment(Request $request, $name, $id)
     {
 
         $LeasingProject = LeasingProject::find($id);
