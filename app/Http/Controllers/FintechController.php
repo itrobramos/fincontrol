@@ -40,9 +40,11 @@ class FintechController extends Controller
          //Tabla
          $IncomesRedGirasol = FintechPayment::join('redgirasol_projects', 'fintech_payments.referenceId', '=', 'redgirasol_projects.id')->join('fintechs', 'fintechs.id', '=', 'fintech_payments.type')->where('fintech_payments.type','2')->where('fintech_payments.userId', Auth::user()->id)->select('fintech_payments.*','fintechs.name as fintech', 'fintechs.imageUrl as logoFintech', 'redgirasol_projects.*')->get(); 
          $IncomesMonific = FintechPayment::join('realestate_projects', 'fintech_payments.referenceId', '=', 'realestate_projects.id')->join('fintechs', 'fintechs.id', '=', 'realestate_projects.fintechId')->where('fintech_payments.type','1')->where('fintech_payments.userId', Auth::user()->id)->select('fintech_payments.*','fintechs.name as fintech', 'fintechs.imageUrl as logoFintech', 'realestate_projects.*')->get(); 
+         $IncomesLeasing = FintechPayment::join('leasing_projects', 'fintech_payments.referenceId', '=', 'leasing_projects.id')->join('fintechs', 'fintechs.id', '=', 'fintech_payments.type')->where('fintech_payments.type','4')->where('fintech_payments.userId', Auth::user()->id)->select('fintech_payments.*','fintechs.name as fintech', 'fintechs.imageUrl as logoFintech', 'leasing_projects.*')->get(); 
+
 
          $IncomesAll = $IncomesRedGirasol;
-         $IncomesAll = $IncomesRedGirasol->toBase()->merge($IncomesMonific)->toBase();
+         $IncomesAll = $IncomesRedGirasol->toBase()->merge($IncomesMonific)->toBase()->merge($IncomesLeasing)->toBase();
 
          //Grafico
          $PaymentsGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount FROM fintech_payments
