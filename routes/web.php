@@ -125,7 +125,7 @@ Route::get('/realestate/{id}/edit', 'App\Http\Controllers\RealEstateController@e
 Route::patch('/realestate/{id}','App\Http\Controllers\RealEstateController@update');
 Route::get('/realestate/{name}/{id}', "App\Http\Controllers\RealEstateController@show");
 Route::get('/realestate/{name}/{id}/payment', 'App\Http\Controllers\RealEstateController@payment')->name('realestate/payment');
-Route::post('/realestate/{name}/{id}/payment', 'App\Http\Controllers\RealEstateController@savePayment');
+Route::post('/realestate/{id}/payment', 'App\Http\Controllers\RealEstateController@savePayment');
 
 
 Route::get('/leasing/{name}', 'App\Http\Controllers\LeasingController@index')->name('leasing');
