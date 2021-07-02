@@ -100,26 +100,46 @@ class HomeController extends Controller
 
         ///PORTAFOLIO
         $Portafolio = [];
-    
-        if($amountOdis > 0)
+        $Diversificacion = [];
+
+        $Extrabursatil = 0;
+        $BienesRaices = 0;
+        $Lending = 0;
+        $RentaFija = 0;
+        $Efectivo = 0;
+
+        if($amountOdis > 0){
             $Portafolio[] = ["Snowball",  $amountOdis[0]->investment, '#1663FD'];
+            $Extrabursatil = $amountOdis[0]->investment;
+        }
+            
 
-        if($amountRedGirasol > 0)
+        if($amountRedGirasol > 0){
             $Portafolio[] = ["Red Girasol",  $amountRedGirasol[0]->investment, '#FAAE3D'];
+            $Lending += $amountRedGirasol[0]->investment;
+        }
 
-        if($amountMonific > 0)
+        if($amountMonific > 0){
             $Portafolio[] = ["Monific",  $amountMonific[0]->investment, '#136176'];
+            $BienesRaices += $amountMonific[0]->investment;
+        }
 
-        if($amountLendera > 0)
+        if($amountLendera > 0){
             $Portafolio[] = ["Lendera",  $amountLendera[0]->investment, '#D23942'];
+            $Lending += $amountLendera[0]->investment;
+        }
 
-        if($amountCumplo > 0)
+        if($amountCumplo > 0){
             $Portafolio[] = ["Cumplo",  $amountCumplo[0]->investment, '#3cba68'];
+            $Lending += $amountCumplo[0]->investment;
+        }
     
         
         foreach(UserAccount::where('userId', Auth::user()->id)->where('active', true)->get() as $useraccount){
-            if($useraccount->amount > 0)
+            if($useraccount->amount > 0){
                 $Portafolio[] = [$useraccount->account->name . " (Cuenta)",  $useraccount->amount, $useraccount->account->color];
+                $Efectivo += $useraccount->amount;
+            }
         }
 
         $InversionesRentaFija = DB::select("SELECT name, color, sum(amount) amount
@@ -129,8 +149,10 @@ class HomeController extends Controller
                                             " GROUP BY name, color");
 
         foreach($InversionesRentaFija as $investment){
-            if($investment->amount > 0)
+            if($investment->amount > 0){
                 $Portafolio[] = [$investment->name,  $investment->amount, $investment->color];
+                $RentaFija += $investment->amount; 
+            }
         } 
 
         $VariableTotalFibra = 0;
@@ -193,15 +215,37 @@ class HomeController extends Controller
         
         $data["Portafolio"] = $Portafolio;
 
+
+        $BienesRaices += $VariableTotalFibra;
+
+        $Diversificacion[] = ["Extrabursatil", $amountOdis[0]->investment, '#1663FD'];
+        $Diversificacion[] = ["BienesRaices", $BienesRaices, '#424949'];
+        $Diversificacion[] = ["Criptomonedas", Round($VariableTotalCriptos,2), '#D68910'];
+        $Diversificacion[] = ["Acciones", Round($VariableTotalAcciones,2), '#76448A'];
+        $Diversificacion[] = ["Lending", $Lending, '#E74C3C'];
+        $Diversificacion[] = ["RentaFija", $RentaFija, '#99A3A4'];
+        $Diversificacion[] = ["Efectivo", $Efectivo, '#1D8348'];
+
+        $data["Diversificacion"] = $Diversificacion;
+
         //PLAZOS POR VENCER
         $RentFixedInvestments = FixedRentInvestments::where('userId', Auth::user()->id)->where('status', 1)->where('endDate','<=', date('Y-m-d', strtotime("+30 days")))->orderBy('endDate')->get()->take(5);
         $data["RentFixedInvestments"] = $RentFixedInvestments;
 
         //Gráfico de dividendos
-        $DividendGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount FROM dividends
+        $DividendGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount, 1 as Type
+            FROM dividends
+            WHERE userId = " . Auth::user()->id . " 
+            GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
+
+        //Gráfico de entradas
+        $EntradasGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount, 1 as Type
+        FROM fintech_payments
         WHERE userId = " . Auth::user()->id . " 
         GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
+         
         $data["dividendGraph"] = $DividendGraph;
+        $data["entradasGraph"] = $EntradasGraph;
 
 
         //Grafico de sectores

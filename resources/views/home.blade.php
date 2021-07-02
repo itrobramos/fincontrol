@@ -118,6 +118,23 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <i class="fas fa-chart-pie mr-1"></i>
+                                    Diversificación General
+                                </h3>
+                            </div><!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="tab-content p-0">
+                                    <div class="chart tab-pane active" id="sales-chart"
+                                        style="position: relative; height: 300px;">
+                                        <canvas id="diversify" height="300" style="height: 300px;"></canvas>
+                                    </div>
+                                </div>
+                            </div><!-- /.card-body -->
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="fas fa-chart-pie mr-1"></i>
                                     Sectores
                                 </h3>
                             </div><!-- /.card-header -->
@@ -192,6 +209,18 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Entradas</h3>
+                            </div>           
+                            <div class="card-body" style="display: block;">
+                                <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="entradasChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 604px;" width="604" height="250" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                        </div>
                         <!-- /.card-body -->
 
                     </section>
@@ -252,6 +281,48 @@
 
     $(function () {
     
+    var pieChartDiversify = $('#diversify').get(0).getContext('2d')
+    var pieData        = {
+            labels: [
+            @foreach($Diversificacion as $P)
+            '{{$P[0]}}',
+            @endforeach
+        ],
+        datasets: [
+          {
+            data: [
+              @foreach($Diversificacion as $P)
+              '{{$P[1]}}',
+              @endforeach
+            ],
+            backgroundColor : [
+              @foreach($Diversificacion as $P)
+              '{{$P[2]}}',
+              @endforeach
+            ],
+          }
+        ]
+        }
+        var pieOptions = {
+        legend: {
+            display: true
+        },
+        maintainAspectRatio : false,
+        responsive : true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        var pieChart = new Chart(pieChartDiversify, {
+        type: 'doughnut',
+        data: pieData,
+        options: pieOptions      
+        });
+
+    })
+
+
+    $(function () {
+    
     var pieChartCanvas = $('#sectors-chart-canvas').get(0).getContext('2d')
     var pieData        = {
       labels: [
@@ -297,56 +368,110 @@
             }
             return color;
                 }
-  })
+    })
 
     $(function () {
 
     var areaChartData = {
-    labels  : [
-        @foreach($dividendGraph as $dividend)
-        '{{$dividend->year}}-{{$dividend->month}}',
-        @endforeach
-    ],
-    datasets: [
-        {
-        label               : 'Dividendos por mes',
-        backgroundColor     : 'rgba(60,141,188,0.9)',
-        borderColor         : 'rgba(60,141,188,0.8)',
-        pointRadius          : false,
-        pointColor          : '#3b8bba',
-        pointStrokeColor    : 'rgba(60,141,188,1)',
-        pointHighlightFill  : '#fff',
-        pointHighlightStroke: 'rgba(60,141,188,1)',
-        data                : [
+        labels  : [
             @foreach($dividendGraph as $dividend)
-                '{{$dividend->amount}}',
+                '{{$dividend->year}}-{{$dividend->month}}',
             @endforeach
+        ],
+        datasets: [
+            {
+            label               : 'Dividendos por mes',
+            backgroundColor     : 'rgba(60,141,188,0.9)',
+            borderColor         : 'rgba(60,141,188,0.8)',
+            pointRadius          : false,
+            pointColor          : '#3b8bba',
+            pointStrokeColor    : 'rgba(60,141,188,1)',
+            pointHighlightFill  : '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            data                : 
+            [
+                @foreach($dividendGraph as $dividend)
+                    @if($dividend->Type == 1)
+                        '{{$dividend->amount}}',
+                    @endif
+                @endforeach
+            ]
+        
+            }
         ]
-        }
-    ]
     }
 
-var barChartCanvas = $('#barChart').get(0).getContext('2d')
-var barChartData = jQuery.extend(true, {}, areaChartData)
-var temp0 = areaChartData.datasets[0]
-barChartData.datasets[0] = temp0
+        var barChartCanvas = $('#barChart').get(0).getContext('2d')
+        var barChartData = jQuery.extend(true, {}, areaChartData)
+        var temp0 = areaChartData.datasets[0]
+        barChartData.datasets[0] = temp0
 
-var barChartOptions = {
-  responsive              : true,
-  maintainAspectRatio     : false,
-  datasetFill             : false
-}
+        var barChartOptions = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+        }
 
-var barChart = new Chart(barChartCanvas, {
-  type: 'bar', 
-  data: barChartData,
-  options: barChartOptions
+        var barChart = new Chart(barChartCanvas, {
+            type: 'bar', 
+            data: barChartData,
+            options: barChartOptions
+        })
+    })
+
+
+    $(function () {
+
+        var areaChartData = {
+            labels  : [
+                @foreach($entradasGraph as $dividend)
+                    '{{$dividend->year}}-{{$dividend->month}}',
+                @endforeach
+            ],
+            datasets: [
+                {
+                label               : 'Entradas por mes',
+                backgroundColor     : 'rgba(60,141,188,0.9)',
+                borderColor         : 'rgba(60,141,188,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data                : 
+                [
+                    @foreach($entradasGraph as $dividend)
+                        @if($dividend->Type == 1)
+                            '{{$dividend->amount}}',
+                        @endif
+                    @endforeach
+                ]
+            
+                }
+            ]
+        }
+
+            var barChartCanvas = $('#entradasChart').get(0).getContext('2d')
+            var barChartData = jQuery.extend(true, {}, areaChartData)
+            var temp0 = areaChartData.datasets[0]
+            barChartData.datasets[0] = temp0
+
+            var barChartOptions = {
+                responsive              : true,
+                maintainAspectRatio     : false,
+                datasetFill             : false
+            }
+
+            var barChart = new Chart(barChartCanvas, {
+                type: 'bar', 
+                data: barChartData,
+                options: barChartOptions
+            })
 })
 
 
-})
 
-    
+  
   </script>
   
 
