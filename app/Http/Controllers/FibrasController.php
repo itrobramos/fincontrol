@@ -244,7 +244,9 @@ class FibrasController extends Controller
 
     public function show($id){
 
-        $UserStock = UserStock::find($id);
+        $UserStock = UserStock::find($id); 
+
+
 
         $dividends = Dividend::join('stocks', 'dividends.referenceId', '=', 'stocks.id')
                     ->join('users_stocks', 'users_stocks.stockId', '=', 'stocks.id')
@@ -253,11 +255,56 @@ class FibrasController extends Controller
                     ->where('dividends.userId', Auth::user()->id)
                     ->get(); 
 
+            
+        
+        $DividendGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount
+        FROM dividends 
+        INNER JOIN users_stocks ON dividends.referenceId = users_stocks.stockid
+        WHERE dividends.userId = " . Auth::user()->id . "
+        AND dividends.type = 3 
+        AND users_stocks.Id = " . $id . "
+        GROUP BY YEAR(dividends.efectiveDate), MONTH(dividends.efectiveDate);");
+
+        
+        $LastMonth = null;
+        $DividendGraphCopy = [];
+
+        foreach($DividendGraph as $Div ){
+            if($LastMonth != null){
+                if($LastMonth < 12){
+                    while($LastMonth + 1 != $Div->month){
+                        if($LastMonth == 12)
+                            $DividendGraphCopy[] = ["year" => $Div->year, "month" => 1, "amount" => 0];
+                        else
+                            $DividendGraphCopy[] = ["year" => $Div->year, "month" => $LastMonth + 1, "amount" => 0];
+
+                        $LastMonth++;
+                        if($LastMonth == 13)
+                            $LastMonth = 1;
+                    }
+                    $DividendGraphCopy[] = ["year" => $Div->year, "month" => $LastMonth + 1, "amount" => $Div->amount];
+                }
+                else{
+                    $DividendGraphCopy[] = ["year" => $Div->year, "month" => 1, "amount" => $Div->amount];
+                }
+            }
+            else{
+                $DividendGraphCopy[] = ["year" => $Div->year, "month" => $Div->month, "amount" => $Div->amount];
+            }
+
+            if($LastMonth == 12)
+                $LastMonth = 1;
+            else
+                $LastMonth = $Div->month;
+        }
+
         $recovery = Round($dividends->sum('amount') / ($UserStock->quantity * $UserStock->averagePrice) * 100,2);
 
         $data['userstock'] = $UserStock;
         $data['dividends'] = $dividends;
         $data['recovery'] = $recovery;
+        $data['dividendGraph'] = $DividendGraphCopy;//LISTO
+
 
         return view('fibras.show', $data);
 

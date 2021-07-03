@@ -76,6 +76,39 @@ class SnowballController extends Controller
                             FROM snowball_odis o INNER JOIN snowball_proyects p ON o.snowballProjectId = p.id 
                             WHERE p.id = ". $id . " AND o.userId = " . Auth::user()->id . " GROUP BY p.name, p.imageUrl");
 
+        $DividendGraph = DB::select("SELECT YEAR(efectiveDate) year, MONTH(efectiveDate) month, SUM(Amount) amount, 1 as Type
+        FROM dividends
+        WHERE userId = " . Auth::user()->id . " 
+        AND type = 4 
+        AND referenceId = " . $id . "
+        GROUP BY YEAR(efectiveDate), MONTH(efectiveDate);");
+
+        $LastMonth = null;
+        $DividendGraphCopy = [];
+
+        foreach($DividendGraph as $Div ){
+            if($LastMonth != null){
+                if($LastMonth < 12){
+                    while($LastMonth + 1 != $Div->month){
+                        $DividendGraphCopy[] = ["year" => $Div->year, "month" => $LastMonth + 1, "amount" => 0];
+                        $LastMonth++;
+                    }
+                    $DividendGraphCopy[] = ["year" => $Div->year, "month" => $LastMonth + 1, "amount" => $Div->amount];
+                }
+                else{
+                    $DividendGraphCopy[] = ["year" => $Div->year, "month" => 1, "amount" => $Div->amount];
+                }
+            }
+            else{
+                $DividendGraphCopy[] = ["year" => $Div->year, "month" => $Div->month, "amount" => $Div->amount];
+            }
+
+            if($LastMonth == 12)
+                $LastMonth = 1;
+            else
+                $LastMonth = $Div->month;
+        }
+
         $shares = SnowballODI::where('userId', Auth::user()->id)->where('snowballprojectid',$odis[0]->id)->get();
         $dividends = Dividend::join('snowball_proyects', 'dividends.referenceId', '=', 'snowball_proyects.id')->where('dividends.type','4')->where('snowball_proyects.id', $id)->where('userId', Auth::user()->id)->get(); 
         $recovery = Round($dividends->sum('amount') / $odis[0]->investment * 100,2);
@@ -83,6 +116,7 @@ class SnowballController extends Controller
         $data['odi'] = $odis[0];
         $data['shares'] = $shares;
         $data['dividends'] = $dividends;
+        $data['dividendGraph'] = $DividendGraphCopy;//LISTO
         $data['recovery'] = $recovery;
 
         return view('snowball.show', $data);

@@ -129,7 +129,8 @@
                                                                             href="{{ env('DEPLOY_URL') }}/{{ $share->pdfUrl }}"><button
                                                                                 class="btn btn-md btn-info fas fa-eye"></button></a>
                                                                     </td>
-                                                                    <td> <a class="btn btn-md btn-dark" href="{{ $share->id }}/edit">
+                                                                    <td> <a class="btn btn-md btn-dark"
+                                                                            href="{{ $share->id }}/edit">
                                                                             <span class="btn-inner-icon">
                                                                                 <i class="fas fa-pencil-alt"></i>
                                                                             </span> Editar
@@ -147,6 +148,40 @@
 
                                         </div>
                                         <div class="tab-pane" id="dividends">
+
+
+                                            <div class="card card-primary">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Dividendos</h3>
+
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-tool"
+                                                            data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-tool"
+                                                            data-card-widget="remove"><i class="fas fa-times"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body" style="display: block;">
+                                                    <div class="chart">
+                                                        <div class="chartjs-size-monitor">
+                                                            <div class="chartjs-size-monitor-expand">
+                                                                <div class=""></div>
+                                                            </div>
+                                                            <div class="chartjs-size-monitor-shrink">
+                                                                <div class=""></div>
+                                                            </div>
+                                                        </div>
+                                                        <canvas id="barChart"
+                                                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 604px;"
+                                                            width="604" height="250"
+                                                            class="chartjs-render-monitor"></canvas>
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+
+
                                             <div class="card">
                                                 <!-- /.card-header -->
                                                 <div class="card-body p-0">
@@ -188,11 +223,53 @@
 
 
 
+    <!-- ChartJS -->
+    <script src="../dist/Chart.min.js"></script>
     <script>
-        // $(document).ready(function() {
-        //     $('.table').DataTable();
-        // });
+        $(function() {
 
+            var areaChartData = {
+                labels: [
+                    @foreach ($dividendGraph as $dividend)
+                        '{{ $dividend['year'] }}-{{ $dividend['month'] }}',
+                    @endforeach
+                ],
+                datasets: [{
+                    label: 'Dividendos por mes',
+                    backgroundColor: 'rgba(60,141,188,0.9)',
+                    borderColor: 'rgba(60,141,188,0.8)',
+                    pointRadius: false,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data: [
+                        @foreach ($dividendGraph as $dividend)
+                            '{{ $dividend['amount'] }}',
+                        @endforeach
+                    ]
+                }]
+            }
+
+            var barChartCanvas = $('#barChart').get(0).getContext('2d')
+            var barChartData = jQuery.extend(true, {}, areaChartData)
+            var temp0 = areaChartData.datasets[0]
+            barChartData.datasets[0] = temp0
+
+            var barChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                datasetFill: false
+            }
+
+            var barChart = new Chart(barChartCanvas, {
+                type: 'bar',
+                data: barChartData,
+                options: barChartOptions
+            })
+
+
+        });
     </script>
 
 @endsection
