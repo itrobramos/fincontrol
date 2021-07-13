@@ -147,13 +147,44 @@
                                     @foreach($dividends as $dividend)
 
                                         <tr role="row" class="odd">
-                                            <td style="width:95px;"><center><img class="img-fluid" src="{{env('DEPLOY_URL')}}/{{$dividend->imageUrl}}" style="display: block; margin-left: auto; margin-right: auto; height:50px;" alt="Logo"></center></td>
+
+                                            @if($dividend->type== 1)
+                                                <td style="width:95px;">
+                                                  <a href="stocks/{{$dividend->id}}"
+                                                    <center>
+                                                      <img class="img-fluid" src="{{env('DEPLOY_URL')}}/{{$dividend->imageUrl}}" style="display: block; margin-left: auto; margin-right: auto; height:50px;" alt="Logo">
+                                                    </center>
+                                                </td>
+
+                                            @elseif($dividend->type == 3)
+
+                                                <td style="width:95px;">
+                                                  <a href="fibras/{{$dividend->id}}"
+                                                      <center>
+                                                      <img class="img-fluid" src="{{env('DEPLOY_URL')}}/{{$dividend->imageUrl}}" style="display: block; margin-left: auto; margin-right: auto; height:50px;" alt="Logo">
+                                                    </center>
+                                                </td>
+
+                                            @elseif($dividend->type == 4)
+      
+                                               <td style="width:95px;">
+                                                    <a href="snowball/{{$dividend->referenceId}}"
+                                                    <center>
+                                                      <img class="img-fluid" src="{{env('DEPLOY_URL')}}/{{$dividend->imageUrl}}" style="display: block; margin-left: auto; margin-right: auto; height:50px;" alt="Logo">
+                                                    </center>
+                                                </td>
+
+                                            @endif
+
+
                                             <td style="vertical-align: middle; text-align:center;">{{$dividend->efectiveDate}}</td>
                                             <td style="vertical-align: middle; text-align:center;">{{$dividend->name}}</td>
                                             <td style="vertical-align: middle; text-align:center;">$ {{$dividend->amount}}</td>
                                             <td style="vertical-align: middle; text-align:center;">{{$dividend->stocksCount}}</td>
                                             <td style="vertical-align: middle; text-align:center;">$ {{ round($dividend->amount / $dividend->stocksCount, 2)}}</td>                                            
-                                        </tr>
+                                        
+                                            </a>
+                                          </tr>
 
                                     @endforeach 
 
