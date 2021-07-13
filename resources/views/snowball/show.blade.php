@@ -259,7 +259,15 @@
             var barChartOptions = {
                 responsive: true,
                 maintainAspectRatio: false,
-                datasetFill: false
+                datasetFill: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            min: 0
+                        }    
+                    }]
+                }
             }
 
             var barChart = new Chart(barChartCanvas, {
